@@ -9,23 +9,23 @@ export const CustomersTablePaymentCell = ({
   paymentOption,
 }: CustomersTablePaymentCellProps) => {
   const paymentOptionsStyles = {
-    2000: {
+    CASH: {
       variant: "success",
       text: "ქეში",
     },
-    2001: {
+    CONSIGNMENT: {
       variant: "warning",
       text: "კონსიგნაცია",
     },
-    2002: {
+    DEPOSIT: {
       variant: "primary",
       text: "გადარიცხვა",
     },
-    2003: {
+    TRIAL: {
       variant: "info",
       text: "საცდელი",
     },
-    2004: {
+    DISCOUNT: {
       variant: "danger",
       text: "ფასდაკლება",
     },

@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { priceIndex } from "@/config";
 import { ColumnDef } from "@tanstack/react-table";
 import { Customer } from "../../validations";
 import { CustomersTablePaymentCell } from "./customers-table-payment-cell";
@@ -24,7 +23,7 @@ export const useCustomerColumns = () => {
       {
         accessorKey: "priceIndex",
         header: "საფასო ინდექსი",
-        cell: (info) => priceIndex[info.getValue() as number],
+        cell: (info) => info.getValue(),
       },
 
       {
