@@ -1,0 +1,40 @@
+import {
+  FieldArrayWithId,
+  UseFieldArrayRemove,
+  UseFormReturn,
+} from "react-hook-form";
+import { Order, OrderProduct } from "../../validations";
+import { OrderProductsListItem } from "./order-produdcts-list-item";
+
+type OrderProductsListProps = {
+  fields: FieldArrayWithId<OrderProduct>[];
+  form: UseFormReturn<Order>;
+  isDisabled: boolean;
+  removeFn: UseFieldArrayRemove;
+};
+
+export const OrderProductsList = ({
+  fields,
+  form,
+  isDisabled,
+  removeFn,
+}: OrderProductsListProps) => {
+  return (
+    <ul className="w-full flex flex-col items-start gap-3">
+      {fields.length !== 0 ? (
+        fields.map((field, index) => (
+          <OrderProductsListItem
+            key={field.id}
+            isDisabled={isDisabled}
+            form={form}
+            index={index}
+            removeFn={removeFn}
+            id={Number(field.id)}
+          />
+        ))
+      ) : (
+        <p>პროდუქტები არ არის</p>
+      )}
+    </ul>
+  );
+};
