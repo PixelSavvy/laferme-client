@@ -23,7 +23,7 @@ export const AddOrderProductsListItem = ({
   return (
     <li
       className={cn(
-        "flex justify-between gap-4 w-full items-center  bg-background typo-label-md border p-4 rounded-md bg-neutral-50",
+        "flex gap-4  items-center justify-start bg-background typo-label-md border p-4 rounded-md bg-neutral-50",
         isDisabled && "opacity-50",
       )}
     >

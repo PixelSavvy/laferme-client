@@ -45,7 +45,7 @@ export const CustomerProductsAppendAction = ({
   return (
     <Fragment>
       {isSelectingProduct ? (
-        <Fragment>
+        <div className="flex justify-start items-center gap-2">
           <ProductSelect
             productSetFn={handleProductSelect}
             filteredProducts={filteredProducts}
@@ -56,10 +56,11 @@ export const CustomerProductsAppendAction = ({
             disabled={isDisabled}
             onClick={() => productSelectFn((prev) => !prev)}
             type="button"
+            className="h-9"
           >
             გაუქმება
           </Button>
-        </Fragment>
+        </div>
       ) : (
         <Button
           variant={"ghost"}
