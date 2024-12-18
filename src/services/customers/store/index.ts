@@ -17,5 +17,5 @@ export const useCustomerStore = create<CustomerStore>()(
       }),
     getCustomer: (customerId) =>
       get().products.find((product) => product.id === customerId),
-  }))
+  })),
 );

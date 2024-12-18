@@ -13,7 +13,7 @@ const addOrder = async (data: NewOrder) => {
   try {
     const response: AxiosResponse<AddEntity> = await api.post(
       apiPaths.app.order,
-      data
+      data,
     );
 
     return response.data;

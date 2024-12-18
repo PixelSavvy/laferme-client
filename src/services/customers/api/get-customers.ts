@@ -11,7 +11,7 @@ import { GetEntities } from "@/shared/types";
 export const getCustomers = async () => {
   try {
     const response: AxiosResponse<GetEntities<Customer>> = await api.get(
-      apiPaths.app.customer
+      apiPaths.app.customer,
     );
     return response.data;
   } catch (error) {

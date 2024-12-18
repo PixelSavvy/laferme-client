@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
-import { Control, UseFieldArrayRemove } from "react-hook-form";
-import { NewOrder, NewOrderProduct } from "../../validations";
+import { Control, FieldValues, UseFieldArrayRemove } from "react-hook-form";
+import { NewOrderProduct } from "../../validations";
 import { AddOrderProductsListItem } from "./add-order-products-list-item";
 
 type AddOrderProductsListProps = {
@@ -8,7 +8,7 @@ type AddOrderProductsListProps = {
   remove: UseFieldArrayRemove;
   isDisabled?: boolean;
   className?: string;
-  control: Control<NewOrder>;
+  control: Control<FieldValues>;
 };
 
 export const AddOrderProductsList = ({
@@ -22,7 +22,7 @@ export const AddOrderProductsList = ({
     <ul
       className={cn(
         "flex flex-wrap justify-start items-center gap-4",
-        className
+        className,
       )}
     >
       {fields.length !== 0 ? (

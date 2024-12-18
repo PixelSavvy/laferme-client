@@ -10,6 +10,8 @@ export const CustomersTable = () => {
 
   if (!customers?.data) return null;
 
+  console.log(customers.data);
+
   return (
     <DataTable
       columns={columns}

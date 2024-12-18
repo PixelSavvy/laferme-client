@@ -13,7 +13,7 @@ const addProduct = async (data: NewProduct) => {
   try {
     const response: AxiosResponse<AddEntity> = await api.post(
       apiPaths.app.product,
-      data
+      data,
     );
 
     return response.data;

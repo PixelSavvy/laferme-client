@@ -63,7 +63,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 
@@ -83,7 +83,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 
@@ -180,8 +180,8 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
             isDisabled={isDisabled}
             isSelectingProduct={isSelectingProduct}
             productSelectFn={setIsSelectingProduct}
+            selectedProductCodes={fields.map((field) => field.productCode)}
             appendFn={append as never}
-            selectedProducts={fields}
           />
         </div>
 

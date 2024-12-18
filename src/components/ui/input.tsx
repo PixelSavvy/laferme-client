@@ -20,7 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       showRightIcon = false,
       ...props
     },
-    ref
+    ref,
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (props.onChange) props.onChange(e);
@@ -32,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {showLeftIcon && leftIcon && (
           <span
             className={cn(
-              "flex items-center justify-center absolute left-2 w-4 h-4 transition-colors text-neutral-600"
+              "flex items-center justify-center absolute left-2 w-4 h-4 transition-colors text-neutral-600",
             )}
           >
             {leftIcon}
@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "flex h-9 w-full rounded-md border border-input bg-background p-3 ring-offset-background outline-none placeholder:text-neutral-500 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 transition-all text-foreground disabled:text-neutral-800 disabled:border-neutral-800 hover:border-primary-950 peer typo-label-md",
             showLeftIcon && leftIcon ? "pl-6" : "",
             showRightIcon && rightIcon ? "pr-6" : "",
-            className
+            className,
           )}
           onChange={handleChange}
           ref={ref}
@@ -57,7 +57,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {showRightIcon && rightIcon && (
           <span
             className={cn(
-              "flex items-center justify-center absolute right-2 w-4 h-4 transition-colors"
+              "flex items-center justify-center absolute right-2 w-4 h-4 transition-colors",
             )}
           >
             {rightIcon}
@@ -65,7 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

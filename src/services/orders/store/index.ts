@@ -27,5 +27,5 @@ export const useOrdersStore = create<OrdersStore>()(
       const order = get().data.orders.find((order) => order.id === id);
       return order;
     },
-  }))
+  })),
 );

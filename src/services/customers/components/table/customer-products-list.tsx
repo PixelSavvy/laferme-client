@@ -20,7 +20,7 @@ export const CustomerProductsList = ({
     <ul
       className={cn(
         "flex flex-wrap justify-start items-center gap-4",
-        className
+        className,
       )}
     >
       {fields.length !== 0 ? (

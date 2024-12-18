@@ -69,7 +69,7 @@ export const useProductColumns = () => {
         cell: ({ row }) => formatCurrency(row.original.prices.TRC),
       },
     ],
-    []
+    [],
   );
 
   return columns;

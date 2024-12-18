@@ -23,7 +23,7 @@ export const CustomerProductsListItem = ({
     <li
       className={cn(
         "flex justify-between gap-4 w-full items-center border-input border rounded-md px-2 py-1 bg-background typo-label-md",
-        isDisabled && "opacity-50"
+        isDisabled && "opacity-50",
       )}
     >
       <div className="space-x-2">

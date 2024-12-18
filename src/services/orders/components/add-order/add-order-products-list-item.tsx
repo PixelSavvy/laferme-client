@@ -1,13 +1,12 @@
 import { Button, InputField } from "@/components/ui";
 import { cn } from "@/lib";
 import { Trash } from "lucide-react";
-import { Control, UseFieldArrayRemove } from "react-hook-form";
-import { NewOrder } from "../../validations";
+import { Control, FieldValues, UseFieldArrayRemove } from "react-hook-form";
 
 type AddOrderProductsListItemProps = {
   removeFn: UseFieldArrayRemove;
   isDisabled?: boolean;
-  control: Control<NewOrder>;
+  control: Control<FieldValues>;
   index: number;
 };
 
@@ -25,7 +24,7 @@ export const AddOrderProductsListItem = ({
     <li
       className={cn(
         "flex justify-between gap-4 w-full items-center  bg-background typo-label-md border p-4 rounded-md bg-neutral-50",
-        isDisabled && "opacity-50"
+        isDisabled && "opacity-50",
       )}
     >
       <div className="flex gap-4">

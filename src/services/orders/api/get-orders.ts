@@ -10,7 +10,7 @@ import { Order } from "../validations";
 export const getOrders = async () => {
   try {
     const response: AxiosResponse<GetEntities<Order>> = await api.get(
-      apiPaths.app.order
+      apiPaths.app.order,
     );
     return response.data;
   } catch (error) {

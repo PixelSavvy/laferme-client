@@ -17,5 +17,5 @@ export const useProductStore = create<ProductStore>()(
       }),
     getProduct: (productId) =>
       get().products.find((product) => product.id === productId),
-  }))
+  })),
 );

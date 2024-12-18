@@ -42,7 +42,7 @@ export const useOrderColumns = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return columns;

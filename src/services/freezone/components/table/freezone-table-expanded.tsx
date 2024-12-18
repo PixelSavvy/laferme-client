@@ -60,7 +60,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 

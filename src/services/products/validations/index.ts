@@ -66,7 +66,7 @@ const pricesSchema = z.object(
   },
   {
     required_error: REQUIRED_ERROR_MSG,
-  }
+  },
 );
 
 const newProductSchema = z.object({

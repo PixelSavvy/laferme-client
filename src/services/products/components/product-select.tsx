@@ -7,54 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui";
-import { Customer } from "@/services/customers";
-import { Dispatch, SetStateAction } from "react";
-import { UseFieldArrayAppend } from "react-hook-form";
-import { useProducts } from "../api";
+import { Product } from "../validations";
 
 type ProductSelectProps = {
-  appendFn: UseFieldArrayAppend<never>;
-  productSelectFn: Dispatch<SetStateAction<boolean>>;
-  selectedProducts: number[];
-  customer: Customer;
+  filteredProducts: Product[];
+  productSetFn: (value: string) => void;
 };
 
 export const ProductSelect = ({
-  appendFn,
-  productSelectFn,
-  selectedProducts,
-  customer,
+  filteredProducts,
+  productSetFn,
 }: ProductSelectProps) => {
-  const { data: products } = useProducts({});
-
-  if (!products) return null;
-
-  const filteredProducts = products.data.filter(
-    (product) => !selectedProducts.includes(product.id)
-  );
-
   const handleSelect = (value: string) => {
-    const selectedProduct = products.data.find(
-      (product) => product.id === parseInt(value)
-    );
-
-    if (!selectedProduct) return console.warn("Product not found");
-
-    const product = {
-      productId: selectedProduct.id,
-      title: selectedProduct.title,
-      productCode: selectedProduct.productCode,
-      price: customer
-        ? selectedProduct.prices[
-            customer.priceIndex as keyof typeof selectedProduct.prices
-          ]
-        : 0,
-      quantity: 1,
-      weight: 0,
-    };
-
-    appendFn(product!);
-    productSelectFn((prev) => !prev);
+    productSetFn(value);
   };
 
   return (

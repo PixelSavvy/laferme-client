@@ -57,7 +57,7 @@ export const ProductsTableExpanded = ({ row }: { row: Row<Product> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 
@@ -77,7 +77,7 @@ export const ProductsTableExpanded = ({ row }: { row: Row<Product> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 

@@ -1,47 +1,60 @@
 import { Button } from "@/components/ui";
-import { ProductSelect } from "@/services/products";
+import { ProductSelect, useProducts } from "@/services/products";
 import { Plus } from "lucide-react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
-import { CustomerProduct } from "../../validations";
+import { NewCustomer } from "../../validations";
 
 type CustomerProductsAppendActionProps = {
   isDisabled?: boolean;
   isSelectingProduct: boolean;
   productSelectFn: Dispatch<SetStateAction<boolean>>;
-  appendFn: UseFieldArrayAppend<never>;
-  selectedProducts: CustomerProduct[];
+  selectedProductCodes: string[];
+  appendFn: UseFieldArrayAppend<NewCustomer>;
 };
 
 export const CustomerProductsAppendAction = ({
   isDisabled,
   isSelectingProduct,
   productSelectFn,
+  selectedProductCodes,
   appendFn,
-  selectedProducts,
 }: CustomerProductsAppendActionProps) => {
-  const handleProductSelect = () => {
+  const { data: products } = useProducts({});
+
+  if (!products) return null;
+
+  const filteredProducts = products.data.filter(
+    (product) => !selectedProductCodes.includes(product.productCode),
+  );
+
+  const handleProductSelect = (val: string) => {
+    const selectedProduct = products.data.find(
+      (product) => product.id === parseInt(val),
+    );
+
+    if (!selectedProduct) return console.warn("Product not found");
+
+    appendFn(selectedProduct!);
     productSelectFn((prev) => !prev);
   };
 
-  const selectedProductsIds = selectedProducts.map(
-    (product) => product.productCode
-  );
+  console.log(selectedProductCodes);
+  console.log(filteredProducts);
 
   return (
     <Fragment>
       {isSelectingProduct ? (
         <Fragment>
           <ProductSelect
-            appendFn={appendFn}
-            productSelectFn={productSelectFn}
-            selectedProducts={selectedProductsIds}
+            productSetFn={handleProductSelect}
+            filteredProducts={filteredProducts}
           />
           <Button
             variant={"ghost"}
             size={"sm"}
             disabled={isDisabled}
-            onClick={handleProductSelect}
+            onClick={() => productSelectFn((prev) => !prev)}
             type="button"
           >
             გაუქმება
@@ -52,7 +65,7 @@ export const CustomerProductsAppendAction = ({
           variant={"ghost"}
           size={"sm"}
           disabled={isDisabled}
-          onClick={handleProductSelect}
+          onClick={() => productSelectFn((prev) => !prev)}
           type="button"
         >
           <Plus />

@@ -17,8 +17,8 @@ import {
   UpdateOrderProduct,
   updateOrderSchema,
 } from "../../validations";
-import { OrderProductsAppendAction } from "./order-products-append-action";
-import { OrderProductsList } from "./order-products-list";
+import { OrderProductsAppendAction } from "../add-order/add-order-product-append-action";
+import { AddOrderProductsList } from "../add-order/add-order-products-list";
 
 export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const order = row.original;
@@ -31,7 +31,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       price: product.orderDetails.price,
       quantity: product.orderDetails.quantity,
       weight: product.orderDetails.weight,
-    })
+    }),
   );
 
   // Form input diasbled state
@@ -45,7 +45,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   } = useUpdateOrder({});
 
   const { mutate: deleteOrder, isPending: isOrderDeleting } = useDeleteOrder(
-    {}
+    {},
   );
 
   const defaultValues = {
@@ -75,7 +75,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 
@@ -92,7 +92,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
         onError: (error) => {
           toast.error(error.message);
         },
-      }
+      },
     );
   };
 
@@ -123,11 +123,12 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
           <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
           {/* Existing Products */}
           <div>
-            <OrderProductsList
+            <AddOrderProductsList
               fields={fields}
-              form={form}
+              remove={remove}
               isDisabled={isDisabled}
-              removeFn={remove}
+              className="flex-nowrap flex-col items-start w-full"
+              control={form.control as never}
             />
           </div>
 
@@ -138,7 +139,8 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
               isSelectingProduct={isSelectingProduct}
               productSelectFn={setIsSelectingProduct}
               isDisabled={isDisabled}
-              selectedProducts={fields}
+              selectedProductsIds={fields.map((field) => field.productId)}
+              customer={order.customer}
             />
           </div>
 

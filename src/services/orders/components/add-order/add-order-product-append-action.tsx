@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui";
 import { Customer } from "@/services/customers";
-import { ProductSelect } from "@/services/products";
+import { ProductSelect, useProducts } from "@/services/products";
 import { Plus } from "lucide-react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
-import { NewOrderProduct } from "../../validations";
+import { NewOrder } from "../../validations";
 
 type OrderProductsAppendActionProps = {
   isDisabled?: boolean;
   isSelectingProduct: boolean;
   productSelectFn: Dispatch<SetStateAction<boolean>>;
-  appendFn: UseFieldArrayAppend<never>;
-  selectedProducts: NewOrderProduct[];
+  appendFn: UseFieldArrayAppend<NewOrder>;
+  selectedProductsIds: number[];
   customer: Customer;
 };
 
@@ -20,32 +20,54 @@ export const OrderProductsAppendAction = ({
   isSelectingProduct,
   productSelectFn,
   appendFn,
-  selectedProducts,
+  selectedProductsIds,
   customer,
 }: OrderProductsAppendActionProps) => {
-  const handleProductSelect = () => {
+  const { data: products } = useProducts({});
+
+  if (!products) return null;
+
+  const filteredProducts = products.data.filter(
+    (product) => !selectedProductsIds.includes(product.id),
+  );
+
+  const handleProductSelect = (val: string) => {
+    const selectedProduct = products.data.find(
+      (product) => product.id === parseInt(val),
+    );
+
+    if (!selectedProduct) return console.warn("Product not found");
+
+    const product = {
+      productId: selectedProduct.id,
+      title: selectedProduct.title,
+      productCode: selectedProduct.productCode,
+      price: customer
+        ? selectedProduct.prices[
+            customer.priceIndex as keyof typeof selectedProduct.prices
+          ]
+        : 0,
+      quantity: 1,
+      weight: 0,
+    };
+
+    appendFn(product!);
     productSelectFn((prev) => !prev);
   };
-
-  const selectedProductsIds = selectedProducts.map(
-    (product) => product.productId
-  );
 
   return (
     <Fragment>
       {isSelectingProduct ? (
         <Fragment>
           <ProductSelect
-            appendFn={appendFn}
-            productSelectFn={productSelectFn}
-            selectedProducts={selectedProductsIds}
-            customer={customer}
+            filteredProducts={filteredProducts}
+            productSetFn={handleProductSelect}
           />
           <Button
             variant={"ghost"}
             size={"sm"}
             disabled={isDisabled}
-            onClick={handleProductSelect}
+            onClick={() => productSelectFn((prev) => !prev)}
             type="button"
           >
             გაუქმება
@@ -56,7 +78,7 @@ export const OrderProductsAppendAction = ({
           variant={"ghost"}
           size={"sm"}
           disabled={isDisabled}
-          onClick={handleProductSelect}
+          onClick={() => productSelectFn((prev) => !prev)}
           type="button"
         >
           <Plus />

@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const REQUIRED_ERROR_MSG = "სავალდებულოა";
 const GEORGIAN_REGEX = new RegExp(
-  "^[ა-ჰ\\s.,?!:;\"'()\\-+@#$%^&*<>[\\]{}|\\\\/]+$"
+  "^[ა-ჰ\\s.,?!:;\"'()\\-+@#$%^&*<>[\\]{}|\\\\/]+$",
 );
 
 const customerProductsSchema = productSchema;

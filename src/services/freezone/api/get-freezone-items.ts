@@ -10,7 +10,7 @@ import { FreezoneItem } from "../validations";
 export const getFreezoneItems = async () => {
   try {
     const response: AxiosResponse<GetEntities<FreezoneItem>> = await api.get(
-      apiPaths.app.freezone
+      apiPaths.app.freezone,
     );
     return response.data;
   } catch (error) {

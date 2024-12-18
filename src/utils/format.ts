@@ -58,7 +58,7 @@ export const formatNumber = (phone: string): string => {
   if (/^\+9955\d{8}$/.test(cleaned)) {
     return cleaned.replace(
       /^\+995(5\d{2})(\d{2})(\d{2})(\d{2})$/,
-      "+995 $1 $2 $3 $4"
+      "+995 $1 $2 $3 $4",
     );
   } else if (/^5\d{8}$/.test(cleaned)) {
     return cleaned.replace(/^(5\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4");
@@ -68,7 +68,7 @@ export const formatNumber = (phone: string): string => {
   else if (/^\+9950322\d{6}$/.test(cleaned)) {
     return cleaned.replace(
       /^\+995(0322)(\d{2})(\d{2})(\d{2})$/,
-      "+995 $1 $2 $3 $4"
+      "+995 $1 $2 $3 $4",
     );
   } else if (/^0322\d{6}$/.test(cleaned)) {
     return cleaned.replace(/^(0322)(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4");

@@ -93,7 +93,7 @@ export const DataTable = <Data, Value>({
                       index === 0 ? "rounded-l-md" : "",
                       index === headerGroup.headers.length - 1
                         ? "rounded-r-md"
-                        : ""
+                        : "",
                     )}
                   >
                     {header.isPlaceholder ? null : (
@@ -117,7 +117,7 @@ export const DataTable = <Data, Value>({
                         {" "}
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                         {{
                           asc: <ArrowUp className="inline ml-1 size-4" />,
@@ -145,7 +145,7 @@ export const DataTable = <Data, Value>({
                       <TableCell key={cell.id} className={cn("border-b ")}>
                         {flexRender(
                           cell.column.columnDef.cell,
-                          cell.getContext()
+                          cell.getContext(),
                         )}
                       </TableCell>
                     ))}

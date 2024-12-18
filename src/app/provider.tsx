@@ -12,7 +12,7 @@ type TAppProviderProps = {
 
 export const AppProvider = ({ children }: TAppProviderProps) => {
   const [queryClient] = useState(
-    () => new QueryClient({ defaultOptions: queryConfig })
+    () => new QueryClient({ defaultOptions: queryConfig }),
   );
 
   return (

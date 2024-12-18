@@ -95,13 +95,13 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
                 fields={fields}
                 remove={remove}
                 className="flex-nowrap flex-col items-start w-full"
-                control={form.control}
+                control={form.control as never}
               />
               <OrderProductsAppendAction
                 isSelectingProduct={isSelectingProduct}
                 productSelectFn={setIsSelectingProduct}
-                appendFn={append as never}
-                selectedProducts={fields}
+                appendFn={append}
+                selectedProductsIds={fields.map((field) => field.productId)}
                 customer={customer ? customer : ({} as Customer)}
               />
             </div>

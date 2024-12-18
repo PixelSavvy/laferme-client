@@ -129,8 +129,8 @@ export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
           <CustomerProductsAppendAction
             isSelectingProduct={isSelectingProduct}
             productSelectFn={setIsSelectingProduct}
-            appendFn={append as never}
-            selectedProducts={fields}
+            selectedProductCodes={fields.map((field) => field.productCode)}
+            appendFn={append}
           />
         </div>
 
