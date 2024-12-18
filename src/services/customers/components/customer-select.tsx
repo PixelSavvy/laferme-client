@@ -67,9 +67,9 @@ export const CustomerSelect = ({
         weight: 0,
       }));
       form.setValue("products", customerProducts);
-      form.setValue("customerId", customerId);
     }
 
+    form.setValue("customerId", customerId);
     customerSetFn(customer as Customer);
     customerSelectFn((prev) => !prev);
   };

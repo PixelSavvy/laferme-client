@@ -6,6 +6,7 @@ import { getOrdersQueryOptions } from "./get-orders";
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
+import { getFreezoneItemsQueryOptions } from "@/services/freezone";
 import { DeleteEntity } from "@/shared/types";
 
 export const deleteOrder = async ({ id }: { id: number }) => {
@@ -33,6 +34,9 @@ export const useDeleteOrder = ({ mutationConfig }: UseDeleteOrderOptions) => {
     onSuccess: async (...args) => {
       await queryClient.invalidateQueries({
         queryKey: getOrdersQueryOptions().queryKey,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: getFreezoneItemsQueryOptions().queryKey,
       });
       onSuccess?.(...args);
     },

@@ -6,6 +6,7 @@ import { getOrdersQueryOptions } from "./get-orders";
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
+import { getFreezoneItemsQueryOptions } from "@/services/freezone";
 import { AddEntity } from "@/shared/types";
 import { NewOrder } from "../validations";
 
@@ -36,6 +37,9 @@ export const useAddOrder = ({ mutationConfig }: UseAddOrderOptions) => {
     onSuccess: async (...args) => {
       await queryClient.invalidateQueries({
         queryKey: getOrdersQueryOptions().queryKey,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: getFreezoneItemsQueryOptions().queryKey,
       });
       onSuccess?.(...args);
     },

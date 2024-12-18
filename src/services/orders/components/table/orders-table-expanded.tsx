@@ -105,7 +105,6 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const handleCancel = () => {
     form.reset();
     handleDisabled();
-    console.log(form.getValues());
   };
 
   const showSubmitActions = !isDisabled || (isOrderUpdating && !isOrderUpdated);

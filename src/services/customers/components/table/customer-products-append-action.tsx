@@ -39,9 +39,6 @@ export const CustomerProductsAppendAction = ({
     productSelectFn((prev) => !prev);
   };
 
-  console.log(selectedProductCodes);
-  console.log(filteredProducts);
-
   return (
     <Fragment>
       {isSelectingProduct ? (
