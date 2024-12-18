@@ -8,7 +8,6 @@ type OrdersTableStatusCellProps = {
 export const OrdersTableStatusCell = ({
   orderStatus,
 }: OrdersTableStatusCellProps) => {
-  console.log(orderStatus);
   const statussStyles = {
     PREPARING: {
       variant: "info",

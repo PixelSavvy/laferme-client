@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui";
+import { Customer } from "@/services/customers";
+import { ProductSelect } from "@/services/products";
 import { Plus } from "lucide-react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
-import { UpdateOrderProduct } from "../../validations";
-import { OrderProductSelect } from "./order-product-select";
+import { NewOrderProduct } from "../../validations";
 
 type OrderProductsAppendActionProps = {
   isDisabled?: boolean;
   isSelectingProduct: boolean;
   productSelectFn: Dispatch<SetStateAction<boolean>>;
   appendFn: UseFieldArrayAppend<never>;
-  selectedProducts: UpdateOrderProduct[];
+  selectedProducts: NewOrderProduct[];
+  customer: Customer;
 };
 
 export const OrderProductsAppendAction = ({
@@ -19,6 +21,7 @@ export const OrderProductsAppendAction = ({
   productSelectFn,
   appendFn,
   selectedProducts,
+  customer,
 }: OrderProductsAppendActionProps) => {
   const handleProductSelect = () => {
     productSelectFn((prev) => !prev);
@@ -30,12 +33,13 @@ export const OrderProductsAppendAction = ({
 
   return (
     <Fragment>
-      {isSelectingProduct && (
-        <div className="flex gap-3 items-center justify-start">
-          <OrderProductSelect
+      {isSelectingProduct ? (
+        <Fragment>
+          <ProductSelect
             appendFn={appendFn}
             productSelectFn={productSelectFn}
             selectedProducts={selectedProductsIds}
+            customer={customer}
           />
           <Button
             variant={"ghost"}
@@ -46,15 +50,14 @@ export const OrderProductsAppendAction = ({
           >
             გაუქმება
           </Button>
-        </div>
-      )}
-      {!isSelectingProduct && (
+        </Fragment>
+      ) : (
         <Button
           variant={"ghost"}
+          size={"sm"}
           disabled={isDisabled}
           onClick={handleProductSelect}
           type="button"
-          size={"sm"}
         >
           <Plus />
           დაამატე პროდუქტი

@@ -34,7 +34,7 @@ export const AddOrderTrigger = () => {
         </DrawerHeader>
 
         {/* Add order Form */}
-        <section className="size-full">
+        <section className="w-[48rem] h-full">
           <AddOrderForm setIsOpen={setIsOpen} />
         </section>
       </DrawerContent>

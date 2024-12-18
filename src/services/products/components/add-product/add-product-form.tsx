@@ -13,7 +13,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
 import { useAddProduct } from "../../api";
-import { NewProduct, newProductSchema } from "../../validations";
+import {
+  NewProduct,
+  newProductSchema,
+  productDefaultValues,
+} from "../../validations";
 
 type AddProductFormProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +31,7 @@ export const AddProductForm = ({ setIsOpen }: AddProductFormProps) => {
   const form = useForm<NewProduct>({
     resolver: zodResolver(newProductSchema),
     mode: "onChange",
+    defaultValues: productDefaultValues,
   });
 
   // Form submit handler

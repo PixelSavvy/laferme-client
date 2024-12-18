@@ -11,12 +11,28 @@ import { Fragment, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useDeleteOrder, useUpdateOrder } from "../../api";
-import { Order, orderSchema } from "../../validations";
+import {
+  Order,
+  UpdateOrder,
+  UpdateOrderProduct,
+  updateOrderSchema,
+} from "../../validations";
 import { OrderProductsAppendAction } from "./order-products-append-action";
 import { OrderProductsList } from "./order-products-list";
 
 export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const order = row.original;
+
+  const transformedProducts: UpdateOrderProduct[] = order.products.map(
+    (product) => ({
+      productId: product.id,
+      title: product.title,
+      productCode: product.productCode,
+      price: product.orderDetails.price,
+      quantity: product.orderDetails.quantity,
+      weight: product.orderDetails.weight,
+    })
+  );
 
   // Form input diasbled state
   const [isDisabled, setIsDisabled] = useState(true);
@@ -32,9 +48,14 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     {}
   );
 
-  const form = useForm<Order>({
-    resolver: zodResolver(orderSchema),
-    defaultValues: order,
+  const defaultValues = {
+    id: order.id,
+    products: transformedProducts,
+  };
+
+  const form = useForm<UpdateOrder>({
+    resolver: zodResolver(updateOrderSchema),
+    defaultValues,
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -42,21 +63,11 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     name: "products",
   });
 
-  const handleSubmit: SubmitHandler<Order> = (payload) => {
-    const transformedPayload = {
-      id: order.id,
-      customerId: order.customer.id,
-      status: payload.status,
-      products: payload.products.map((product) => ({
-        productId: product.id,
-        ...product.orderDetails,
-      })),
-    };
-
+  const handleSubmit: SubmitHandler<UpdateOrder> = (payload) => {
     updateOrder(
       {
-        id: order.id,
-        data: transformedPayload,
+        id: payload.id,
+        data: payload,
       },
       {
         onSuccess: (data) => {
@@ -78,6 +89,9 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
           toast.success(data.message);
           row.toggleExpanded();
         },
+        onError: (error) => {
+          toast.error(error.message);
+        },
       }
     );
   };
@@ -91,6 +105,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const handleCancel = () => {
     form.reset();
     handleDisabled();
+    console.log(form.getValues());
   };
 
   const showSubmitActions = !isDisabled || (isOrderUpdating && !isOrderUpdated);
@@ -103,11 +118,11 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-        <div className="space-y-4 flex flex-col max-w-max ">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full ">
+        <div className="space-y-4 flex flex-col w-full ">
           <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
           {/* Existing Products */}
-          <div className="">
+          <div>
             <OrderProductsList
               fields={fields}
               form={form}
@@ -123,7 +138,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
               isSelectingProduct={isSelectingProduct}
               productSelectFn={setIsSelectingProduct}
               isDisabled={isDisabled}
-              selectedProducts={order.products}
+              selectedProducts={fields}
             />
           </div>
 

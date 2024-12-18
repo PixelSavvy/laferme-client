@@ -12,6 +12,8 @@ export const FreezoneTableCustomerCell = ({
 
   const freezoneProducts = row.original.products;
 
+  console.log(customer);
+
   return (
     <div className="flex justify-start items-center gap-2">
       <span>{customer.name}</span>

@@ -1,11 +1,11 @@
 import { orderStatus } from "@/config";
 import { customerDefaultValues, customerSchema } from "@/services/customers";
-import { orderProductDefaultValues } from "@/services/orders";
+import { newOrderDefaultValues } from "@/services/orders";
+
 import { productSchema } from "@/services/products";
 import { z } from "zod";
 
 const REQUIRED_ERROR_MSG = "სავალდებულოა";
-const status = Object.values(orderStatus) as [string, ...string[]];
 
 const freezoneItemProductsSchema = productSchema
   .omit({
@@ -34,7 +34,7 @@ const freezoneItemSchema = z.object({
       required_error: REQUIRED_ERROR_MSG,
     })
     .nonnegative(),
-  status: z.enum(status, {
+  status: z.enum(orderStatus, {
     required_error: REQUIRED_ERROR_MSG,
   }),
   products: z.array(freezoneItemProductsSchema),
@@ -49,7 +49,7 @@ type FreezoneItemProducts = z.infer<typeof freezoneItemProductsSchema>;
 type FreezoneItem = z.infer<typeof freezoneItemSchema>;
 
 const freezoneItemProductsDefaultValues = {
-  ...orderProductDefaultValues,
+  ...newOrderDefaultValues,
   adjustedWeight: 0,
   adjustedQuantity: 0,
 };
@@ -57,7 +57,7 @@ const freezoneItemProductsDefaultValues = {
 const freezoneItemDefaultValues: FreezoneItem = {
   orderId: 0,
   products: [],
-  status: status[0],
+  status: orderStatus[0],
   id: 0,
   customer: customerDefaultValues,
   createdAt: new Date(),
@@ -68,7 +68,7 @@ const freezoneItemDefaultValues: FreezoneItem = {
 const updateFreezoneItemSchema = z.object({
   id: z.number().int().nonnegative(),
   orderId: z.number().int().nonnegative(),
-  status: z.enum(status),
+  status: z.enum(orderStatus),
   products: z.array(
     z.object({
       quantity: z.number().int().positive(),

@@ -7,9 +7,6 @@ const GEORGIAN_REGEX = new RegExp(
   "^[ა-ჰ\\s.,?!:;\"'()\\-+@#$%^&*<>[\\]{}|\\\\/]+$"
 );
 
-const PAYMENT_OPTIONS = Object.keys(paymentOptions) as [string, ...string[]];
-const PRICE_INDEXES = Object.keys(priceIndex) as [string, ...string[]];
-
 const customerProductsSchema = productSchema;
 
 type CustomerProduct = z.infer<typeof customerProductsSchema>;
@@ -20,10 +17,10 @@ const newCustomerSchema = z.object({
   name: z.string({ required_error: REQUIRED_ERROR_MSG }).regex(GEORGIAN_REGEX, {
     message: "მხოლოდ ქართული ასოები",
   }),
-  priceIndex: z.enum(PRICE_INDEXES, {
+  priceIndex: z.enum(priceIndex, {
     required_error: REQUIRED_ERROR_MSG,
   }),
-  paymentOption: z.enum(PAYMENT_OPTIONS, {
+  paymentOption: z.enum(paymentOptions, {
     required_error: REQUIRED_ERROR_MSG,
   }),
   phone: z.string({

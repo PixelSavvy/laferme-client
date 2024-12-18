@@ -52,6 +52,7 @@ export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
 
   const handleCancel = () => {
     form.reset();
+    setIsOpen((prev) => !prev);
   };
 
   return (

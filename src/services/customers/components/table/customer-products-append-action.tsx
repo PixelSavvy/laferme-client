@@ -30,23 +30,35 @@ export const CustomerProductsAppendAction = ({
 
   return (
     <Fragment>
-      {isSelectingProduct && (
-        <ProductSelect
-          appendFn={appendFn}
-          productSelectFn={productSelectFn}
-          selectedProducts={selectedProductsIds}
-        />
+      {isSelectingProduct ? (
+        <Fragment>
+          <ProductSelect
+            appendFn={appendFn}
+            productSelectFn={productSelectFn}
+            selectedProducts={selectedProductsIds}
+          />
+          <Button
+            variant={"ghost"}
+            size={"sm"}
+            disabled={isDisabled}
+            onClick={handleProductSelect}
+            type="button"
+          >
+            გაუქმება
+          </Button>
+        </Fragment>
+      ) : (
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          disabled={isDisabled}
+          onClick={handleProductSelect}
+          type="button"
+        >
+          <Plus />
+          დაამატე პროდუქტი
+        </Button>
       )}
-      <Button
-        variant={"ghost"}
-        size={"sm"}
-        disabled={isDisabled}
-        onClick={handleProductSelect}
-        type="button"
-      >
-        <Plus />
-        დაამატე პროდუქტი
-      </Button>
     </Fragment>
   );
 };

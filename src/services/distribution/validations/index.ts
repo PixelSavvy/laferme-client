@@ -4,7 +4,6 @@ import { productSchema } from "@/services/products";
 import { z } from "zod";
 
 const REQUIRED_ERROR_MSG = "სავალდებულოა";
-const status = Object.values(distributionStatus) as [string, ...string[]];
 
 const distributionItemProductsSchema = productSchema
   .omit({
@@ -26,7 +25,7 @@ const distributionItemSchema = z.object({
       required_error: REQUIRED_ERROR_MSG,
     })
     .nonnegative(),
-  status: z.enum(status, {
+  status: z.enum(distributionStatus, {
     required_error: REQUIRED_ERROR_MSG,
   }),
   products: z.array(distributionItemProductsSchema),
@@ -44,7 +43,7 @@ type DistributionItem = z.infer<typeof distributionItemSchema>;
 const distributionItemDefaultValues: DistributionItem = {
   id: 0,
   freezoneItemId: 0,
-  status: status[0],
+  status: distributionStatus[0],
   products: [],
   customer: customerDefaultValues,
   createdAt: new Date(),
@@ -55,7 +54,7 @@ const distributionItemDefaultValues: DistributionItem = {
 const updateDistributionItemSchema = z.object({
   id: z.number().int().nonnegative(),
   freezoneItemId: z.number().int().nonnegative(),
-  status: z.enum(status),
+  status: z.enum(distributionStatus),
   products: z.array(
     z.object({
       price: z.coerce.number().positive(),

@@ -1,50 +1,44 @@
-export const paymentOptions: { [key: number]: string } = {
-  2000: "CASH",
-  2001: "CONSIGNMENT",
-  2002: "TRANSFER",
-  2003: "TRIAL",
-  2004: "DISCOUNT",
-};
+export const paymentOptions = [
+  "CASH",
+  "CONSIGNMENT",
+  "TRANSFER",
+  "TRIAL",
+  "DISCOUNT",
+] as [string, ...string[]];
 
-export const orderStatus: { [key: number]: string } = {
-  3000: "PREPARING",
-  3001: "PREPARED",
-  3002: "CANCELLED",
-  3003: "RETURNED",
-};
+export const orderStatus = [
+  "PREPARING",
+  "PREPARED",
+  "CANCELLED",
+  "RETURNED",
+] as [string, ...string[]];
 
-export const distributionStatus: { [key: number]: string } = {
-  3000: "TODELIVER",
-  3001: "DELIVERING",
-  3002: "DELIVERED",
-};
+export const distributionStatus = ["TODELIVER", "DELIVERING", "DELIVERED"] as [
+  string,
+  ...string[],
+];
 
-export const priceIndex: { [key: number]: string } = {
-  1: "TR1",
-  2: "TR2",
-  3: "TR3",
-  4: "TR4",
-  5: "TR5",
-  6: "TRC",
-  7: "TRD",
-};
+export const priceIndex = ["TR1", "TR2", "TR3", "TR4", "TR5", "TRD", "TRC"] as [
+  string,
+  ...string[],
+];
 
 export const paymentOptionValues = [
-  { label: "ქეში", value: "2000" },
-  { label: "ტრანსფერი", value: "2001" },
-  { label: "კონსიგნაცია", value: "2002" },
-  { label: "სატესტო", value: "2003" },
-  { label: "ფასდაკლებული", value: "2004" },
+  { label: "ქეში", value: "CASH" },
+  { label: "ტრანსფერი", value: "TRANSFER" },
+  { label: "კონსიგნაცია", value: "CONSIGNMENT" },
+  { label: "სატესტო", value: "TRIAL" },
+  { label: "ფასდაკლებული", value: "DISCOUNT" },
 ];
 
 export const priceIndexes = [
-  { label: "TR1", value: "1" },
-  { label: "TR2", value: "2" },
-  { label: "TR3", value: "3" },
-  { label: "TR4", value: "4" },
-  { label: "TR5", value: "5" },
-  { label: "TRD", value: "6" },
-  { label: "TRC", value: "7" },
+  { label: "TR1", value: "TR1" },
+  { label: "TR2", value: "TR2" },
+  { label: "TR3", value: "TR3" },
+  { label: "TR4", value: "TR4" },
+  { label: "TR5", value: "TR5" },
+  { label: "TRD", value: "TRC" },
+  { label: "TRC", value: "TRD" },
 ];
 
 export const invoiceOptions = [

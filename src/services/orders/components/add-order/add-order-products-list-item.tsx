@@ -1,0 +1,87 @@
+import { Button, InputField } from "@/components/ui";
+import { cn } from "@/lib";
+import { Trash } from "lucide-react";
+import { Control, UseFieldArrayRemove } from "react-hook-form";
+import { NewOrder } from "../../validations";
+
+type AddOrderProductsListItemProps = {
+  removeFn: UseFieldArrayRemove;
+  isDisabled?: boolean;
+  control: Control<NewOrder>;
+  index: number;
+};
+
+export const AddOrderProductsListItem = ({
+  isDisabled,
+  removeFn,
+  control,
+  index,
+}: AddOrderProductsListItemProps) => {
+  const handleDelete = () => {
+    removeFn(index);
+  };
+
+  return (
+    <li
+      className={cn(
+        "flex justify-between gap-4 w-full items-center  bg-background typo-label-md border p-4 rounded-md bg-neutral-50",
+        isDisabled && "opacity-50"
+      )}
+    >
+      <div className="flex gap-4">
+        <InputField
+          name={`products.${index}.productCode`}
+          label="SKU"
+          control={control}
+          className="max-w-16"
+          type="text"
+          disabled
+        />
+        <InputField
+          name={`products.${index}.title`}
+          label="პროდუქტი"
+          control={control}
+          className="min-w-72"
+          type="text"
+          disabled
+        />
+        <InputField
+          name={`products.${index}.price`}
+          label="ფასი"
+          control={control}
+          className="max-w-24"
+          placeholder="0.00"
+          type="number"
+          isCurrency
+        />
+        <InputField
+          name={`products.${index}.quantity`}
+          label="რაოდენობა"
+          control={control}
+          className="max-w-24"
+          placeholder="0"
+          type="number"
+        />
+        <InputField
+          name={`products.${index}.weight`}
+          label="წონა"
+          control={control}
+          className="max-w-24"
+          placeholder="0.00"
+          type="number"
+        />
+      </div>
+      <div>
+        <Button
+          className="size-9 text-danger-500"
+          variant={"danger"}
+          onClick={handleDelete}
+          disabled={isDisabled}
+          type="button"
+        >
+          <Trash className="text-background" />
+        </Button>
+      </div>
+    </li>
+  );
+};

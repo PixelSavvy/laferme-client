@@ -1,62 +1,60 @@
 import { Button, InputField } from "@/components/ui";
 import { Trash } from "lucide-react";
 import { UseFieldArrayRemove, UseFormReturn } from "react-hook-form";
-import { Order } from "../../validations";
+import { UpdateOrder } from "../../validations";
 
 type OrderProductsListItemProps = {
   isDisabled: boolean;
-  form: UseFormReturn<Order>;
+  form: UseFormReturn<UpdateOrder>;
   index: number;
   removeFn: UseFieldArrayRemove;
-  id: number;
 };
 export const OrderProductsListItem = ({
   isDisabled,
   form,
   index,
   removeFn,
-  id,
 }: OrderProductsListItemProps) => {
   const handleDelete = () => {
-    removeFn(id);
+    removeFn(index);
   };
 
   return (
-    <li className="flex justify-between items-center gap-4">
+    <li className="flex justify-between items-center gap-4 w-full">
       <InputField
         name={`products.${index}.productCode`}
         label="SKU"
         control={form.control}
         className="max-w-16"
-        disabled={isDisabled}
+        disabled
       />
       <InputField
         name={`products.${index}.title`}
         label="პროდუქტი"
         control={form.control}
-        className="w-80"
-        disabled={isDisabled}
+        className="min-w-72"
+        disabled
       />
       <InputField
         control={form.control}
-        name={`products.${index}.orderDetails.price`}
+        name={`products.${index}.price`}
         type="number"
         label="ფასი"
-        className="w-24"
+        className="max-w-24"
         isCurrency
         disabled={isDisabled}
       />
       <InputField
         control={form.control}
-        name={`products.${index}.orderDetails.weight`}
+        name={`products.${index}.weight`}
         type="number"
         label="წონა (კგ)"
-        className="w-24"
+        className="max-w-24"
         disabled={isDisabled}
       />
       <InputField
         control={form.control}
-        name={`products.${index}.orderDetails.quantity`}
+        name={`products.${index}.quantity`}
         type="number"
         label="რაოდენობა"
         className="w-24"

@@ -1,104 +1,107 @@
 import { orderStatus } from "@/config";
-import { customerDefaultValues, customerSchema } from "@/services/customers";
+import { customerSchema } from "@/services/customers";
 import { productSchema } from "@/services/products";
 import { z } from "zod";
 
 const REQUIRED_ERROR_MSG = "სავალდებულოა";
-const status = Object.keys(orderStatus) as [string, ...string[]];
 
-const orderProductSchema = productSchema
-  .omit({
-    prices: true,
-  })
-  .extend({
-    orderDetails: z.object({
-      quantity: z.coerce
-        .number({ required_error: REQUIRED_ERROR_MSG })
-        .int()
-        .positive(),
-      weight: z.coerce
-        .number({ required_error: REQUIRED_ERROR_MSG })
-        .positive(),
-      price: z.coerce.number({ required_error: REQUIRED_ERROR_MSG }).positive(),
+// Order Product schemas
+const newOrderProductSchema = z.object({
+  productId: z.number().int().nonnegative(),
+  price: z.coerce
+    .number({
+      required_error: REQUIRED_ERROR_MSG,
+    })
+    .positive({
+      message: "მინ. 1 ₾",
     }),
-  });
+  quantity: z.coerce
+    .number({
+      required_error: REQUIRED_ERROR_MSG,
+    })
+    .int({
+      message: "მთელი",
+    })
+    .positive({
+      message: "მინ. 1 ც",
+    }),
 
-type OrderProduct = z.infer<typeof orderProductSchema>;
-
-const orderProductDefaultValues: OrderProduct = {
-  id: 0,
-  title: "",
-  productCode: "",
-  hasVAT: "",
-  orderDetails: {
-    quantity: 0,
-    weight: 0,
-    price: 0,
-  },
-};
-
-const newOrderSchema = z.object({
-  customerId: z.number().nonnegative(),
-  status: z.enum(status, {
-    required_error: REQUIRED_ERROR_MSG,
-  }),
-  products: z.array(orderProductSchema),
+  weight: z.coerce
+    .number({
+      required_error: REQUIRED_ERROR_MSG,
+    })
+    .positive({
+      message: "მინ. 1 კგ",
+    }),
 });
 
-type NewOrder = z.infer<typeof newOrderSchema>;
-
-const newOrderDefaultValues: NewOrder = {
-  customerId: 0,
-  status: status[0],
-  products: [],
-};
-
-const orderSchema = newOrderSchema
-  .extend({
-    id: z.number().int().nonnegative(),
-    customer: customerSchema,
-    createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date(),
-    deletedAt: z.coerce.date().nullable(),
+const orderProductSchema = productSchema
+  .pick({
+    title: true,
+    id: true,
+    productCode: true,
   })
-  .omit({ customerId: true });
+  .extend({
+    orderDetails: newOrderProductSchema,
+  });
 
-type Order = z.infer<typeof orderSchema>;
+const updateOrderProductSchema = newOrderProductSchema;
 
-const orderDefaultValues: Order = {
-  ...newOrderDefaultValues,
-  id: 0,
-  customer: customerDefaultValues,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  deletedAt: null,
-};
+// Order Product types
+type NewOrderProduct = z.infer<typeof newOrderProductSchema>;
+type OrderProduct = z.infer<typeof orderProductSchema>;
+type UpdateOrderProduct = z.infer<typeof updateOrderProductSchema>;
+
+// Order schemas
+const newOrderSchema = z.object({
+  customerId: z.number().int().nonnegative(),
+  products: z.array(newOrderProductSchema),
+  status: z.enum(orderStatus).default(orderStatus[0]),
+});
 
 const updateOrderSchema = z.object({
   id: z.number().int().nonnegative(),
-  customerId: z.number().int().nonnegative(),
-  status: z.enum(status),
-  products: z.array(
-    z.object({
-      quantity: z.number().int().positive(),
-      weight: z.number().int().positive(),
-      price: z.number().positive(),
-    })
-  ),
+  products: z.array(updateOrderProductSchema),
 });
 
+const orderSchema = z.object({
+  id: z.number().int().nonnegative(),
+  customer: customerSchema,
+  products: z.array(orderProductSchema),
+  status: z.enum(orderStatus),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  deletedAt: z.coerce.date().nullable(),
+});
+
+// Order types
+type NewOrder = z.infer<typeof newOrderSchema>;
 type UpdateOrder = z.infer<typeof updateOrderSchema>;
+type Order = z.infer<typeof orderSchema>;
+
+// New Order  default values
+
+const newOrderDefaultValues: NewOrder = {
+  customerId: 0,
+  products: [],
+  status: orderStatus[0],
+};
+
+export type {
+  NewOrder,
+  NewOrderProduct,
+  Order,
+  OrderProduct,
+  UpdateOrder,
+  UpdateOrderProduct,
+};
 
 export {
   newOrderDefaultValues,
+  newOrderProductSchema,
   newOrderSchema,
-  orderDefaultValues,
-  orderProductDefaultValues,
   orderProductSchema,
   orderSchema,
+  updateOrderProductSchema,
   updateOrderSchema,
-  type NewOrder,
-  type Order,
-  type OrderProduct,
-  type UpdateOrder,
 };

@@ -3,12 +3,12 @@ import {
   UseFieldArrayRemove,
   UseFormReturn,
 } from "react-hook-form";
-import { Order, OrderProduct } from "../../validations";
+import { OrderProduct, UpdateOrder } from "../../validations";
 import { OrderProductsListItem } from "./order-produdcts-list-item";
 
 type OrderProductsListProps = {
   fields: FieldArrayWithId<OrderProduct>[];
-  form: UseFormReturn<Order>;
+  form: UseFormReturn<UpdateOrder>;
   isDisabled: boolean;
   removeFn: UseFieldArrayRemove;
 };
@@ -20,7 +20,7 @@ export const OrderProductsList = ({
   removeFn,
 }: OrderProductsListProps) => {
   return (
-    <ul className="w-full flex flex-col items-start gap-3">
+    <ul className="w-full flex flex-col items-start gap-3 ">
       {fields.length !== 0 ? (
         fields.map((field, index) => (
           <OrderProductsListItem
@@ -29,7 +29,6 @@ export const OrderProductsList = ({
             form={form}
             index={index}
             removeFn={removeFn}
-            id={Number(field.id)}
           />
         ))
       ) : (

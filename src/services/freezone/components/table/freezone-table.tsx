@@ -11,6 +11,8 @@ export const FreezoneTable = () => {
 
   if (!freezoneItem?.data) return null;
 
+  console.log(freezoneItem.data);
+
   return (
     <DataTable
       columns={columns}

@@ -40,7 +40,7 @@ export const OrderProductSelect = ({
 
   return (
     <Select onValueChange={handleSelect}>
-      <SelectTrigger type="button">
+      <SelectTrigger type="button" className="max-w-72">
         <SelectValue placeholder="აირჩიე პროდუქტი" />
       </SelectTrigger>
       <SelectContent>

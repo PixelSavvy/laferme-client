@@ -38,7 +38,7 @@ export const DeleteAlertDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"danger"}>
+        <Button variant={"danger"} type="button">
           <Trash />
         </Button>
       </AlertDialogTrigger>
@@ -52,8 +52,8 @@ export const DeleteAlertDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-6">
           <AlertDialogCancel>გაუქმება</AlertDialogCancel>
-          <AlertDialogAction>
-            <Button variant={"danger"} onClick={deleteFn}>
+          <AlertDialogAction asChild>
+            <Button variant={"danger"} onClick={deleteFn} type="button">
               {alertDialogActionLabel}
             </Button>
           </AlertDialogAction>
