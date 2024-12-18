@@ -51,7 +51,6 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
 
   // Customer update handler
   const handleSubmit: SubmitHandler<Customer> = (payload) => {
-    console.log(payload);
     updateCustomer(
       {
         id: customer.id,

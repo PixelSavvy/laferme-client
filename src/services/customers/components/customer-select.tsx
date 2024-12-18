@@ -53,8 +53,6 @@ export const CustomerSelect = ({
       return;
     }
 
-    console.log(customerId);
-
     if (!customer.products || customer.products.length === 0) {
       appendFn([]);
       console.warn("Customer has no products");
