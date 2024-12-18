@@ -53,6 +53,8 @@ export const CustomerSelect = ({
       return;
     }
 
+    console.log(customerId);
+
     if (!customer.products || customer.products.length === 0) {
       appendFn([]);
       console.warn("Customer has no products");
@@ -67,9 +69,9 @@ export const CustomerSelect = ({
         weight: 0,
       }));
       form.setValue("products", customerProducts);
-      form.setValue("customerId", customerId);
     }
 
+    form.setValue("customerId", customerId);
     customerSetFn(customer as Customer);
     customerSelectFn((prev) => !prev);
   };

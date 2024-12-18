@@ -45,6 +45,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
       orderId: freezoneItem.orderId,
       status: payload.status,
       products: payload.products.map((product) => ({
+        freezoneItemId: freezoneItem.id,
         productId: product.id,
         ...product.freezoneDetails,
       })),

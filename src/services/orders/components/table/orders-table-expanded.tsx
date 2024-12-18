@@ -64,6 +64,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   });
 
   const handleSubmit: SubmitHandler<UpdateOrder> = (payload) => {
+    console.log(payload);
     updateOrder(
       {
         id: payload.id,

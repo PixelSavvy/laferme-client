@@ -6,6 +6,7 @@ import { UpdateOrder } from "../validations";
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
+import { getFreezoneItemQueryOptions } from "@/services/freezone";
 import { UpdateEntity } from "@/shared/types";
 import { getOrderQueryOptions } from "./get-order";
 
@@ -40,6 +41,9 @@ export const useUpdateOrder = ({ mutationConfig }: UseUpdateOrderOptions) => {
     onSuccess: async (data, ...args) => {
       await queryClient.refetchQueries({
         queryKey: getOrderQueryOptions(data.id).queryKey,
+      });
+      await queryClient.refetchQueries({
+        queryKey: getFreezoneItemQueryOptions(data.id).queryKey,
       });
       onSuccess?.(data, ...args);
     },
