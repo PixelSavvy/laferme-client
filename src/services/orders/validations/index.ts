@@ -74,10 +74,16 @@ const orderSchema = z.object({
   deletedAt: z.coerce.date().nullable(),
 });
 
+const updateOrderStatusSchema = z.object({
+  id: z.number().int().nonnegative(),
+  status: z.enum(orderStatus),
+});
+
 // Order types
 type NewOrder = z.infer<typeof newOrderSchema>;
 type UpdateOrder = z.infer<typeof updateOrderSchema>;
 type Order = z.infer<typeof orderSchema>;
+type UpdateOrderStatus = z.infer<typeof updateOrderStatusSchema>;
 
 // New Order  default values
 
@@ -94,6 +100,7 @@ export type {
   OrderProduct,
   UpdateOrder,
   UpdateOrderProduct,
+  UpdateOrderStatus,
 };
 
 export {
@@ -104,4 +111,5 @@ export {
   orderSchema,
   updateOrderProductSchema,
   updateOrderSchema,
+  updateOrderStatusSchema,
 };

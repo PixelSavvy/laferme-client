@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { OrdersTableStatusCell } from "@/services/orders/components/table/orders-table-status-cell";
+import { OrderStatusTrigger } from "@/services/orders/components";
 import { formatDate } from "@/utils/format";
 import { ColumnDef } from "@tanstack/react-table";
 import { FreezoneItem } from "../../validations";
@@ -37,8 +37,11 @@ export const useFreezoneColumns = () => {
       {
         accessorKey: "status",
         header: () => "სტატუსი",
-        cell: (info) => (
-          <OrdersTableStatusCell orderStatus={info.getValue() as string} />
+        cell: ({ row }) => (
+          <OrderStatusTrigger
+            id={row.original.id}
+            status={row.original.status}
+          />
         ),
       },
     ],

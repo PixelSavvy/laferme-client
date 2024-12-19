@@ -3,8 +3,8 @@ import * as React from "react";
 import { formatDate } from "@/utils/format";
 import { ColumnDef } from "@tanstack/react-table";
 import { Order } from "../../validations";
+import { OrderStatusTrigger } from "../status";
 import { OrdersTableCustomerCell } from "./orders-table-customer-cell";
-import { OrdersTableStatusCell } from "./orders-table-status-cell";
 
 export const useOrderColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
@@ -37,8 +37,11 @@ export const useOrderColumns = () => {
       {
         accessorKey: "status",
         header: () => "სტატუსი",
-        cell: (info) => (
-          <OrdersTableStatusCell orderStatus={info.getValue() as string} />
+        cell: ({ row }) => (
+          <OrderStatusTrigger
+            status={row.original.status}
+            id={row.original.id}
+          />
         ),
       },
     ],
