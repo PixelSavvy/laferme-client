@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui";
 import { Order } from "../../validations";
+import { OrderStatusTrigger } from "../status";
 
 type OrdersTableStatusCellProps = {
   orderStatus: Order["status"];
@@ -32,5 +32,6 @@ export const OrdersTableStatusCell = ({
 
   if (!status) return null;
 
-  return <Badge variant={status.variant}>{status.text}</Badge>;
+  // return <Badge variant={status.variant}>{status.text}</Badge>;
+  return <OrderStatusTrigger />;
 };
