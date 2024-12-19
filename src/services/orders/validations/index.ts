@@ -85,7 +85,7 @@ type UpdateOrder = z.infer<typeof updateOrderSchema>;
 type Order = z.infer<typeof orderSchema>;
 type UpdateOrderStatus = z.infer<typeof updateOrderStatusSchema>;
 
-// New Order  default values
+// New Order  default values for form
 
 const newOrderDefaultValues: NewOrder = {
   customerId: 0,
