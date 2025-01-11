@@ -27,7 +27,6 @@ type SelectFieldProps<T extends FieldValues> = {
     label: string;
     value: string;
   }[];
-  disabled?: boolean;
 };
 
 export const SelectField = <T extends FieldValues>({
@@ -37,7 +36,6 @@ export const SelectField = <T extends FieldValues>({
   items,
   className,
   placeholder,
-  disabled,
 }: SelectFieldProps<T>) => {
   return (
     <FormField
@@ -55,7 +53,7 @@ export const SelectField = <T extends FieldValues>({
             value={field.value as string}
           >
             <FormControl>
-              <SelectTrigger disabled={disabled} className="h-10">
+              <SelectTrigger disabled={field.disabled} className="h-10">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>

@@ -24,7 +24,7 @@ type FormCalendarFieldProps<T extends FieldValues> = {
 export const FormCalendarField = <T extends FieldValues>({
   form,
   name,
-  isDisabled,
+
   label,
 }: FormCalendarFieldProps<T>) => {
   return (
@@ -35,7 +35,7 @@ export const FormCalendarField = <T extends FieldValues>({
         <FormItem className="flex flex-col ">
           {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
           <Popover>
-            <PopoverTrigger asChild disabled={isDisabled}>
+            <PopoverTrigger asChild disabled={field.disabled}>
               <FormControl>
                 <Button
                   variant={"outline"}
