@@ -16,7 +16,7 @@ const handleAxiosError = async (error: unknown): Promise<never> => {
 
 const api = axios.create({
   baseURL:
-    import.meta.env.VITE_NODE_ENV === "development"
+    import.meta.env.MODE === "development"
       ? "http://localhost:8080/api"
       : import.meta.env.VITE_API_URL,
 });
