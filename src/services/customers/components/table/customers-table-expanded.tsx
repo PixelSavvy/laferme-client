@@ -65,7 +65,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      }
+      },
     );
   };
 
@@ -76,7 +76,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      }
+      },
     );
   };
 

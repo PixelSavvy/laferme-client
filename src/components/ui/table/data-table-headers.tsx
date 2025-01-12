@@ -26,7 +26,7 @@ export const DataTableHeaders = <Data,>({
                   : index === headerGroup.headers.length - 1
                     ? "rounded-r-md"
                     : undefined,
-                "bg-primary text-background"
+                "bg-primary text-background",
               )}
             >
               {!header.isPlaceholder && (
@@ -53,7 +53,7 @@ export const DataTableHeaders = <Data,>({
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext()
+                    header.getContext(),
                   )}
                   {header.column.getIsSorted() === "asc" && (
                     <ArrowUp className="inline ml-1 size-4" />

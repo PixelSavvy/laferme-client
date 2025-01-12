@@ -73,7 +73,7 @@ const updateDistributionItemSchema = z.object({
       price: z.coerce.number().positive(),
       adjustedWeight: z.coerce.number().int().positive(),
       distributedWeight: z.coerce.number().int().positive(),
-    })
+    }),
   ),
 });
 

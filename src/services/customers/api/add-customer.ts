@@ -13,7 +13,7 @@ const addCustomer = async (data: NewCustomer) => {
   try {
     const response: AxiosResponse<AddEntity> = await api.post(
       apiPaths.app.customer,
-      data
+      data,
     );
 
     return response.data;

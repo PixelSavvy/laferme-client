@@ -26,7 +26,7 @@ export const ProductsDataTableBody = ({
                 key={cell.id}
                 className={cn(
                   "border-b py-2",
-                  row.getIsSelected() && "bg-neutral-100"
+                  row.getIsSelected() && "bg-neutral-100",
                 )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

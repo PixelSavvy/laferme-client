@@ -91,7 +91,7 @@ const updateFreezoneItemSchema = z.object({
       price: z.number().positive(),
       adjustedWeight: z.number().int().positive(),
       adjustedQuantity: z.number().int().positive(),
-    })
+    }),
   ),
   dueDateAt: z.coerce.date().nullable(),
   isUpdated: z.boolean(),

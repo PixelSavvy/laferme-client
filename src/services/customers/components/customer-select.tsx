@@ -45,7 +45,7 @@ export const CustomerSelect = ({
     }
 
     const customer = customers.data.find(
-      (customer) => customer.id === customerId
+      (customer) => customer.id === customerId,
     );
 
     if (!customer) {

@@ -101,7 +101,7 @@ export const CalendarFilter = (props: useCalendarFilterProps) => {
                 variant={"outline"}
                 className={cn(
                   "pl-3 text-left font-normal group typo-label-md",
-                  !date && "text-neutral-800"
+                  !date && "text-neutral-800",
                 )}
               >
                 <CalendarIcon />

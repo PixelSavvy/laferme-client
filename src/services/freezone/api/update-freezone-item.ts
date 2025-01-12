@@ -21,7 +21,7 @@ export const updateFreezoneItem = async ({
 
     const response: AxiosResponse<UpdateEntity<FreezoneItem>> = await api.patch(
       URL,
-      data
+      data,
     );
     return response.data;
   } catch (error) {

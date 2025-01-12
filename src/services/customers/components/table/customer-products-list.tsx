@@ -25,7 +25,7 @@ export const CustomerProductsList = ({
             key={product.id}
             className={cn(
               "flex justify-between w-full items-center  border-input border rounded-md px-4 py-2 bg-background text-sm ",
-              isDisabled && "opacity-50"
+              isDisabled && "opacity-50",
             )}
           >
             <div>

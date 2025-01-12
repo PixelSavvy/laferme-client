@@ -25,12 +25,12 @@ export const CustomerProductsAppendAction = ({
   if (!products) return null;
 
   const filteredProducts = products.data.filter(
-    (product) => !selectedProductCodes.includes(product.productCode)
+    (product) => !selectedProductCodes.includes(product.productCode),
   );
 
   const handleProductSelect = (val: string) => {
     const selectedProduct = products.data.find(
-      (product) => product.id === parseInt(val)
+      (product) => product.id === parseInt(val),
     );
 
     if (!selectedProduct) return console.warn("Product not found");

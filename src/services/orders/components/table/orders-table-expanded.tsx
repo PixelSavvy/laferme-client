@@ -36,11 +36,11 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   });
 
   const { mutate: updateOrder, isPending: isOrderUpdating } = useUpdateOrder(
-    {}
+    {},
   );
 
   const { mutate: deleteOrder, isPending: isOrderDeleting } = useDeleteOrder(
-    {}
+    {},
   );
 
   const transformedProducts: UpdateOrderProduct[] = orderProducts.map(
@@ -51,7 +51,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       price: product.orderDetails.price,
       quantity: product.orderDetails.quantity,
       weight: product.orderDetails.weight,
-    })
+    }),
   );
 
   const form = useForm<UpdateOrder>({
@@ -87,7 +87,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      }
+      },
     );
   };
 
@@ -98,7 +98,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      }
+      },
     );
   };
 

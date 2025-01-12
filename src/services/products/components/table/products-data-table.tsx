@@ -68,7 +68,7 @@ export const ProductsDataTable = ({
     queryClient.setQueryData(productsQuery.queryKey, (oldData) => {
       if (oldData) {
         const updatedProducts = oldData.data.map((product) =>
-          product.id === updatedProduct.id ? updatedProduct : product
+          product.id === updatedProduct.id ? updatedProduct : product,
         );
         return { ...oldData, data: updatedProducts };
       }
@@ -96,7 +96,7 @@ export const ProductsDataTable = ({
           onError: (error) => {
             toast.error(error.message);
           },
-        }
+        },
       );
     }
   };
@@ -117,7 +117,7 @@ export const ProductsDataTable = ({
             setRowSelection({});
             remove(productToRemove.id);
           },
-        }
+        },
       );
     }
   };

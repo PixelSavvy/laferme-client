@@ -28,12 +28,12 @@ export const OrderProductsAppendAction = ({
   if (!products) return null;
 
   const filteredProducts = products.data.filter(
-    (product) => !selectedProductsIds.includes(product.id)
+    (product) => !selectedProductsIds.includes(product.id),
   );
 
   const handleProductSelect = (val: string) => {
     const selectedProduct = products.data.find(
-      (product) => product.id === parseInt(val)
+      (product) => product.id === parseInt(val),
     );
 
     if (!selectedProduct) return console.warn("Product not found");

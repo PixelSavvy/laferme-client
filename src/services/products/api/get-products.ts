@@ -11,7 +11,7 @@ import { GetEntities } from "@/shared/types";
 const getProducts = async () => {
   try {
     const response: AxiosResponse<GetEntities<Product>> = await api.get(
-      apiPaths.app.product
+      apiPaths.app.product,
     );
 
     return response.data;

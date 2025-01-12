@@ -33,7 +33,7 @@ export const useStatus = ({ data, status }: UseStatusProps) => {
 
   // Filter for current status
   const currentStatus = AllStatuses.find(
-    (variant) => variant.value === status
+    (variant) => variant.value === status,
   ) ?? {
     value: status,
     label: convertStatus(status),
@@ -42,7 +42,7 @@ export const useStatus = ({ data, status }: UseStatusProps) => {
 
   // Statuses without current status
   const filteredStatuses = AllStatuses.filter(
-    (variant) => variant.value !== currentStatus?.value
+    (variant) => variant.value !== currentStatus?.value,
   );
 
   return { currentStatus, filteredStatuses, AllStatuses };

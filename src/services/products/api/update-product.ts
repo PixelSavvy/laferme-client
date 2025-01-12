@@ -21,7 +21,7 @@ export const updateProduct = async ({
   try {
     const response: AxiosResponse<UpdateEntity<Product>> = await api.patch(
       URL,
-      data
+      data,
     );
 
     return response.data;

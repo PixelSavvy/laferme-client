@@ -57,7 +57,7 @@ export const useCustomerColumns = () => {
         cell: (info) => <span>{info.getValue() as string}</span>,
       },
     ],
-    []
+    [],
   );
 
   return columns;

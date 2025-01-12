@@ -20,7 +20,7 @@ export const updateCustomer = async ({
     const URL = `${apiPaths.app.customer}/${id}`;
     const response: AxiosResponse<UpdateEntity<Customer>> = await api.patch(
       URL,
-      data
+      data,
     );
     return response.data;
   } catch (error) {

@@ -62,7 +62,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      }
+      },
     );
   };
 
