@@ -55,10 +55,7 @@ export const useDistributionColumns = () => {
         accessorKey: "status",
         header: () => "სტატუსი",
         cell: (info) => (
-          <StatusCell
-            status={info.getValue() as string}
-            data={statuses.distribution}
-          />
+          <StatusCell status={info.getValue() as string} data={statuses.all} />
         ),
       },
     ],

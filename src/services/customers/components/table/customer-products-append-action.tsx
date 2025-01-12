@@ -3,7 +3,7 @@ import { ProductSelect, useProducts } from "@/services/products";
 import { Plus } from "lucide-react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
-import { NewCustomer } from "../../validations";
+import { NewCustomer } from "../../schema";
 
 type CustomerProductsAppendActionProps = {
   isDisabled?: boolean;
@@ -41,27 +41,26 @@ export const CustomerProductsAppendAction = ({
 
   return (
     <Fragment>
-      {isSelectingProduct ? (
-        <div className="flex justify-start items-center gap-2">
+      {isSelectingProduct && !isDisabled ? (
+        <div className="flex flex-col items-start gap-2 w-full">
           <ProductSelect
             productSetFn={handleProductSelect}
             filteredProducts={filteredProducts}
+            isDisabled={isDisabled}
           />
           <Button
             variant={"ghost"}
-            size={"sm"}
             disabled={isDisabled}
             onClick={() => productSelectFn((prev) => !prev)}
             type="button"
-            className="h-9"
+            className="h-10"
           >
             გაუქმება
           </Button>
         </div>
       ) : (
         <Button
-          variant={"ghost"}
-          size={"sm"}
+          variant={"outline"}
           disabled={isDisabled}
           onClick={() => productSelectFn((prev) => !prev)}
           type="button"

@@ -1,7 +1,7 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-import { Customer } from "../validations";
+import { Customer } from "../schema";
 
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-import { Customer } from "../validations";
+import { Customer } from "../schema";
 import { getCustomerQueryOptions } from "./get-customer";
 
 import { apiPaths } from "@/config";

@@ -6,14 +6,13 @@ import { getCookie } from "@/utils";
 import { AppSidebar } from "../ui";
 import { LottieCheckIcon } from "../ui/lottie";
 import {
-  SIDEBAR_COOKIE_NAME,
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "../ui/sidebar/sidebar";
 
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const match = getCookie(SIDEBAR_COOKIE_NAME);
+  const match = getCookie("sidebar:state");
   const defaultOpen = match ? match[2] === "true" : false;
 
   return (

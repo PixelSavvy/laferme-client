@@ -1,4 +1,4 @@
-import { Control, FieldValues } from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 import {
   Select,
@@ -6,20 +6,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../select";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./form";
+} from "../select/select";
+import { FormControl, FormField, FormItem, FormLabel } from "./form";
 
 import { cn } from "@/lib";
 
 type SelectFieldProps<T extends FieldValues> = {
-  control: Control<T>;
-  name: string;
+  form: UseFormReturn<T>;
+  name: Path<T>;
   label: string;
   className?: string;
   placeholder?: string;
@@ -27,35 +21,31 @@ type SelectFieldProps<T extends FieldValues> = {
     label: string;
     value: string;
   }[];
-  disabled?: boolean;
 };
 
 export const SelectField = <T extends FieldValues>({
-  control,
+  form,
   name,
   label,
   items,
   className,
   placeholder,
-  disabled,
 }: SelectFieldProps<T>) => {
   return (
     <FormField
-      control={control as Control<FieldValues>}
+      control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("w-full ", className)}>
-          <FormLabel htmlFor={name} className="text-neutral-700">
-            {label}
-          </FormLabel>
+        <FormItem className={cn("w-auto ", className)}>
+          <FormLabel htmlFor={name}>{label}</FormLabel>
           <Select
             onValueChange={(value) => {
               field.onChange(value);
             }}
-            value={field.value as string}
+            value={field.value}
           >
             <FormControl>
-              <SelectTrigger disabled={disabled} className="h-10">
+              <SelectTrigger disabled={field.disabled}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
@@ -67,7 +57,6 @@ export const SelectField = <T extends FieldValues>({
               ))}
             </SelectContent>
           </Select>
-          <FormMessage />
         </FormItem>
       )}
     />

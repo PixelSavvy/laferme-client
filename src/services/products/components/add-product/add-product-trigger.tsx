@@ -18,7 +18,7 @@ export const AddProductTrigger = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
       <DrawerTrigger asChild>
         <Button>
           <Plus />
@@ -26,18 +26,15 @@ export const AddProductTrigger = () => {
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent>
+      <DrawerContent className="ml-auto h-full w-full max-w-2xl">
         <DrawerHeader>
           <DrawerTitle>ახალი პროდუქტი</DrawerTitle>
-          <DrawerDescription className="opacity-0">
-            Some description goes here.
-          </DrawerDescription>
+          <DrawerDescription>Some description goes here.</DrawerDescription>
         </DrawerHeader>
 
         {/* Add product Form */}
-        <section className="size-full">
-          <AddProductForm setIsOpen={setIsOpen} />
-        </section>
+
+        <AddProductForm setIsOpen={setIsOpen} />
       </DrawerContent>
     </Drawer>
   );

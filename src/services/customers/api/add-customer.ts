@@ -7,7 +7,7 @@ import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
 import { AddEntity } from "@/shared/types";
-import { NewCustomer } from "../validations";
+import { NewCustomer } from "../schema";
 
 const addCustomer = async (data: NewCustomer) => {
   try {

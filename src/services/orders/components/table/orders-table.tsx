@@ -1,5 +1,4 @@
-import { DataTable } from "@/components/ui";
-import { useCalendarFilter } from "@/hooks";
+import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 import { useOrders } from "../../api";
 import { AddOrderTrigger } from "../add-order";
 import { useOrderColumns } from "./orders-table-cols";
@@ -10,13 +9,9 @@ export const OrdersTable = () => {
 
   const ordersQuery = useOrders({});
 
-  const { showAll, filteredData, fallback, CalendarFilter } = useCalendarFilter(
-    {
-      query: ordersQuery.data
-        ? { ...ordersQuery.data, message: ordersQuery.data.message ?? "" }
-        : undefined,
-    },
-  );
+  const { showAll, filteredData, fallback, ...rest } = UseCalendarFilter({
+    response: ordersQuery,
+  });
 
   if (!ordersQuery?.data) return null;
 
@@ -24,7 +19,7 @@ export const OrdersTable = () => {
     <div className="space-y-6 mt-10">
       {/* Actions */}
       <div className="flex gap-4 justify-between">
-        {CalendarFilter}
+        <CalendarFilter {...rest} />
         <AddOrderTrigger />
       </div>
       <DataTable

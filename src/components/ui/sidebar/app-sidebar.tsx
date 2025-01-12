@@ -10,12 +10,12 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { appPaths } from "@/config";
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar/avatar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../collapsible";
+} from "../collapsible/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -95,19 +95,13 @@ const MENU_ITEMS: MenuItem[] = [
 /** Sidebar Header Component */
 const SidebarHeaderComponent: React.FC = () => (
   <SidebarHeader className="flex-row items-center justify-between gap-0 p-0">
-    <Avatar className="size-12 bg-neutral-200 md:size-16">
+    <Avatar className="">
       <AvatarImage />
-      <AvatarFallback className="typo-mobile-h4 md:typo-mobile-h3 lg:typo-desktop-h4">
-        გმ
-      </AvatarFallback>
+      <AvatarFallback>გმ</AvatarFallback>
     </Avatar>
     <div className="flex flex-col items-start justify-center">
-      <h2 className="typo-paragraph-sm md:typo-paragraph-md">
-        გიორგი მენაბდიშვილი
-      </h2>
-      <span className="text-neutral-700 typo-label-xs md:typo-label-sm">
-        გაყიდვების დეპარტამენტი
-      </span>
+      <h2>გიორგი მენაბდიშვილი</h2>
+      <span>გაყიდვების დეპარტამენტი</span>
     </div>
   </SidebarHeader>
 );
@@ -131,7 +125,7 @@ const SidebarMenuItemComponent: React.FC<SidebarMenuItemProps> = ({
       className="group/collapsible"
     >
       <CollapsibleTrigger asChild>
-        <SidebarMenuButton className="h-12 pl-2 typo-label-md md:pl-3 lg:pl-4">
+        <SidebarMenuButton className="h-12 pl-2  md:pl-3 lg:pl-4">
           <item.icon />
           <span>{item.title}</span>
           <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
@@ -142,7 +136,7 @@ const SidebarMenuItemComponent: React.FC<SidebarMenuItemProps> = ({
           <SidebarMenuSub className="mx-6 my-1 gap-0">
             {item.subMenu.map((subItem) => (
               <SidebarMenuSubItem key={subItem.title}>
-                <SidebarMenuSubButton asChild className="h-8 typo-label-sm">
+                <SidebarMenuSubButton asChild className="h-8">
                   <Link to={subItem.url}>{subItem.title}</Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
@@ -177,9 +171,7 @@ export const AppSidebar: React.FC = () => {
 
         {/* Sidebar Main Content */}
         <SidebarGroup className="gap-4 p-0">
-          <SidebarGroupLabel className="text-neutral-700 typo-label-sm">
-            მართვის პანელი
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>მართვის პანელი</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {/* Render Menu Items */}
@@ -195,7 +187,7 @@ export const AppSidebar: React.FC = () => {
               {/* Additional Static Menu Items */}
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="h-12 pl-2 typo-label-md md:pl-3 lg:pl-4"
+                  className="h-12 pl-2  md:pl-3 lg:pl-4"
                   asChild
                 >
                   <Link to={appPaths.app.customers.path}>
@@ -206,7 +198,7 @@ export const AppSidebar: React.FC = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="h-12 pl-2 typo-label-md md:pl-3 lg:pl-4"
+                  className="h-12 pl-2  md:pl-3 lg:pl-4"
                   asChild
                 >
                   <Link to={appPaths.app.products.path}>
@@ -228,7 +220,7 @@ export const AppSidebar: React.FC = () => {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                className="h-12 pl-4 typo-label-md"
+                className="h-12 pl-4 "
               ></SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

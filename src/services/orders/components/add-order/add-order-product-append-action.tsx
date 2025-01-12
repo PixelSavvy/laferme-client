@@ -47,37 +47,35 @@ export const OrderProductsAppendAction = ({
             customer.priceIndex as keyof typeof selectedProduct.prices
           ]
         : 0,
-      quantity: 1,
+      quantity: 0,
       weight: 0,
     };
 
-    appendFn(product!);
+    appendFn(product);
     productSelectFn((prev) => !prev);
   };
 
   return (
     <Fragment>
-      {isSelectingProduct ? (
-        <div className="flex justify-start items-center gap-2">
+      {isSelectingProduct && !isDisabled ? (
+        <div className="flex flex-col justify-center items-start gap-2 w-full">
           <ProductSelect
             filteredProducts={filteredProducts}
             productSetFn={handleProductSelect}
+            isDisabled={isDisabled}
           />
           <Button
             variant={"ghost"}
-            size={"sm"}
             disabled={isDisabled}
             onClick={() => productSelectFn((prev) => !prev)}
             type="button"
-            className="h-9"
           >
             გაუქმება
           </Button>
         </div>
       ) : (
         <Button
-          variant={"ghost"}
-          size={"sm"}
+          variant={"outline"}
           disabled={isDisabled}
           onClick={() => productSelectFn((prev) => !prev)}
           type="button"

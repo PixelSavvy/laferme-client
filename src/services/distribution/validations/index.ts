@@ -54,7 +54,7 @@ type DistributionItem = z.infer<typeof distributionItemSchema>;
 const distributionItemDefaultValues: DistributionItem = {
   id: 0,
   freezoneItemId: 0,
-  status: statuses.distribution.READYTODELIVER,
+  status: statuses.all.READYTODELIVER,
   products: [],
   customer: customerDefaultValues,
   total: 0,

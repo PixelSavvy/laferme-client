@@ -18,12 +18,14 @@ type DeleteAlertDialogProps = {
   deleteFn: () => void;
   isPending: boolean;
   isDisabled?: boolean;
+  className?: string;
 };
 
 export const DeleteAlertDialog = ({
   deleteFn,
   isPending,
   isDisabled,
+  className,
 }: DeleteAlertDialogProps) => {
   const alertDialogActionLabel = isPending ? (
     <ClipLoader
@@ -41,10 +43,10 @@ export const DeleteAlertDialog = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant={"ghost"}
+          variant={"destructive"}
           type="button"
-          className="text-danger-500"
           disabled={isDisabled}
+          className={className}
         >
           <Trash />
         </Button>
@@ -58,12 +60,14 @@ export const DeleteAlertDialog = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-6">
-          <AlertDialogCancel>გაუქმება</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button variant={"danger"} onClick={deleteFn} type="button">
+            <Button onClick={deleteFn} type="button" variant="destructive">
               {alertDialogActionLabel}
             </Button>
           </AlertDialogAction>
+          <AlertDialogCancel asChild>
+            <Button variant={"outline"}>გაუქმება</Button>
+          </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

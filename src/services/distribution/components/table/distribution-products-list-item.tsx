@@ -17,7 +17,8 @@ export const DistributionProductsListItem = ({
       <InputField
         name={`products.${index}.productCode`}
         label="SKU"
-        control={form.control}
+        type="text"
+        form={form}
         className="max-w-16"
         disabled
       />
@@ -25,39 +26,39 @@ export const DistributionProductsListItem = ({
       <InputField
         name={`products.${index}.title`}
         label="პროდუქტი"
-        control={form.control}
+        form={form}
+        type="text"
         className="w-80"
         disabled
       />
       <InputField
-        control={form.control}
+        form={form}
         name={`products.${index}.distributionDetails.price`}
         type="number"
         label="ფასი"
         className="max-w-20"
-        isCurrency
         disabled
       />
 
       <InputField
-        control={form.control}
+        form={form}
         name={`products.${index}.distributionDetails.adjustedWeight`}
         type="number"
         label="წონა"
         className="max-w-20"
         disabled
         showHoverCard
-        hoverCardContent="თავისუფალი ზონის წონა"
+        hoverCard="თავისუფალი ზონის წონა"
       />
       <InputField
-        control={form.control}
+        form={form}
         name={`products.${index}.distributionDetails.distributedWeight`}
         type="number"
         label="წონა *"
         className="max-w-20"
         disabled={isDisabled}
         showHoverCard
-        hoverCardContent="მიტანილი წონა"
+        hoverCard="მიტანილი წონა"
       />
     </li>
   );

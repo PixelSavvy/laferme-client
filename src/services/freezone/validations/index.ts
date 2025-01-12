@@ -70,7 +70,7 @@ const freezoneItemProductsDefaultValues = {
 const freezoneItemDefaultValues: FreezoneItem = {
   orderId: 0,
   products: [],
-  status: statuses.freezone.ACCEPTED,
+  status: statuses.all.ACCEPTED,
   id: 0,
   customer: customerDefaultValues,
   dueDateAt: null,

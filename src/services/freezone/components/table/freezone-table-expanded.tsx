@@ -1,12 +1,9 @@
-import {
-  Form,
-  FormCancelAction,
-  FormEditAction,
-  FormSubmitAction,
-} from "@/components/ui";
+import { Button, Form, FormSection, SelectField } from "@/components/ui";
+import { statuses } from "@/config";
+import { useStatus } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { Save } from "lucide-react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useUpdateFreezoneItem } from "../../api/update-freezone-item";
@@ -19,28 +16,34 @@ import { FreezoneProductsList } from "./freezone-products-list";
 
 export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
   const freezoneItem = row.original;
+  const isOrderUpdated = freezoneItem.isUpdated;
 
-  // Form input diasbled state
-  const [isDisabled, setIsDisabled] = useState(false);
-  const isOrderPrepared = freezoneItem.status === "PREPARED";
+  console.log(isOrderUpdated);
 
-  const isAlreadyUpdated = freezoneItem.isUpdated;
+  const { mutate: updateFreezoneItem, isPending: isFreezoneItemUpdating } =
+    useUpdateFreezoneItem({});
 
-  const {
-    mutate: updateFreezoneItem,
-    isPending: isFreezoneItemUpdating,
-    isSuccess: isFreezoneItemUpdated,
-  } = useUpdateFreezoneItem({});
+  const { currentStatus, filteredStatuses } = useStatus({
+    data: statuses.freezone,
+    status: freezoneItem.status,
+  });
 
   const form = useForm<FreezoneItem>({
     resolver: zodResolver(freezoneItemSchema),
     defaultValues: freezoneItem,
+    disabled: isOrderUpdated,
   });
 
   const { fields } = useFieldArray({
     control: form.control,
     name: "products",
   });
+
+  const onSuccessSubmit = (message: string | undefined) => {
+    form.reset();
+    toast.success(message);
+    row.toggleExpanded();
+  };
 
   const handleSubmit: SubmitHandler<FreezoneItem> = (payload) => {
     const transformedPayload: UpdateFreezoneItem = {
@@ -58,73 +61,46 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
         data: transformedPayload,
       },
       {
-        onSuccess: (data) => {
-          form.reset();
-          toast.success(data.message);
-          row.toggleExpanded();
-        },
+        onSuccess: (data) => onSuccessSubmit(data.message),
       },
     );
   };
 
-  // Handle input field disabled state
-  const handleDisabled = () => {
-    setIsDisabled((prev) => !prev);
-  };
-
-  // Product cancel edit handler
-  const handleCancel = () => {
-    form.reset();
-    handleDisabled();
-  };
-
-  const showSubmitActions =
-    !isDisabled || (isFreezoneItemUpdating && !isFreezoneItemUpdated);
-
-  const showEditActions =
-    isDisabled &&
-    !form.formState.isDirty &&
-    !isFreezoneItemUpdating &&
-    !isFreezoneItemUpdated;
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-        <div className="space-y-4 flex flex-col max-w-max ">
-          <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
-          {/* Products */}
-          <div>
-            <FreezoneProductsList
-              fields={fields}
-              form={form}
-              isDisabled={isDisabled}
-            />
-          </div>
-        </div>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="grid grid-cols-[45%_1fr] gap-x-6"
+      >
+        <FormSection label="შეკვეთის დეტალები" className="items-start">
+          <SelectField
+            form={form}
+            name="status"
+            items={filteredStatuses}
+            placeholder={currentStatus?.label}
+            label="სტატუსი"
+            className="w-64"
+          />
+        </FormSection>
+        <FormSection label="პროდუქცია" className="flex-col items-start gap-0">
+          <FreezoneProductsList
+            fields={fields}
+            form={form}
+            isDisabled={isOrderUpdated}
+          />
+        </FormSection>
         {/* Form Actions */}
-        {!isAlreadyUpdated && !isOrderPrepared && (
-          <div className="flex justify-between items-center gap-2 mt-8 col-span-full justify-self-end">
-            {/* Form edit actions */}
-            {showEditActions && (
-              <FormEditAction
-                disableFn={handleDisabled}
-                show={showEditActions}
-              />
-            )}
-            {/* Form submit actions */}
-            {showSubmitActions && (
-              <Fragment>
-                <FormSubmitAction
-                  isDisabled={isDisabled}
-                  isFormDirty={form.formState.isDirty}
-                  isPending={isFreezoneItemUpdating}
-                  show={showSubmitActions}
-                />
-                <FormCancelAction cancelFn={handleCancel} />
-              </Fragment>
-            )}
+        {!isOrderUpdated ? (
+          <div className="col-span-full justify-self-end mt-10">
+            <Button
+              disabled={isFreezoneItemUpdating || !form.formState.isDirty}
+              type="submit"
+            >
+              <Save />
+              <span>შენახვა</span>
+            </Button>
           </div>
-        )}
+        ) : null}
       </form>
     </Form>
   );

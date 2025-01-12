@@ -1,17 +1,11 @@
-import {
-  Button,
-  DrawerClose,
-  Form,
-  FormCalendarField,
-  FormCancelAction,
-} from "@/components/ui";
+import { Form, FormCalendarField, FormSection } from "@/components/ui";
 import { Customer } from "@/services/customers";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { FormAddActions } from "@/components/ui/form/form-add-actions";
 import { CustomerSelect } from "@/services/customers/components/customer-select";
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
 import { useAddOrder } from "../../api";
 import {
@@ -31,7 +25,7 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);
   const [customer, setCustomer] = useState<Customer>();
 
-  const { mutate: addOrder, isPending } = useAddOrder({});
+  const { mutate: addOrder, isPending: isOrderAdding } = useAddOrder({});
 
   const form = useForm<NewOrder>({
     resolver: zodResolver(newOrderSchema),
@@ -43,29 +37,28 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
     name: "products",
   });
 
-  const handleSubmit: SubmitHandler<NewOrder> = (payload) => {
-    addOrder(payload, {
-      onSuccess: (data) => {
-        toast.success(data.message);
-        setIsOpen((prev) => !prev);
-        form.reset();
-      },
-      onError: (data) => {
-        toast.error(data.message);
-      },
-    });
+  const onSuccessSubmit = (message: string | undefined) => {
+    toast.success(message);
+    setIsOpen((prev) => !prev);
+    form.reset();
   };
 
-  const handleCancel = () => {
-    form.reset();
-    setIsOpen((prev) => !prev);
+  const onErrorSubmit = (message: string | undefined) => {
+    toast.error(message);
+  };
+
+  const handleSubmit: SubmitHandler<NewOrder> = (payload) => {
+    addOrder(payload, {
+      onSuccess: (data) => onSuccessSubmit(data.message),
+      onError: (data) => onErrorSubmit(data.message),
+    });
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={(e) => void form.handleSubmit(handleSubmit)(e)}
-        className="flex flex-col justify-start items-start gap-6 h-full "
+        className="h-full flex flex-col justify-start gap-6"
       >
         {!isCustomerSelected ? (
           <CustomerSelect
@@ -76,32 +69,44 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
           />
         ) : (
           <Fragment>
-            {/* Customer */}
-            <div className="space-y-4 w-full">
-              <div className="flex flex-col items-start gap-2 border p-4 rounded-md typo-label-md bg-neutral-50">
-                <div className="flex justify-start items-center gap-1">
-                  <h3 className="font-medium">სარეალიზაციო პუნქტი:</h3>
-                  <p>{customer?.name}</p>
-                </div>
-                <div className="flex justify-start items-center gap-1">
-                  <h3 className="font-medium">ტელეფონი:</h3>
-                  <p className="underline text-info-500">{customer?.phone}</p>
-                </div>
-                <div className="flex justify-start items-center gap-1">
-                  <h3 className="font-medium">ელ-ფოსტა:</h3>
-                  <p className="underline text-info-500">{customer?.email}</p>
+            <FormSection label="სარეალიზაციო პუნქტი">
+              {/* Customer */}
+              <div className="space-y-4 w-full text-sm">
+                <div className="flex flex-col items-start gap-2 border p-4 rounded-md bg-neutral-50">
+                  <div className="flex justify-start items-center gap-1">
+                    <h3 className="font-semiBold">სარეალიზაციო პუნქტი:</h3>
+                    <p>{customer?.name}</p>
+                  </div>
+                  <div className="flex justify-start items-center gap-1">
+                    <h3 className="font-semiBold">ტელეფონი:</h3>
+                    <p className="underline text-blue-500">{customer?.phone}</p>
+                  </div>
+                  <div className="flex justify-start items-center gap-1">
+                    <h3 className="font-semiBold">ელ-ფოსტა:</h3>
+                    <p className="underline text-blue-500">{customer?.email}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </FormSection>
+
+            <FormSection label="შეკვეთის დეტალები">
+              <FormCalendarField
+                form={form}
+                name="dueDateAt"
+                label="რეალიზაციის თარიღი"
+              />
+            </FormSection>
 
             {/* Products */}
-            <div className="space-y-4 flex flex-col items-start w-full">
-              <h2 className="font-medium">პროდუქტები</h2>
+            <FormSection
+              label="პროდუქცია"
+              className="flex-col items-start gap-0 w-full "
+            >
               <AddOrderProductsList
                 fields={fields}
                 remove={remove}
-                className="flex-nowrap flex-col items-start w-full"
-                control={form.control as never}
+                form={form}
+                className="w-full"
               />
               <OrderProductsAppendAction
                 isSelectingProduct={isSelectingProduct}
@@ -110,31 +115,12 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
                 selectedProductsIds={fields.map((field) => field.productId)}
                 customer={customer ? customer : ({} as Customer)}
               />
-            </div>
-
-            <div className="space-y-4 flex flex-col items-start w-full">
-              <h2 className="font-medium">რეალიზაციის თარიღი</h2>
-              <FormCalendarField form={form} name="dueDateAt" />
-            </div>
+            </FormSection>
           </Fragment>
         )}
-        {/* 
- 
+
         {/* Form actions */}
-        <div className="gap-2 w-full flex justify-end items-center mt-auto">
-          {isCustomerSelected && (
-            <Button type="submit" disabled={isPending}>
-              {isPending ? (
-                <ClipLoader color="white" size={16} className="mr-1" />
-              ) : (
-                "დამატება"
-              )}
-            </Button>
-          )}
-          <DrawerClose asChild>
-            <FormCancelAction cancelFn={handleCancel} />
-          </DrawerClose>
-        </div>
+        <FormAddActions form={form} isProcessing={isOrderAdding} />
       </form>
     </Form>
   );

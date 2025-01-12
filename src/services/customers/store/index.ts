@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { Customer } from "../validations";
+import { Customer } from "../schema";
 
 type CustomerStore = {
   products: Customer[];

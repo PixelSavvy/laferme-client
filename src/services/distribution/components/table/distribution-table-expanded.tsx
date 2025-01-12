@@ -1,12 +1,7 @@
-import {
-  Form,
-  FormCancelAction,
-  FormEditAction,
-  FormSubmitAction,
-} from "@/components/ui";
+import { Form, FormSection, FormUpdateActions } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -26,17 +21,17 @@ export const DistributionTableExpanded = ({
   const distributionItem = row.original;
 
   // Form input diasbled state
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isFormDisabled, setIsFormDisabled] = useState(true);
 
   const {
     mutate: updateDistributionItem,
     isPending: isDistributionItemUpdating,
-    isSuccess: isDistributionItemUpdated,
   } = useUpdateDistributionItem({});
 
   const form = useForm<DistributionItem>({
     resolver: zodResolver(distributionItemSchema),
     defaultValues: distributionItem,
+    disabled: isFormDisabled,
   });
 
   const { fields } = useFieldArray({
@@ -70,59 +65,23 @@ export const DistributionTableExpanded = ({
     );
   };
 
-  // Handle input field disabled state
-  const handleDisabled = () => {
-    setIsDisabled((prev) => !prev);
-  };
-
-  // Product cancel edit handler
-  const handleCancel = () => {
-    form.reset();
-    handleDisabled();
-  };
-
-  const showSubmitActions =
-    !isDisabled || (isDistributionItemUpdating && !isDistributionItemUpdated);
-
-  const showEditActions =
-    isDisabled &&
-    !form.formState.isDirty &&
-    !isDistributionItemUpdating &&
-    !isDistributionItemUpdated;
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-        <div className="space-y-4 flex flex-col max-w-max ">
-          <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
-          {/* Products */}
-          <div>
-            <DistributionProductsList
-              fields={fields}
-              form={form}
-              isDisabled={isDisabled}
-            />
-          </div>
-        </div>
-        {/* Form Actions */}
-        <div className="flex justify-between items-center gap-2 mt-8 col-span-full justify-self-end">
-          {/* Form edit actions */}
-          {showEditActions && (
-            <FormEditAction disableFn={handleDisabled} show={showEditActions} />
-          )}
-          {/* Form submit actions */}
-          {showSubmitActions && (
-            <Fragment>
-              <FormSubmitAction
-                isDisabled={isDisabled}
-                isFormDirty={form.formState.isDirty}
-                isPending={isDistributionItemUpdating}
-                show={showSubmitActions}
-              />
-              <FormCancelAction cancelFn={handleCancel} />
-            </Fragment>
-          )}
-        </div>
+        <FormSection>
+          <DistributionProductsList
+            fields={fields}
+            form={form}
+            isDisabled={isFormDisabled}
+          />
+        </FormSection>
+
+        <FormUpdateActions
+          form={form}
+          isFormDisabled={isFormDisabled}
+          setIsFormDisabled={setIsFormDisabled}
+          isProcessing={isDistributionItemUpdating}
+        />
       </form>
     </Form>
   );

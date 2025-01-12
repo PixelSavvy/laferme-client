@@ -1,6 +1,7 @@
-import { cn } from "@/lib";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
+
 import { CircleHelp } from "lucide-react";
-import { Control, FieldValues } from "react-hook-form";
+
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../hover-card";
 import { Input } from "../input";
 import {
@@ -11,72 +12,55 @@ import {
   FormMessage,
 } from "./form";
 
-type InputFieldProps<T extends FieldValues> = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "name" | "id"
-> & {
-  control: Control<T>;
-  name: string;
-  showLabel?: boolean;
+type InputFieldProps<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  type: string;
+  name: Path<T>;
   label: string;
   className?: string;
-  inputClassName?: string;
-  isCurrency?: boolean;
-  isWeight?: boolean;
   showHoverCard?: boolean;
-  hoverCardContent?: string;
+  hoverCard?: string;
+  disabled?: boolean;
 };
 
 export const InputField = <T extends FieldValues>({
-  control,
+  form,
   name,
-  showLabel = true,
   label,
-  type = "text",
+  type,
   className = "",
-  inputClassName = "",
-  isCurrency = false,
-  isWeight = false,
   showHoverCard = false,
-  hoverCardContent,
-  ...inputProps
+  hoverCard,
+  disabled,
 }: InputFieldProps<T>) => (
   <FormField
-    control={control as Control<FieldValues>}
+    control={form.control}
     name={name}
     render={({ field }) => (
       <FormItem className={`w-full ${className}`}>
-        {showLabel && (
-          <div className="flex justify-start items-center gap-1">
-            <FormLabel htmlFor={name} className="text-neutral-800">
-              {label}
-            </FormLabel>
-            {showHoverCard && (
-              <HoverCard>
-                <HoverCardTrigger className="text-info-700">
-                  <CircleHelp size={16} />
-                </HoverCardTrigger>
-                <HoverCardContent className="typo-label-sm" align="start">
-                  {hoverCardContent}
-                </HoverCardContent>
-              </HoverCard>
-            )}
-          </div>
-        )}
-
+        <div className="flex justify-start items-center gap-1">
+          <FormLabel htmlFor={name} className="">
+            {label}
+          </FormLabel>
+          {showHoverCard && (
+            <HoverCard>
+              <HoverCardTrigger className="">
+                <CircleHelp size={16} />
+              </HoverCardTrigger>
+              <HoverCardContent className="" align="start">
+                {hoverCard}
+              </HoverCardContent>
+            </HoverCard>
+          )}
+        </div>
         <FormControl>
           <Input
             {...field}
-            {...inputProps}
-            showLeftIcon={isCurrency}
-            leftIcon={isCurrency && "₾"}
-            showRightIcon={isWeight}
-            rightIcon={isWeight && "კგ"}
-            type={type}
+            disabled={disabled ? disabled : field.disabled}
             id={name}
             name={name}
-            className={cn("w-full ", inputClassName)}
-            disabled={inputProps.disabled}
+            type={type}
+            className="w-full"
             min={type === "number" ? 0 : undefined}
             step={type === "number" ? 0.01 : undefined}
           />
