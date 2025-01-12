@@ -1,44 +1,48 @@
 import { BadgeVariant } from "@/components/ui";
-import { useCallback } from "react";
 
 type UseStatusProps = {
   data: object;
-  status?: string;
+  status: string;
 };
 
 export const useStatus = ({ data, status }: UseStatusProps) => {
-  const convertStatus = useCallback((val: string) => {
+  const convertStatus = (val: string) => {
     let label: string = "";
 
-    if (val === "ACCEPTED") label = "მიღებული";
-    if (val === "PREPARING") label = "მზადდება";
-    if (val === "PREPARED") label = "დამზადებული";
-    if (val === "READYTODELIVER") label = "მისატანი";
-    if (val === "DELIVERING") label = "გზაშია";
-    if (val === "DELIVERED") label = "მიტანილი";
-    if (val === "CANCELLED") label = "გაუქმებული";
-    if (val === "RETURNED") label = "მობრუნებული";
+    if (val === "1000") label = "მიღებული";
+    if (val === "1001") label = "მზადდება";
+    if (val === "1002") label = "დამზადებული";
+    if (val === "1003") label = "მისატანი";
+    if (val === "1004") label = "გზაშია";
+    if (val === "1005") label = "მიტანილი";
+    if (val === "1006") label = "გაუქმებული";
+    if (val === "1007") label = "მობრუნებული";
 
     return label;
-  }, []);
+  };
 
   // Tranform statuses object to array of objects with value, variant and label
   const AllStatuses = Object.entries(data).map(([key, value]) => {
     const variant = {
       value: value as string,
       variant: key.toLowerCase() as BadgeVariant,
-      label: convertStatus(key),
+      label: convertStatus(value),
     };
-
     return variant;
   });
 
   // Filter for current status
-  const currentStatus = AllStatuses.find((variant) => variant.value === status);
+  const currentStatus = AllStatuses.find(
+    (variant) => variant.value === status
+  ) ?? {
+    value: status,
+    label: convertStatus(status),
+    variant: null,
+  };
 
   // Statuses without current status
   const filteredStatuses = AllStatuses.filter(
-    (variant) => variant.value !== currentStatus?.value,
+    (variant) => variant.value !== currentStatus?.value
   );
 
   return { currentStatus, filteredStatuses, AllStatuses };

@@ -30,18 +30,15 @@ export const AddOrderTrigger = () => {
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent>
+      <DrawerContent className="ml-auto max-w-2xl h-full">
         <DrawerHeader>
           <DrawerTitle>ახალი შეკვეთა</DrawerTitle>
-          <DrawerDescription className="opacity-0">
-            Some description goes here.
-          </DrawerDescription>
+          <DrawerDescription>Some description goes here.</DrawerDescription>
         </DrawerHeader>
 
         {/* Add order Form */}
-        <section className="w-[48rem] h-full">
-          <AddOrderForm setIsOpen={setIsOpen} />
-        </section>
+
+        <AddOrderForm setIsOpen={setIsOpen} />
       </DrawerContent>
     </Drawer>
   );

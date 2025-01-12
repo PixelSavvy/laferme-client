@@ -25,18 +25,15 @@ export const AddCustomerTrigger = () => {
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent>
+      <DrawerContent className="ml-auto h-full w-full max-w-2xl">
         <DrawerHeader>
           <DrawerTitle>ახალი სარეალიზაციო პუნქტი</DrawerTitle>
-          <DrawerDescription className="opacity-0">
-            Some description goes here.
-          </DrawerDescription>
+          <DrawerDescription>Some description goes here.</DrawerDescription>
         </DrawerHeader>
 
         {/* Add product Form */}
-        <section className="size-full">
-          <AddCustomerForm setIsOpen={setIsOpen} />
-        </section>
+
+        <AddCustomerForm setIsOpen={setIsOpen} />
       </DrawerContent>
     </Drawer>
   );

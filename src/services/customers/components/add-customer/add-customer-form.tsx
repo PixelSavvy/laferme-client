@@ -1,23 +1,16 @@
-import {
-  Button,
-  DrawerClose,
-  Form,
-  FormCancelAction,
-  InputField,
-  SelectField,
-} from "@/components/ui";
+import { Form, FormSection, InputField, SelectField } from "@/components/ui";
+import { FormAddActions } from "@/components/ui/form/form-add-actions";
 import { invoiceOptions, paymentOptionValues, priceIndexes } from "@/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
 import { useAddCustomer } from "../../api";
 import {
   NewCustomer,
   newCustomerDefaultValues,
   newCustomerSchema,
-} from "../../validations";
+} from "../../schema";
 import { CustomerProductsList } from "../table";
 import { CustomerProductsAppendAction } from "../table/customer-products-append-action";
 
@@ -26,7 +19,9 @@ type AddCustomerFormProps = {
 };
 
 export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
-  const { mutate: addCustomer, isPending } = useAddCustomer({});
+  const { mutate: addCustomer, isPending: isCustomerAdding } = useAddCustomer(
+    {}
+  );
 
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);
 
@@ -40,112 +35,75 @@ export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
     name: "products",
   });
 
-  const handleSubmit: SubmitHandler<NewCustomer> = (payload) => {
-    addCustomer(payload, {
-      onSuccess: (data) => {
-        toast.success(data.message);
-        setIsOpen((prev) => !prev);
-        form.reset();
-      },
-    });
+  const onSuccessSubmit = (message: string | undefined) => {
+    toast.success(message);
+    setIsOpen((prev) => !prev);
+    form.reset();
   };
 
-  const handleCancel = () => {
-    form.reset();
-    setIsOpen((prev) => !prev);
+  const handleSubmit: SubmitHandler<NewCustomer> = (payload) => {
+    addCustomer(payload, {
+      onSuccess: (data) => onSuccessSubmit(data.message),
+    });
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={(e) => void form.handleSubmit(handleSubmit)(e)}
-        className="flex flex-col justify-start items-start gap-6 h-full"
+        className="h-full flex flex-col gap-6"
       >
         {/* General Details */}
-        <div className="space-y-4 w-full">
-          <h2 className="font-medium">ძირითადი ინფორმაცია</h2>
-          {/* Selectables */}
-          <div className="flex justify-start items-center gap-4  ">
-            <SelectField
-              control={form.control}
-              label="ინდექსი"
-              name="priceIndex"
-              items={priceIndexes}
-              placeholder="ინდექსი"
-              className="min-w-28"
-            />
-            <SelectField
-              control={form.control}
-              label="ზედნადები"
-              name="needInvoice"
-              items={invoiceOptions}
-              className="min-w-28"
-              placeholder="აირჩიე"
-            />
-            <SelectField
-              control={form.control}
-              label="გადახდა"
-              name="paymentOption"
-              items={paymentOptionValues}
-              placeholder="მეთოდი"
-              className="min-w-44"
-            />
-          </div>
-          {/* Name */}
-          <div>
-            <InputField
-              control={form.control}
-              name="name"
-              label="სახელი"
-              type="text"
-            />
-          </div>
+        <FormSection label="ზოგადი ინფორმაცია" className="justify-between">
+          <SelectField
+            form={form}
+            label="ინდექსი"
+            name="priceIndex"
+            items={priceIndexes}
+            placeholder="ინდექსი"
+            className="flex-1"
+          />
+          <SelectField
+            form={form}
+            label="ზედნადები"
+            name="needInvoice"
+            items={invoiceOptions}
+            placeholder="აირჩიე"
+            className="flex-1"
+          />
+          <SelectField
+            form={form}
+            label="გადახდა"
+            name="paymentOption"
+            items={paymentOptionValues}
+            placeholder="მეთოდი"
+            className="flex-1"
+          />
+        </FormSection>
+        {/* Name */}
+        <FormSection>
+          <InputField form={form} name="name" label="სახელი" type="text" />
+        </FormSection>
 
-          {/* Contact details */}
-          <div className="flex justify-start items-center gap-4 w-full">
-            <InputField
-              control={form.control}
-              name="phone"
-              label="ტელეფონი"
-              type="phone"
-            />
-            <InputField
-              control={form.control}
-              name="email"
-              label="ელ.ფოსტა"
-              type="email"
-            />
-          </div>
-        </div>
+        {/* Contact details */}
+        <FormSection>
+          <InputField form={form} name="phone" label="ტელეფონი" type="phone" />
+          <InputField form={form} name="email" label="ელ.ფოსტა" type="email" />
+        </FormSection>
 
         {/* Customer Products */}
-        <div className="space-y-4 flex flex-col items-start w-full">
-          <h2 className="font-medium">პროდუქტები</h2>
-          <CustomerProductsList
-            fields={fields}
-            remove={remove}
-            className="flex-nowrap flex-col items-start w-full"
-          />
+        <FormSection label="პროდუქცია" className="flex flex-col items-start">
+          <CustomerProductsList fields={fields} remove={remove} />
           <CustomerProductsAppendAction
             isSelectingProduct={isSelectingProduct}
             productSelectFn={setIsSelectingProduct}
             selectedProductCodes={fields.map((field) => field.productCode)}
             appendFn={append}
           />
-        </div>
+        </FormSection>
 
         {/* Form actions */}
-        <div className="gap-2 w-full flex justify-end items-center mt-auto">
-          <Button type="submit" disabled={isPending}>
-            {isPending ?? (
-              <ClipLoader color="white" size={16} className="mr-1" />
-            )}
-            დამატება
-          </Button>
-          <DrawerClose asChild>
-            <FormCancelAction cancelFn={handleCancel} />
-          </DrawerClose>
-        </div>
+        <FormAddActions form={form} isProcessing={isCustomerAdding} />
       </form>
     </Form>
   );

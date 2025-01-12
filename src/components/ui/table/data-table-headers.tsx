@@ -13,22 +13,21 @@ export const DataTableHeaders = <Data,>({
   table,
 }: DataTableHeadersProps<Data>) => {
   return (
-    <TableHeader className={cn("bg-primary-500 text-background border-none")}>
+    <TableHeader>
       {table.getHeaderGroups().map((headerGroup) => (
         <TableRow key={headerGroup.id}>
           {headerGroup.headers.map((header, index) => (
             <TableHead
               key={header.id}
               colSpan={header.colSpan}
-              className={
-                (cn(
-                  index === 0 ? "rounded-l-md" : "",
-                  index === headerGroup.headers.length - 1
+              className={cn(
+                index === 0
+                  ? "rounded-l-md"
+                  : index === headerGroup.headers.length - 1
                     ? "rounded-r-md"
-                    : "",
-                ),
-                "max-w-96")
-              }
+                    : undefined,
+                "bg-primary text-background"
+              )}
             >
               {!header.isPlaceholder && (
                 <div
@@ -54,7 +53,7 @@ export const DataTableHeaders = <Data,>({
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext(),
+                    header.getContext()
                   )}
                   {header.column.getIsSorted() === "asc" && (
                     <ArrowUp className="inline ml-1 size-4" />

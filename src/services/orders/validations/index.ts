@@ -38,10 +38,17 @@ const orderProductSchema = productSchema
     productCode: true,
   })
   .extend({
-    orderDetails: newOrderProductSchema,
+    orderDetails: newOrderProductSchema.omit({
+      productId: true,
+    }),
   });
 
-const updateOrderProductSchema = newOrderProductSchema;
+const updateOrderProductSchema = productSchema
+  .pick({
+    title: true,
+    productCode: true,
+  })
+  .extend(newOrderProductSchema.shape);
 
 // Order Product types
 type NewOrderProduct = z.infer<typeof newOrderProductSchema>;
@@ -84,7 +91,7 @@ type Order = z.infer<typeof orderSchema>;
 const newOrderDefaultValues: NewOrder = {
   customerId: 0,
   products: [],
-  status: statuses.order.ACCEPTED,
+  status: statuses.all.ACCEPTED,
   dueDateAt: null,
 };
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { Product } from "../validations";
+import { Product } from "../schemas";
 
 type ProductStore = {
   products: Product[];
@@ -17,5 +17,5 @@ export const useProductStore = create<ProductStore>()(
       }),
     getProduct: (productId) =>
       get().products.find((product) => product.id === productId),
-  })),
+  }))
 );

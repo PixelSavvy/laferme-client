@@ -24,10 +24,10 @@ export const DataTableBody = <Data, Value>({
           <Fragment key={row.id}>
             <TableRow
               onClick={() => row.toggleExpanded()}
-              className="cursor-pointer hover:bg-neutral-100 focus-within:bg-neutral-100 transition-colors"
+              className="cursor-pointer"
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className={cn("border-b h-14")}>
+                <TableCell key={cell.id} className={cn("border-b")}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

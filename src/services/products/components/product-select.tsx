@@ -7,16 +7,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui";
-import { Product } from "../validations";
+import { Product } from "../schemas";
 
 type ProductSelectProps = {
   filteredProducts: Product[];
   productSetFn: (value: string) => void;
+  isDisabled?: boolean;
 };
 
 export const ProductSelect = ({
   filteredProducts,
   productSetFn,
+  isDisabled,
 }: ProductSelectProps) => {
   const handleSelect = (value: string) => {
     productSetFn(value);
@@ -24,19 +26,23 @@ export const ProductSelect = ({
 
   return (
     <Select onValueChange={handleSelect}>
-      <SelectTrigger type="button" className="w-72">
+      <SelectTrigger type="button" className="w-full" disabled={isDisabled}>
         <SelectValue placeholder="აირჩიე პროდუქტი" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           {filteredProducts.length !== 0 ? (
             filteredProducts.map((product) => (
-              <SelectItem key={product.id} value={product.id.toString()}>
+              <SelectItem
+                key={product.id}
+                value={product.id.toString()}
+                className="pl-2"
+              >
                 {product.title}
               </SelectItem>
             ))
           ) : (
-            <SelectLabel>პროდუქტი ვერ მოიძებნა</SelectLabel>
+            <SelectLabel className="pl-2">პროდუქტი ვერ მოიძებნა</SelectLabel>
           )}
         </SelectGroup>
       </SelectContent>

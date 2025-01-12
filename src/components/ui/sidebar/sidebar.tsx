@@ -1,26 +1,29 @@
+"use client";
+
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
+  Button,
+  Input,
+  Separator,
+  Sheet,
+  SheetContent,
+  Skeleton,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useSidebar } from "@/hooks";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib";
+} from "@/components/ui";
 
-export const SIDEBAR_COOKIE_NAME = "sidebar:state";
+import { useIsMobile } from "@/hooks";
+import { cn } from "@/lib/";
+
+const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "20rem";
+const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
@@ -36,6 +39,15 @@ type SidebarContext = {
 };
 
 const SidebarContext = React.createContext<SidebarContext | null>(null);
+
+function useSidebar() {
+  const context = React.useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider.");
+  }
+
+  return context;
+}
 
 const SidebarProvider = React.forwardRef<
   HTMLDivElement,

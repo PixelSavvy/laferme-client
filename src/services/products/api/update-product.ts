@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-import { Product } from "../validations";
+import { Product } from "../schemas";
 
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
@@ -21,7 +21,7 @@ export const updateProduct = async ({
   try {
     const response: AxiosResponse<UpdateEntity<Product>> = await api.patch(
       URL,
-      data,
+      data
     );
 
     return response.data;

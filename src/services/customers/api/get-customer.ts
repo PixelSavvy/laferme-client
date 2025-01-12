@@ -5,7 +5,7 @@ import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { GetEntity } from "@/shared/types";
-import { Customer } from "../validations";
+import { Customer } from "../schema";
 
 export const getCustomer = async ({ id }: { id: number }) => {
   try {

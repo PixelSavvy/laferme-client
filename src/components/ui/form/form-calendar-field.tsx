@@ -4,8 +4,8 @@ import { ka } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { Button } from "../button/button";
-import { Calendar } from "../calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import { Calendar } from "../calendar/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover/popover";
 import {
   FormControl,
   FormField,
@@ -24,7 +24,6 @@ type FormCalendarFieldProps<T extends FieldValues> = {
 export const FormCalendarField = <T extends FieldValues>({
   form,
   name,
-
   label,
 }: FormCalendarFieldProps<T>) => {
   return (
@@ -32,16 +31,20 @@ export const FormCalendarField = <T extends FieldValues>({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col ">
-          {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        <FormItem className="flex flex-col items-start">
+          <FormLabel htmlFor={name}>{label}</FormLabel>
           <Popover>
-            <PopoverTrigger asChild disabled={field.disabled}>
+            <PopoverTrigger
+              asChild
+              disabled={field.disabled}
+              className="w-[278px]"
+            >
               <FormControl>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    " pl-3 text-left font-normal w-[280px] group typo-label-md disabled:opacity-50 disabled:text-foreground disabled:bg-background disabled:border-input disabled:cursor-not-allowed ",
-                    !field.value && "text-neutral-800"
+                    " pl-3 text-left font-normal group  ",
+                    !field.value && "text-neutral-700"
                   )}
                 >
                   {field.value ? (
@@ -49,11 +52,11 @@ export const FormCalendarField = <T extends FieldValues>({
                   ) : (
                     <span>აირჩიე თარიღი</span>
                   )}
-                  <CalendarIcon className="ml-auto h-4 w-4 text-neutral-800 group-hover:text-background transition-colors" />
+                  <CalendarIcon className="ml-auto h-4 w-4 text-neutral-700" />
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className="p-0" align="start">
               <Calendar
                 selected={field.value ? field.value : undefined}
                 onSelect={(date) => {

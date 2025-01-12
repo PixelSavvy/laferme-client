@@ -1,4 +1,4 @@
-import { Form, FormActions } from "@/components/ui";
+import { Form, FormSection, FormUpdateActions } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
 import { useState } from "react";
@@ -68,19 +68,15 @@ export const DistributionTableExpanded = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-        <div className="space-y-4 flex flex-col max-w-max ">
-          <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
-          {/* Products */}
-          <div>
-            <DistributionProductsList
-              fields={fields}
-              form={form}
-              isDisabled={isFormDisabled}
-            />
-          </div>
-        </div>
+        <FormSection>
+          <DistributionProductsList
+            fields={fields}
+            form={form}
+            isDisabled={isFormDisabled}
+          />
+        </FormSection>
 
-        <FormActions
+        <FormUpdateActions
           form={form}
           isFormDisabled={isFormDisabled}
           setIsFormDisabled={setIsFormDisabled}

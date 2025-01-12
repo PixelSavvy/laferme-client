@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Customer } from "../../validations";
+import { Customer } from "../../schema";
 import { CustomersTablePaymentCell } from "./customers-table-payment-cell";
 
 export const useCustomerColumns = () => {
@@ -57,7 +57,7 @@ export const useCustomerColumns = () => {
         cell: (info) => <span>{info.getValue() as string}</span>,
       },
     ],
-    [],
+    []
   );
 
   return columns;

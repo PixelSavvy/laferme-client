@@ -70,7 +70,7 @@ const freezoneItemProductsDefaultValues = {
 const freezoneItemDefaultValues: FreezoneItem = {
   orderId: 0,
   products: [],
-  status: statuses.freezone.ACCEPTED,
+  status: statuses.all.ACCEPTED,
   id: 0,
   customer: customerDefaultValues,
   dueDateAt: null,
@@ -91,7 +91,7 @@ const updateFreezoneItemSchema = z.object({
       price: z.number().positive(),
       adjustedWeight: z.number().int().positive(),
       adjustedQuantity: z.number().int().positive(),
-    }),
+    })
   ),
   dueDateAt: z.coerce.date().nullable(),
   isUpdated: z.boolean(),

@@ -44,14 +44,11 @@ export const useFreezoneColumns = () => {
         accessorKey: "status",
         header: () => "სტატუსი",
         cell: (info) => (
-          <StatusCell
-            status={info.getValue() as string}
-            data={statuses.freezone}
-          />
+          <StatusCell status={info.getValue() as string} data={statuses.all} />
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

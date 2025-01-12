@@ -7,13 +7,13 @@ import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
 import { AddEntity } from "@/shared/types";
-import { NewProduct } from "../validations";
+import { NewProduct } from "../schemas";
 
 const addProduct = async (data: NewProduct) => {
   try {
     const response: AxiosResponse<AddEntity> = await api.post(
       apiPaths.app.product,
-      data,
+      data
     );
 
     return response.data;

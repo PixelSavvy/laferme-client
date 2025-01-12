@@ -2,12 +2,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
-import { Form, FormActions, InputField, SelectField } from "@/components/ui";
+import {
+  Form,
+  FormSection,
+  FormUpdateActions,
+  InputField,
+  SelectField,
+} from "@/components/ui";
 import { invoiceOptions, paymentOptionValues, priceIndexes } from "@/config";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useDeleteCustomer, useUpdateCustomer } from "../../api";
-import { Customer, customerSchema } from "../../validations";
+import { Customer, customerSchema } from "../../schema";
 import { CustomerProductsAppendAction } from "./customer-products-append-action";
 import { CustomerProductsList } from "./customer-products-list";
 
@@ -39,6 +45,17 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
     name: "products",
   });
 
+  const onSuccessSubmit = (message: string | undefined) => {
+    form.reset();
+    toast.success(message);
+    row.toggleExpanded();
+  };
+
+  const onSuccessDelete = (message: string | undefined) => {
+    toast.success(message);
+    row.toggleExpanded();
+  };
+
   // Customer update handler
   const handleSubmit: SubmitHandler<Customer> = (payload) => {
     updateCustomer(
@@ -47,116 +64,109 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
         data: payload,
       },
       {
-        onSuccess: (data) => {
-          form.reset();
-          toast.success(data.message);
-          row.toggleExpanded();
-        },
+        onSuccess: (data) => onSuccessSubmit(data.message),
       }
     );
   };
 
-  const handleDele = () => {
+  const handleDelete = () => {
     deleteCustomer(
       {
         id: customer.id,
       },
       {
-        onSuccess: (data) => {
-          toast.success(data.message);
-          row.toggleExpanded();
-        },
+        onSuccess: (data) => onSuccessDelete(data.message),
       }
     );
-    row.toggleExpanded();
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={(e) => void form.handleSubmit(handleSubmit)(e)}
-        className="grid grid-cols-2 justify-center gap-x-16"
+        className="grid grid-cols-2 gap-x-24"
       >
-        {/* General Details */}
-        <div className="space-y-4 flex flex-col">
-          <h2 className="font-medium">ძირითადი ინფორმაცია</h2>
-          {/* Selectables */}
-          <div className="w-full flex justify-between items-center gap-4">
+        <div className="space-y-4">
+          {/* General Details */}
+          <FormSection
+            label="მომხმარებელი"
+            className="flex justify-between items-center gap-4"
+          >
             <SelectField
-              control={form.control}
+              form={form}
               label="ინდექსი"
               name="priceIndex"
               items={priceIndexes}
               placeholder="ინდექსი"
-              className="min-w-20"
+              className="flex-1"
             />
             <SelectField
-              control={form.control}
+              form={form}
               label="ზედნადები"
               name="needInvoice"
               items={invoiceOptions}
-              className="min-w-20"
+              className="flex-1"
             />
             <SelectField
-              control={form.control}
+              form={form}
               label="გადახდა"
               name="paymentOption"
               items={paymentOptionValues}
               placeholder="მეთოდი"
-              className="min-w-44"
+              className="flex-1"
             />
+          </FormSection>
 
-            <InputField
-              control={form.control}
-              name="name"
-              label="სახელი"
-              type="text"
-            />
-          </div>
+          <FormSection>
+            <InputField form={form} name="name" label="სახელი" type="text" />
+          </FormSection>
 
-          {/* Contact details */}
-          <div className="flex justify-start items-center gap-4 w-full">
+          <FormSection>
             <InputField
-              control={form.control}
+              form={form}
               name="phone"
               label="ტელეფონი"
               type="phone"
             />
             <InputField
-              control={form.control}
+              form={form}
               name="email"
               label="ელ.ფოსტა"
               type="email"
             />
-          </div>
+          </FormSection>
         </div>
 
-        {/* CustomerProducts */}
-        <div className="space-y-4 flex flex-col items-start">
-          <h2 className="font-medium">პროდუქტები</h2>
-          <CustomerProductsList
-            fields={fields}
-            remove={remove}
-            isDisabled={isFormDisabled}
-          />
-          <CustomerProductsAppendAction
-            isDisabled={isFormDisabled}
-            isSelectingProduct={isSelectingProduct}
-            productSelectFn={setIsSelectingProduct}
-            selectedProductCodes={fields.map((field) => field.productCode)}
-            appendFn={append as never}
-          />
+        <div className="">
+          {/* CustomerProducts */}
+          <FormSection className="flex flex-col items-start" label="პროდუქცია">
+            <CustomerProductsList
+              fields={fields}
+              remove={remove}
+              isDisabled={isFormDisabled}
+              className="mt-6"
+            />
+            <CustomerProductsAppendAction
+              isDisabled={isFormDisabled}
+              isSelectingProduct={isSelectingProduct}
+              productSelectFn={setIsSelectingProduct}
+              selectedProductCodes={fields.map((field) => field.productCode)}
+              appendFn={append as never}
+            />
+          </FormSection>
         </div>
 
         {/* Form Actions */}
-        <FormActions
-          form={form}
-          isFormDisabled={isFormDisabled}
-          setIsFormDisabled={setIsFormDisabled}
-          isProcessing={isCustomerUpdating}
-          isDeleting={isCustomerDeleting}
-          onDelete={handleDele}
-        />
+        <div className="col-span-full ">
+          <FormUpdateActions
+            form={form}
+            isFormDisabled={isFormDisabled}
+            setIsFormDisabled={setIsFormDisabled}
+            isProcessing={isCustomerUpdating}
+            isDeleting={isCustomerDeleting}
+            onDelete={handleDelete}
+          />
+        </div>
       </form>
     </Form>
   );

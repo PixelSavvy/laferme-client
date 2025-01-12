@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui";
 import { ColumnDef, SortingFn } from "@tanstack/react-table";
-import { Product } from "../../validations";
+import { Product } from "../../schemas";
 
 export const useProductColumns = () => {
   const sortVATFn: SortingFn<Product> = (rowA, rowB) => {

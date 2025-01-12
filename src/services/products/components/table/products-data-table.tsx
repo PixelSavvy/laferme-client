@@ -21,8 +21,7 @@ import {
   useDeleteProduct,
   useUpdateProduct,
 } from "../../api";
-import { Product } from "../../validations";
-import { AddProductTrigger } from "../add-product";
+import { Product, ProductsTableFormData } from "../../schemas";
 import { ProductsDataTableBody } from "./products-data-table-body";
 import { ProductsTableEditableCell } from "./products-table-editable-cell";
 
@@ -30,10 +29,6 @@ type ProductsDataTableProps = {
   data: Product[];
   columns: ColumnDef<Product>[];
   fallback?: string;
-};
-
-type ProductsTableFormData = {
-  products: Product[];
 };
 
 export const ProductsDataTable = ({
@@ -73,7 +68,7 @@ export const ProductsDataTable = ({
     queryClient.setQueryData(productsQuery.queryKey, (oldData) => {
       if (oldData) {
         const updatedProducts = oldData.data.map((product) =>
-          product.id === updatedProduct.id ? updatedProduct : product,
+          product.id === updatedProduct.id ? updatedProduct : product
         );
         return { ...oldData, data: updatedProducts };
       }
@@ -86,8 +81,6 @@ export const ProductsDataTable = ({
 
   const handleSubmit = (payload: Product) => {
     const updatedData = payload;
-
-    console.log(updatedData);
 
     const originalData = data.find((item) => item.id === payload.id);
     const isDataChanged = !_.isEqual(updatedData, originalData);
@@ -103,7 +96,7 @@ export const ProductsDataTable = ({
           onError: (error) => {
             toast.error(error.message);
           },
-        },
+        }
       );
     }
   };
@@ -124,7 +117,7 @@ export const ProductsDataTable = ({
             setRowSelection({});
             remove(productToRemove.id);
           },
-        },
+        }
       );
     }
   };
@@ -168,10 +161,6 @@ export const ProductsDataTable = ({
 
   return (
     <Fragment>
-      {/* Table actions */}
-      <div className="flex py-4 justify-end">
-        <AddProductTrigger />
-      </div>
       {/* Table component */}
       <div className="rounded-md ">
         <Form {...form}>

@@ -12,5 +12,5 @@ export const StatusCell = ({ status, data }: OrderStatusTriggerProps) => {
     status,
   });
 
-  return <Badge variant={currentStatus?.variant}>{currentStatus?.label}</Badge>;
+  return <Badge status={currentStatus?.variant}>{currentStatus?.label}</Badge>;
 };

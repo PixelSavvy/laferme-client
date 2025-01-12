@@ -13,7 +13,7 @@ import { ColumnDef, Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import { MouseEvent } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Product } from "../../validations";
+import { Product } from "../../schemas";
 
 type ProductsTableFormData = {
   products: Product[];
@@ -63,7 +63,7 @@ export const ProductsTableEditableCell = ({
               {...field}
               disabled={isDisabled}
               type="text"
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-20"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
             />
           )}
           disabled={isDisabled}
@@ -79,7 +79,7 @@ export const ProductsTableEditableCell = ({
             <Input
               {...field}
               type="text"
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground  min-w-80"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-80"
             />
           )}
           disabled={isDisabled}
@@ -94,13 +94,13 @@ export const ProductsTableEditableCell = ({
           render={({ field }) => (
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <SelectTrigger
-                className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground min-w-24"
+                className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground w-24"
                 disabled={field.disabled}
                 {...field}
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="min-w-full">
                 {vatOptions.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
@@ -125,9 +125,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -150,9 +148,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground   max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -175,9 +171,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground  max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -200,9 +194,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -225,9 +217,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -250,9 +240,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -275,9 +263,7 @@ export const ProductsTableEditableCell = ({
               type="number"
               min={0}
               step={0.01}
-              showLeftIcon
-              leftIcon={"₾"}
-              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground"
+              className="disabled:bg-transparent disabled:border-transparent disabled:opacity-100 disabled:text-foreground max-w-16"
               onChange={(e) => {
                 const value = Number(e.target.value);
                 field.onChange(value);
@@ -291,10 +277,10 @@ export const ProductsTableEditableCell = ({
 
     case "actions":
       content = (
-        <div className="flex">
+        <div className="flex items-center gap-2">
           <Button
-            variant={"ghost"}
             disabled={isDisabled}
+            className="size-8"
             onClick={(e) => onSubmit(e)}
             type="submit"
           >
@@ -305,6 +291,7 @@ export const ProductsTableEditableCell = ({
             deleteFn={onDelete}
             isPending={isProductDeleting}
             isDisabled={isDisabled}
+            className="size-8"
           />
         </div>
       );

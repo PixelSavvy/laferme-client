@@ -1,4 +1,5 @@
-import { Customer } from "../../validations";
+import { Badge } from "@/components/ui";
+import { Customer } from "../../schema";
 
 type CustomersTablePaymentCellProps = {
   paymentOption: Customer["paymentOption"];
@@ -9,24 +10,24 @@ export const CustomersTablePaymentCell = ({
 }: CustomersTablePaymentCellProps) => {
   const paymentOptionsStyles = {
     CASH: {
-      variant: "success",
-      text: "ქეში",
+      label: "ქეში",
+      style: "bg-green-500 text-white hover:bg-green-600",
     },
     CONSIGNMENT: {
-      variant: "warning",
-      text: "კონსიგნაცია",
+      label: "კონსიგნაცია",
+      style: "bg-blue-500 text-white hover:bg-blue-600",
     },
-    DEPOSIT: {
-      variant: "primary",
-      text: "გადარიცხვა",
+    TRANSFER: {
+      label: "გადარიცხვა",
+      style: "bg-yellow-500 text-white hover:bg-yellow-600",
     },
     TRIAL: {
-      variant: "info",
-      text: "საცდელი",
+      label: "საცდელი",
+      style: "bg-neutral-500 text-white hover:bg-neutral-600",
     },
     DISCOUNT: {
-      variant: "danger",
-      text: "ფასდაკლება",
+      label: "ფასდაკლება",
+      style: "bg-red-500 text-white  hover:bg-red-600",
     },
   } as const;
 
@@ -37,5 +38,5 @@ export const CustomersTablePaymentCell = ({
 
   if (!payment) return null;
 
-  return <span>{payment.text}</span>;
+  return <Badge className={payment.style}>{payment.label}</Badge>;
 };

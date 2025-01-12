@@ -37,14 +37,11 @@ export const invoiceOptions = [
 export const statuses = {
   order: {
     ACCEPTED: "1000",
-    PREPARING: "1001",
-    PREPARED: "1002",
     READYTODELIVER: "1003",
-    DELIVERING: "1004",
-    DELIVERED: "1005",
     CANCELLED: "1006",
     RETURNED: "1007",
   },
+
   freezone: {
     ACCEPTED: "1000",
     PREPARING: "1001",
@@ -52,11 +49,18 @@ export const statuses = {
   },
 
   distribution: {
-    READYTODELIVER: "1003",
     DELIVERING: "1004",
     DELIVERED: "1005",
+  },
+  all: {
+    ACCEPTED: "1000",
+    READYTODELIVER: "1003",
     CANCELLED: "1006",
     RETURNED: "1007",
+    PREPARING: "1001",
+    PREPARED: "1002",
+    DELIVERING: "1004",
+    DELIVERED: "1005",
   },
 };
 
@@ -73,4 +77,10 @@ export const freezoneStatuses = Object.values(statuses.freezone) as [
 export const distributionStatuses = Object.values(statuses.distribution) as [
   string,
   ...string[],
+];
+
+export const allStatuses = [
+  ...orderStatuses,
+  ...freezoneStatuses,
+  ...distributionStatuses,
 ];

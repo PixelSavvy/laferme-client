@@ -1,7 +1,7 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-import { Product } from "../validations";
+import { Product } from "../schemas";
 
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
@@ -11,7 +11,7 @@ import { GetEntities } from "@/shared/types";
 const getProducts = async () => {
   try {
     const response: AxiosResponse<GetEntities<Product>> = await api.get(
-      apiPaths.app.product,
+      apiPaths.app.product
     );
 
     return response.data;

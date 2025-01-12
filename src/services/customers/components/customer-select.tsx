@@ -17,7 +17,7 @@ import { NewOrder } from "@/services/orders";
 import { Dispatch, SetStateAction } from "react";
 import { UseFieldArrayAppend, UseFormReturn } from "react-hook-form";
 import { useCustomers } from "../api";
-import { Customer } from "../validations";
+import { Customer } from "../schema";
 
 type CustomerSelectProps = {
   appendFn: UseFieldArrayAppend<never>;
@@ -45,7 +45,7 @@ export const CustomerSelect = ({
     }
 
     const customer = customers.data.find(
-      (customer) => customer.id === customerId,
+      (customer) => customer.id === customerId
     );
 
     if (!customer) {

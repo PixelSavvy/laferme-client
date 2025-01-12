@@ -46,14 +46,11 @@ export const useOrderColumns = () => {
         accessorKey: "status",
         header: () => "სტატუსი",
         cell: (info) => (
-          <StatusCell
-            status={info.getValue() as string}
-            data={statuses.order}
-          />
+          <StatusCell status={info.getValue() as string} data={statuses.all} />
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

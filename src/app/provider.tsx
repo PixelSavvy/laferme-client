@@ -12,7 +12,7 @@ type TAppProviderProps = {
 
 export const AppProvider = ({ children }: TAppProviderProps) => {
   const [queryClient] = useState(
-    () => new QueryClient({ defaultOptions: queryConfig }),
+    () => new QueryClient({ defaultOptions: queryConfig })
   );
 
   return (
@@ -22,7 +22,7 @@ export const AppProvider = ({ children }: TAppProviderProps) => {
         <HelmetProvider>
           {/* Query Client Provider */}
           <QueryClientProvider client={queryClient}>
-            {import.meta.env.DEV && <ReactQueryDevtools />}
+            {!import.meta.env.DEV && <ReactQueryDevtools />}
             {children}
           </QueryClientProvider>
         </HelmetProvider>

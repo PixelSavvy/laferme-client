@@ -1,7 +1,8 @@
 import {
   Form,
-  FormActions,
   FormCalendarField,
+  FormSection,
+  FormUpdateActions,
   SelectField,
 } from "@/components/ui";
 import { statuses } from "@/config";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 import { useDeleteOrder, useUpdateOrder } from "../../api";
 import {
   Order,
+  OrderProduct,
   UpdateOrder,
   UpdateOrderProduct,
   updateOrderSchema,
@@ -23,8 +25,9 @@ import { AddOrderProductsList } from "../add-order/add-order-products-list";
 
 export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const order = row.original;
+  const orderProducts: OrderProduct[] = order.products;
 
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isFormDisabled, setIsFormDisabled] = useState(true);
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);
 
   const { currentStatus, filteredStatuses } = useStatus({
@@ -40,7 +43,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     {}
   );
 
-  const transformedProducts: UpdateOrderProduct[] = order.products.map(
+  const transformedProducts: UpdateOrderProduct[] = orderProducts.map(
     (product) => ({
       productId: product.id,
       title: product.title,
@@ -57,13 +60,24 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       ...order,
       products: transformedProducts,
     },
-    disabled: isDisabled,
+    disabled: isFormDisabled,
   });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "products",
   });
+
+  const onSuccessSubmit = (message: string | undefined) => {
+    form.reset();
+    toast.success(message);
+    row.toggleExpanded();
+  };
+
+  const onSuccessDelete = (message: string | undefined) => {
+    toast.success(message);
+    row.toggleExpanded();
+  };
 
   const handleSubmit: SubmitHandler<UpdateOrder> = (payload) => {
     updateOrder(
@@ -72,11 +86,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
         data: payload,
       },
       {
-        onSuccess: (data) => {
-          form.reset();
-          toast.success(data.message);
-          row.toggleExpanded();
-        },
+        onSuccess: (data) => onSuccessSubmit(data.message),
       }
     );
   };
@@ -87,76 +97,61 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
         id: order.id,
       },
       {
-        onSuccess: (data) => {
-          toast.success(data.message);
-          row.toggleExpanded();
-        },
-        onError: (error) => {
-          toast.error(error.message);
-        },
+        onSuccess: (data) => onSuccessDelete(data.message),
       }
     );
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full ">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="grid grid-cols-2 gap-x-2"
+      >
         {/* General details */}
-        <div className="space-y-4 flex flex-col w-full ">
-          <h2 className="font-medium">ზოგადი ინფორმაცია</h2>
-          <div className="flex justify-start items-center gap-4">
-            {/* Order Due Date */}
-            <FormCalendarField
-              form={form}
-              name="dueDateAt"
-              label="რეალიზაციის თარიღი"
-            />
+        <FormSection label="შეკვეთის დეტალები" className="items-start">
+          <FormCalendarField
+            form={form}
+            name="dueDateAt"
+            label="რეალიზაციის თარიღი"
+          />
 
-            {/* Status */}
-            <SelectField
-              control={form.control}
-              name="status"
-              items={filteredStatuses}
-              placeholder={currentStatus?.value}
-              label="სტატუსი"
-              className="max-w-64"
-            />
-          </div>
-        </div>
+          {/* Status */}
+          <SelectField
+            form={form}
+            name="status"
+            items={filteredStatuses}
+            label="სტატუსი"
+            className="w-64 -mt-1.5"
+            placeholder={currentStatus.label}
+          />
+        </FormSection>
 
         {/* Order Products */}
-        <div className="space-y-4 flex flex-col w-full ">
-          <h2 className="font-medium">პროდუქტების ინფორმაცია</h2>
-          {/* Existing Products */}
-          <div>
-            <AddOrderProductsList
-              fields={fields}
-              remove={remove}
-              isDisabled={isDisabled}
-              className="flex-nowrap flex-col items-start w-full"
-              control={form.control as never}
-            />
-          </div>
+        <FormSection label="პროდუქცია" className="flex-col items-start gap-0">
+          <AddOrderProductsList
+            fields={fields}
+            remove={remove}
+            form={form}
+            className="w-full"
+          />
 
           {/* Add order products */}
-          <div>
-            <OrderProductsAppendAction
-              appendFn={append as never}
-              isSelectingProduct={isSelectingProduct}
-              productSelectFn={setIsSelectingProduct}
-              isDisabled={isDisabled}
-              selectedProductsIds={fields.map((field) => field.productId)}
-              customer={order.customer}
-            />
-          </div>
+          <OrderProductsAppendAction
+            appendFn={append as never}
+            isSelectingProduct={isSelectingProduct}
+            productSelectFn={setIsSelectingProduct}
+            isDisabled={isFormDisabled}
+            selectedProductsIds={fields.map((field) => field.productId)}
+            customer={order.customer}
+          />
+        </FormSection>
 
-          {/* Order Products */}
-        </div>
         {/* Form Actions */}
-        <FormActions
+        <FormUpdateActions
           form={form}
-          isFormDisabled={isDisabled}
-          setIsFormDisabled={setIsDisabled}
+          isFormDisabled={isFormDisabled}
+          setIsFormDisabled={setIsFormDisabled}
           isProcessing={isOrderUpdating}
           isDeleting={isOrderDeleting}
           onDelete={handleDelete}

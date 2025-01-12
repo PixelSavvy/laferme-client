@@ -23,6 +23,8 @@ type DataTableProps<Data, Value> = {
   isProductsRoute?: boolean;
   isCustomersRoute?: boolean;
   isOrdersRoute?: boolean;
+  isFreezeRoute?: boolean;
+  isDistributionRoute?: boolean;
 };
 
 export const DataTable = <Data, Value>({
@@ -54,19 +56,17 @@ export const DataTable = <Data, Value>({
   });
 
   return (
-    <div className="rounded-md ">
-      <Table>
-        {/* Render the table headers */}
-        <DataTableHeaders table={table} />
+    <Table>
+      {/* Render the table headers */}
+      <DataTableHeaders table={table} />
 
-        {/* Render the table body */}
-        <DataTableBody
-          columns={columns}
-          table={table}
-          renderSubComponent={renderSubComponent}
-          fallback={fallback}
-        />
-      </Table>
-    </div>
+      {/* Render the table body */}
+      <DataTableBody
+        columns={columns}
+        table={table}
+        renderSubComponent={renderSubComponent}
+        fallback={fallback}
+      />
+    </Table>
   );
 };

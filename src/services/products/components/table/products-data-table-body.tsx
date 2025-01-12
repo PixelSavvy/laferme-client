@@ -3,7 +3,7 @@ import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table/table";
 import { cn } from "@/lib";
 
-import { Product } from "../../validations";
+import { Product } from "../../schemas";
 
 type ProductsDataTableBodyProps = {
   table: Table<Product>;
@@ -20,12 +20,15 @@ export const ProductsDataTableBody = ({
     <TableBody className="w-full">
       {table.getRowModel().rows.length ? (
         table.getRowModel().rows.map((row) => (
-          <TableRow
-            key={row.id}
-            className="cursor-pointer hover:bg-neutral-100 focus-within:bg-neutral-100 transition-colors"
-          >
+          <TableRow key={row.id} className="cursor-pointer">
             {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id} className={cn("border-b h-14")}>
+              <TableCell
+                key={cell.id}
+                className={cn(
+                  "border-b py-2",
+                  row.getIsSelected() && "bg-neutral-100"
+                )}
+              >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
             ))}

@@ -1,6 +1,5 @@
-import { DataTable } from "@/components/ui";
+import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 
-import { useCalendarFilter } from "@/hooks";
 import { useDistributionItems } from "../../api";
 import { useDistributionColumns } from "./distribution-table-cols";
 import { DistributionTableExpanded } from "./distribution-table-expanded";
@@ -10,23 +9,18 @@ export const DistributionTable = () => {
 
   const distributionQuery = useDistributionItems({});
 
-  const { showAll, filteredData, fallback, CalendarFilter } = useCalendarFilter(
-    {
-      query: distributionQuery.data
-        ? {
-            ...distributionQuery.data,
-            message: distributionQuery.data.message ?? "",
-          }
-        : undefined,
-    },
-  );
+  const { showAll, filteredData, fallback, ...rest } = UseCalendarFilter({
+    response: distributionQuery,
+  });
 
   if (!distributionQuery?.data) return null;
 
   return (
     <div className="space-y-6 mt-10">
       {/* Actions */}
-      <div className="flex gap-4 justify-between">{CalendarFilter}</div>
+      <div className="flex gap-4 justify-between">
+        <CalendarFilter {...rest} />
+      </div>
       <DataTable
         columns={columns}
         data={showAll ? distributionQuery.data.data : filteredData}
@@ -35,7 +29,7 @@ export const DistributionTable = () => {
           <DistributionTableExpanded row={row} />
         )}
         fallback={fallback}
-        isOrdersRoute
+        isDistributionRoute
       />
     </div>
   );
