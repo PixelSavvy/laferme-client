@@ -16,9 +16,7 @@ import { FreezoneProductsList } from "./freezone-products-list";
 
 export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
   const freezoneItem = row.original;
-  const isOrderUpdated = freezoneItem.isUpdated;
-
-  console.log(isOrderUpdated);
+  const isOrderUpdated = freezoneItem.isUpdated ?? false;
 
   const { mutate: updateFreezoneItem, isPending: isFreezoneItemUpdating } =
     useUpdateFreezoneItem({});
@@ -31,7 +29,6 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
   const form = useForm<FreezoneItem>({
     resolver: zodResolver(freezoneItemSchema),
     defaultValues: freezoneItem,
-    disabled: isOrderUpdated,
   });
 
   const { fields } = useFieldArray({
@@ -62,7 +59,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
@@ -80,6 +77,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
             placeholder={currentStatus?.label}
             label="სტატუსი"
             className="w-64"
+            isDisabled={isOrderUpdated}
           />
         </FormSection>
         <FormSection label="პროდუქცია" className="flex-col items-start gap-0">

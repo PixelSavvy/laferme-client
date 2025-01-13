@@ -13,14 +13,9 @@ import { Fragment, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { Form } from "@/components/ui";
-import { useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
 import { toast } from "sonner";
-import {
-  getProductsQueryOptions,
-  useDeleteProduct,
-  useUpdateProduct,
-} from "../../api";
+import { useDeleteProduct, useUpdateProduct } from "../../api";
 import { Product, ProductsTableFormData } from "../../schemas";
 import { ProductsDataTableBody } from "./products-data-table-body";
 import { ProductsTableEditableCell } from "./products-table-editable-cell";
@@ -40,87 +35,9 @@ export const ProductsDataTable = ({
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [formData, setFormData] = useState<Product[]>(data);
 
-  const queryClient = useQueryClient();
-
   const { mutate: updateProduct } = useUpdateProduct({});
   const { mutate: deleteProduct, isPending: isProductDeleting } =
     useDeleteProduct({});
-
-  const form = useForm<ProductsTableFormData>({
-    defaultValues: {
-      products: data,
-    },
-  });
-
-  const { remove } = useFieldArray({
-    control: form.control,
-    name: "products",
-  });
-
-  useEffect(() => {
-    form.reset({ products: data });
-    setFormData(data);
-  }, [data]);
-
-  const onUpdateSuccess = async (updatedProduct: Product, message: string) => {
-    const productsQuery = getProductsQueryOptions();
-
-    queryClient.setQueryData(productsQuery.queryKey, (oldData) => {
-      if (oldData) {
-        const updatedProducts = oldData.data.map((product) =>
-          product.id === updatedProduct.id ? updatedProduct : product,
-        );
-        return { ...oldData, data: updatedProducts };
-      }
-
-      return { data: [updatedProduct] };
-    });
-    toast.success(message);
-    setRowSelection({});
-  };
-
-  const handleSubmit = (payload: Product) => {
-    const updatedData = payload;
-
-    const originalData = data.find((item) => item.id === payload.id);
-    const isDataChanged = !_.isEqual(updatedData, originalData);
-
-    if (isDataChanged) {
-      updateProduct(
-        {
-          id: payload.id,
-          data: updatedData,
-        },
-        {
-          onSuccess: (data) => onUpdateSuccess(data.data, data.message!),
-          onError: (error) => {
-            toast.error(error.message);
-          },
-        },
-      );
-    }
-  };
-
-  const handleRemove = (id: number) => {
-    const productToRemove = data.find((item) => item.id === id);
-
-    if (!productToRemove) {
-      toast.error("პროდუქტი ვერ მოიძებნა");
-    } else {
-      deleteProduct(
-        {
-          id: productToRemove.id,
-        },
-        {
-          onSuccess: (data) => {
-            toast.success(data.message);
-            setRowSelection({});
-            remove(productToRemove.id);
-          },
-        },
-      );
-    }
-  };
 
   const defaultColumn: Partial<ColumnDef<Product>> = {
     cell: (info) => (
@@ -133,6 +50,25 @@ export const ProductsDataTable = ({
       />
     ),
   };
+
+  const form = useForm<ProductsTableFormData>({
+    defaultValues: {
+      products: data,
+    },
+  });
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      form.reset({ products: data });
+      setFormData(data);
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [form, data]);
 
   const table = useReactTable({
     data: formData,
@@ -158,6 +94,71 @@ export const ProductsDataTable = ({
       rowSelection,
     },
   });
+
+  const { remove } = useFieldArray({
+    control: form.control,
+    name: "products",
+  });
+
+  const onUpdateSuccess = async (message: string) => {
+    // const productsQuery = getProductsQueryOptions();
+
+    // queryClient.setQueryData(productsQuery.queryKey, (oldData) => {
+    //   if (oldData) {
+    //     const updatedProducts = oldData.data.map((product) =>
+    //       product.id === updatedProduct.id ? updatedProduct : product
+    //     );
+    //     return { ...oldData, data: updatedProducts };
+    //   }
+
+    //   return { data: [updatedProduct] };
+    // });
+    toast.success(message);
+    setRowSelection({});
+  };
+
+  const handleSubmit = (payload: Product) => {
+    const updatedData = payload;
+
+    const originalData = data.find((item) => item.id === payload.id);
+    const isDataChanged = !_.isEqual(updatedData, originalData);
+
+    if (isDataChanged) {
+      updateProduct(
+        {
+          id: payload.id,
+          data: updatedData,
+        },
+        {
+          onSuccess: (data) => onUpdateSuccess(data.message!),
+          onError: (error) => {
+            toast.error(error.message);
+          },
+        }
+      );
+    }
+  };
+
+  const handleRemove = (id: number) => {
+    const productToRemove = data.find((item) => item.id === id);
+
+    if (!productToRemove) {
+      toast.error("პროდუქტი ვერ მოიძებნა");
+    } else {
+      deleteProduct(
+        {
+          id: productToRemove.id,
+        },
+        {
+          onSuccess: (data) => {
+            toast.success(data.message);
+            setRowSelection({});
+            remove(productToRemove.id);
+          },
+        }
+      );
+    }
+  };
 
   return (
     <Fragment>

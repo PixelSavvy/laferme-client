@@ -36,7 +36,6 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
   const form = useForm<Customer>({
     resolver: zodResolver(customerSchema),
     defaultValues: customer,
-    disabled: isFormDisabled,
   });
 
   // React hook field array instance
@@ -65,7 +64,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
@@ -76,7 +75,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      },
+      }
     );
   };
 
@@ -99,6 +98,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
               items={priceIndexes}
               placeholder="ინდექსი"
               className="flex-1"
+              isDisabled={isFormDisabled}
             />
             <SelectField
               form={form}
@@ -106,6 +106,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
               name="needInvoice"
               items={invoiceOptions}
               className="flex-1"
+              isDisabled={isFormDisabled}
             />
             <SelectField
               form={form}
@@ -114,11 +115,18 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
               items={paymentOptionValues}
               placeholder="მეთოდი"
               className="flex-1"
+              isDisabled={isFormDisabled}
             />
           </FormSection>
 
           <FormSection>
-            <InputField form={form} name="name" label="სახელი" type="text" />
+            <InputField
+              form={form}
+              name="name"
+              label="სახელი"
+              type="text"
+              disabled={isFormDisabled}
+            />
           </FormSection>
 
           <FormSection>
@@ -127,12 +135,14 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
               name="phone"
               label="ტელეფონი"
               type="phone"
+              disabled={isFormDisabled}
             />
             <InputField
               form={form}
               name="email"
               label="ელ.ფოსტა"
               type="email"
+              disabled={isFormDisabled}
             />
           </FormSection>
         </div>

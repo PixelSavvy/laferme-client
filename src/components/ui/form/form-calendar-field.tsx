@@ -25,6 +25,7 @@ export const FormCalendarField = <T extends FieldValues>({
   form,
   name,
   label,
+  isDisabled,
 }: FormCalendarFieldProps<T>) => {
   return (
     <FormField
@@ -34,17 +35,13 @@ export const FormCalendarField = <T extends FieldValues>({
         <FormItem className="flex flex-col items-start">
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <Popover>
-            <PopoverTrigger
-              asChild
-              disabled={field.disabled}
-              className="w-[278px]"
-            >
+            <PopoverTrigger asChild className="w-[278px]" disabled={isDisabled}>
               <FormControl>
                 <Button
                   variant={"outline"}
                   className={cn(
                     " pl-3 text-left font-normal group  ",
-                    !field.value && "text-neutral-700",
+                    !field.value && "text-neutral-700"
                   )}
                 >
                   {field.value ? (
@@ -58,15 +55,10 @@ export const FormCalendarField = <T extends FieldValues>({
             </PopoverTrigger>
             <PopoverContent className="p-0" align="start">
               <Calendar
-                selected={field.value ? field.value : undefined}
-                onSelect={(date) => {
-                  if (date) {
-                    field.onChange(date);
-                  }
-                }}
+                selected={field.value ?? undefined}
+                onSelect={field.onChange}
                 mode="single"
                 initialFocus
-                className="pointer-events-auto"
                 locale={ka}
               />
             </PopoverContent>

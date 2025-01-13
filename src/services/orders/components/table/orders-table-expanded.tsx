@@ -9,7 +9,7 @@ import { statuses } from "@/config";
 import { useStatus } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useDeleteOrder, useUpdateOrder } from "../../api";
@@ -30,17 +30,17 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const [isFormDisabled, setIsFormDisabled] = useState(true);
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);
 
-  const { currentStatus, filteredStatuses } = useStatus({
+  const { filteredStatuses } = useStatus({
     data: statuses.order,
     status: order.status,
   });
 
   const { mutate: updateOrder, isPending: isOrderUpdating } = useUpdateOrder(
-    {},
+    {}
   );
 
   const { mutate: deleteOrder, isPending: isOrderDeleting } = useDeleteOrder(
-    {},
+    {}
   );
 
   const transformedProducts: UpdateOrderProduct[] = orderProducts.map(
@@ -51,16 +51,19 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       price: product.orderDetails.price,
       quantity: product.orderDetails.quantity,
       weight: product.orderDetails.weight,
+    })
+  );
+  const defaultValues = useMemo(
+    () => ({
+      ...order,
+      products: transformedProducts,
     }),
+    [order, transformedProducts]
   );
 
   const form = useForm<UpdateOrder>({
     resolver: zodResolver(updateOrderSchema),
-    defaultValues: {
-      ...order,
-      products: transformedProducts,
-    },
-    disabled: isFormDisabled,
+    defaultValues: defaultValues,
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -68,15 +71,13 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     name: "products",
   });
 
-  const onSuccessSubmit = (message: string | undefined) => {
+  const onSuccessSubmit = async (message: string | undefined) => {
     form.reset();
     toast.success(message);
-    row.toggleExpanded();
   };
 
-  const onSuccessDelete = (message: string | undefined) => {
+  const onSuccessDelete = async (message: string | undefined) => {
     toast.success(message);
-    row.toggleExpanded();
   };
 
   const handleSubmit: SubmitHandler<UpdateOrder> = (payload) => {
@@ -87,7 +88,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
@@ -98,7 +99,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      },
+      }
     );
   };
 
@@ -108,35 +109,31 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
         onSubmit={form.handleSubmit(handleSubmit)}
         className="grid grid-cols-2 gap-x-2"
       >
-        {/* General details */}
         <FormSection label="შეკვეთის დეტალები" className="items-start">
           <FormCalendarField
             form={form}
             name="dueDateAt"
+            isDisabled={isFormDisabled}
             label="რეალიზაციის თარიღი"
           />
-
-          {/* Status */}
           <SelectField
             form={form}
             name="status"
             items={filteredStatuses}
             label="სტატუსი"
             className="w-64 -mt-1.5"
-            placeholder={currentStatus.label}
           />
         </FormSection>
 
-        {/* Order Products */}
         <FormSection label="პროდუქცია" className="flex-col items-start gap-0">
           <AddOrderProductsList
             fields={fields}
             remove={remove}
             form={form}
             className="w-full"
+            isDisabled={isFormDisabled}
           />
 
-          {/* Add order products */}
           <OrderProductsAppendAction
             appendFn={append as never}
             isSelectingProduct={isSelectingProduct}

@@ -12,8 +12,6 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
-      },
-      status: {
         accepted: "bg-green-500 text-background",
         preparing: "bg-yellow-500 text-background",
         prepared: "bg-black text-background",
@@ -22,12 +20,15 @@ const badgeVariants = cva(
         delivered: "bg-green-500 text-background",
         cancelled: "bg-red-500 text-background",
         returned: "bg-red-500 text-background",
+
+        status: {},
       },
+      status: {},
     },
     defaultVariants: {
       variant: "default",
     },
-  },
+  }
 );
 
 type BadgeVariant = keyof typeof badgeVariants;

@@ -14,6 +14,7 @@ export const ProductsTable = () => {
       <div className="flex gap-4 justify-end">
         <AddProductTrigger />
       </div>
+
       <ProductsDataTable
         data={products.data}
         fallback={products.message}
