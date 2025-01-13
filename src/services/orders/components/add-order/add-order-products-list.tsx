@@ -15,6 +15,7 @@ type AddOrderProductsListProps<T extends FieldValues> = {
   remove: UseFieldArrayRemove;
   className?: string;
   form: UseFormReturn<T>;
+  isDisabled?: boolean;
 };
 
 export const AddOrderProductsList = <T extends FieldValues>({
@@ -22,6 +23,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
   remove,
   className,
   form,
+  isDisabled,
 }: AddOrderProductsListProps<T>) => {
   return (
     <ul className={cn("", className)}>
@@ -37,6 +39,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
               form={form}
               type="text"
               className="max-w-16"
+              disabled={isDisabled}
             />
             <InputField
               name={`products.${index}.title` as Path<T>}
@@ -44,6 +47,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
               form={form}
               type="text"
               className="min-w-60"
+              disabled={isDisabled}
             />
             <InputField
               name={`products.${index}.price` as Path<T>}
@@ -51,6 +55,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
               form={form}
               type="text"
               className="max-w-16"
+              disabled={isDisabled}
             />
             <InputField
               name={`products.${index}.weight` as Path<T>}
@@ -58,6 +63,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
               form={form}
               type="text"
               className="max-w-16"
+              disabled={isDisabled}
             />
             <InputField
               name={`products.${index}.quantity` as Path<T>}
@@ -65,6 +71,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
               form={form}
               type="text"
               className="max-w-16"
+              disabled={isDisabled}
             />
             <div>
               <Button
@@ -72,7 +79,7 @@ export const AddOrderProductsList = <T extends FieldValues>({
                 size="icon"
                 type="button"
                 onClick={() => remove(index)}
-                disabled={form.formState.disabled}
+                disabled={isDisabled}
               >
                 <Trash className="text-background" />
               </Button>

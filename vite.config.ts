@@ -15,5 +15,13 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_ENV__: JSON.stringify(env),
     },
+
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {},
+        },
+      },
+    },
   };
 });
