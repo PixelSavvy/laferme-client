@@ -19,10 +19,10 @@ const createAppRouter = (queryClient: QueryClient) => {
           {
             path: appPaths.app.products.path,
             lazy: async () => {
-              const { ProductsRoute } = await import("./routes/app/products");
-              const { productsLoader } = await import(
-                "./routes/loaders/products-loader"
+              const { ProductsRoute, productsLoader } = await import(
+                "./routes/app/products"
               );
+
               return {
                 Component: ProductsRoute,
                 loader: () => productsLoader(queryClient),
@@ -34,10 +34,10 @@ const createAppRouter = (queryClient: QueryClient) => {
           {
             path: appPaths.app.customers.path,
             lazy: async () => {
-              const { CustomersRoute } = await import("./routes/app/customers");
-              const { customersLoader } = await import(
-                "./routes/loaders/customers-loader"
+              const { CustomersRoute, customersLoader } = await import(
+                "./routes/app/customers"
               );
+
               return {
                 Component: CustomersRoute,
                 loader: () => customersLoader(queryClient),
@@ -50,10 +50,10 @@ const createAppRouter = (queryClient: QueryClient) => {
           {
             path: appPaths.app.orders.path,
             lazy: async () => {
-              const { OrdersRoute } = await import("./routes/app/orders");
-              const { ordersLoader } = await import(
-                "./routes/loaders/orders-loader"
+              const { OrdersRoute, ordersLoader } = await import(
+                "./routes/app/orders"
               );
+
               return {
                 Component: OrdersRoute,
                 loader: () => ordersLoader(queryClient),
@@ -66,10 +66,10 @@ const createAppRouter = (queryClient: QueryClient) => {
           {
             path: appPaths.app.freezone.path,
             lazy: async () => {
-              const { FreezoneRoute } = await import("./routes/app/freezone");
-              const { freezoneLoader } = await import(
-                "./routes/loaders/freezone-loader"
+              const { FreezoneRoute, freezoneLoader } = await import(
+                "./routes/app/freezone"
               );
+
               return {
                 Component: FreezoneRoute,
                 loader: () => freezoneLoader(queryClient),
@@ -81,12 +81,10 @@ const createAppRouter = (queryClient: QueryClient) => {
           {
             path: appPaths.app.distribution.path,
             lazy: async () => {
-              const { DistributionRoute } = await import(
+              const { DistributionRoute, distributionLoader } = await import(
                 "./routes/app/distribution"
               );
-              const { distributionLoader } = await import(
-                "./routes/loaders/distribution-loader"
-              );
+
               return {
                 Component: DistributionRoute,
                 loader: () => distributionLoader(queryClient),
@@ -112,7 +110,7 @@ const createAppRouter = (queryClient: QueryClient) => {
         v7_relativeSplatPath: true,
         v7_skipActionErrorRevalidation: true,
       },
-    },
+    }
   );
 };
 
@@ -121,7 +119,7 @@ export const AppRouter = () => {
 
   const router = React.useMemo(
     () => createAppRouter(queryClient),
-    [queryClient],
+    [queryClient]
   );
 
   return (

@@ -54,11 +54,11 @@ const MENU_ITEMS: MenuItem[] = [
     subMenu: [
       {
         title: "მიმდინარე",
-        url: appPaths.app.orders.path,
+        url: appPaths.app.orders.getHref(),
       },
       {
         title: "რეპორტები",
-        url: appPaths.app.orders.path,
+        url: appPaths.app.orders.getHref(),
       },
     ],
   },
@@ -68,11 +68,11 @@ const MENU_ITEMS: MenuItem[] = [
     subMenu: [
       {
         title: "მიმდინარე",
-        url: appPaths.app.freezone.path,
+        url: appPaths.app.freezone.getHref(),
       },
       {
         title: "რეპორტები",
-        url: appPaths.app.freezone.path,
+        url: appPaths.app.freezone.getHref(),
       },
     ],
   },
@@ -82,11 +82,11 @@ const MENU_ITEMS: MenuItem[] = [
     subMenu: [
       {
         title: "მიმდინარე",
-        url: appPaths.app.distribution.path,
+        url: appPaths.app.distribution.getHref(),
       },
       {
         title: "რეპორტები",
-        url: appPaths.app.distribution.path,
+        url: appPaths.app.distribution.getHref(),
       },
     ],
   },

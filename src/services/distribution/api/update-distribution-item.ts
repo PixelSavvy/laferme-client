@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import { apiPaths } from "@/config";
 import { api, handleAxiosError } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
+import { getOrderQueryOptions } from "@/services/orders";
 import { UpdateEntity } from "@/shared/types";
 import { DistributionItem, UpdateDistributionItem } from "../validations";
 import { getDistributionItemQueryOptions } from "./get-distribution-item";
@@ -42,6 +43,9 @@ export const useUpdateDistributionItem = ({
     onSuccess: async (data, ...args) => {
       await queryClient.refetchQueries({
         queryKey: getDistributionItemQueryOptions(data.id).queryKey,
+      });
+      await queryClient.refetchQueries({
+        queryKey: getOrderQueryOptions(data.id).queryKey,
       });
       onSuccess?.(data, ...args);
     },

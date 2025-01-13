@@ -3,7 +3,7 @@ import {
   FormCalendarField,
   FormSection,
   FormUpdateActions,
-  SelectField,
+  SelectStatusField,
 } from "@/components/ui";
 import { statuses } from "@/config";
 import { useStatus } from "@/hooks";
@@ -74,10 +74,12 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const onSuccessSubmit = async (message: string | undefined) => {
     form.reset();
     toast.success(message);
+    row.toggleExpanded();
   };
 
   const onSuccessDelete = async (message: string | undefined) => {
     toast.success(message);
+    row.toggleExpanded();
   };
 
   const handleSubmit: SubmitHandler<UpdateOrder> = (payload) => {
@@ -116,12 +118,13 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
             isDisabled={isFormDisabled}
             label="რეალიზაციის თარიღი"
           />
-          <SelectField
+          <SelectStatusField
             form={form}
             name="status"
             items={filteredStatuses}
             label="სტატუსი"
             className="w-64 -mt-1.5"
+            isDisabled={isFormDisabled}
           />
         </FormSection>
 

@@ -1,4 +1,4 @@
-import { Button, Form, FormSection, SelectField } from "@/components/ui";
+import { Button, Form, FormSection, SelectStatusField } from "@/components/ui";
 import { statuses } from "@/config";
 import { useStatus } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,7 +70,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
         className="grid grid-cols-[45%_1fr] gap-x-6"
       >
         <FormSection label="შეკვეთის დეტალები" className="items-start">
-          <SelectField
+          <SelectStatusField
             form={form}
             name="status"
             items={filteredStatuses}

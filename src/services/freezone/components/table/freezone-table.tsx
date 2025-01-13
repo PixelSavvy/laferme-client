@@ -1,7 +1,7 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 
 import { useFreezoneItems } from "../../api/get-freezone-items";
-import { useFreezoneColumns } from "./freezone-table-cols";
+import useFreezoneColumns from "./freezone-table-cols";
 import { FreezoneTableExpanded } from "./freezone-table-expanded";
 
 export const FreezoneTable = () => {
