@@ -22,24 +22,24 @@ export const appPaths = {
       getHref: () => "/",
     },
     orders: {
-      path: "/orders/current",
-      getHref: () => "/orders/current",
+      path: "/app/orders",
+      getHref: () => "/app/orders",
     },
     freezone: {
-      path: "/freezone",
-      getHref: () => "/freezone",
+      path: "/app/freezone",
+      getHref: () => "/app/freezone",
     },
     distribution: {
-      path: "/distribution",
-      getHref: () => "/distribution",
+      path: "/app/distribution",
+      getHref: () => "/app/distribution",
     },
     customers: {
-      path: "/customers",
-      getHref: () => "/customers",
+      path: "/app/customers",
+      getHref: () => "/app/customers",
     },
     products: {
-      path: "/products",
-      getHref: () => "/products",
+      path: "/app/products",
+      getHref: () => "/app/products",
     },
   },
 } as const;

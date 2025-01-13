@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-full  px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
@@ -20,10 +20,7 @@ const badgeVariants = cva(
         delivered: "bg-green-500 text-background",
         cancelled: "bg-red-500 text-background",
         returned: "bg-red-500 text-background",
-
-        status: {},
       },
-      status: {},
     },
     defaultVariants: {
       variant: "default",

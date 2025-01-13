@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { FreezoneItem } from "../../validations";
 import { FreezoneTableCustomerCell } from "./freezone-table-customer-cell";
 
-export const useFreezoneColumns = () => {
+const useFreezoneColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
   //   const vatA = rowA.original.hasVAT;
   //   const vatB = rowB.original.hasVAT;
@@ -25,7 +25,7 @@ export const useFreezoneColumns = () => {
       },
       {
         accessorKey: "createdAt",
-        header: () => "წარმოების თარიღი",
+        header: () => "წარმოების თარიღი1",
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
@@ -48,8 +48,10 @@ export const useFreezoneColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;
 };
+
+export default useFreezoneColumns;
