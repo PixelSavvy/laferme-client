@@ -36,14 +36,12 @@ export const invoiceOptions = [
 
 export const statuses = {
   order: {
-    ACCEPTED: "1000",
     READYTODELIVER: "1003",
     CANCELLED: "1006",
     RETURNED: "1007",
   },
 
   freezone: {
-    ACCEPTED: "1000",
     PREPARING: "1001",
     PREPARED: "1002",
   },
@@ -51,6 +49,8 @@ export const statuses = {
   distribution: {
     DELIVERING: "1004",
     DELIVERED: "1005",
+    CANCELLED: "1006",
+    RETURNED: "1007",
   },
   all: {
     ACCEPTED: "1000",
@@ -79,8 +79,4 @@ export const distributionStatuses = Object.values(statuses.distribution) as [
   ...string[],
 ];
 
-export const allStatuses = [
-  ...orderStatuses,
-  ...freezoneStatuses,
-  ...distributionStatuses,
-];
+export const allStatuses = Object.values(statuses.all) as [string, ...string[]];

@@ -17,7 +17,7 @@ type FormUpdateActionsProps<T extends FieldValues> = {
 };
 
 export const FormUpdateActions = <T extends FieldValues>(
-  props: FormUpdateActionsProps<T>
+  props: FormUpdateActionsProps<T>,
 ) => {
   const {
     form,

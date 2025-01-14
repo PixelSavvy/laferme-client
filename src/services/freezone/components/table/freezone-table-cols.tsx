@@ -48,7 +48,7 @@ const useFreezoneColumns = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return columns;

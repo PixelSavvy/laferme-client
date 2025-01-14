@@ -1,4 +1,5 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
+import { statuses } from "@/config";
 import { useOrders } from "../../api";
 import { AddOrderTrigger } from "../add-order";
 import { useOrderColumns } from "./orders-table-cols";
@@ -15,6 +16,17 @@ export const OrdersTable = () => {
 
   if (!ordersQuery?.data) return null;
 
+  const notDeliveredOrders = ordersQuery.data.data.filter((order) => {
+    return (
+      order.status !== statuses.all.CANCELLED &&
+      order.status !== statuses.all.RETURNED &&
+      order.status !== statuses.all.DELIVERED
+    );
+  });
+
+  const defaultFallback =
+    notDeliveredOrders.length === 0 ? "შეკვეთები ვერ მოიძებნა" : fallback;
+
   return (
     <div className="space-y-6 mt-10">
       {/* Actions */}
@@ -27,7 +39,7 @@ export const OrdersTable = () => {
         data={showAll ? ordersQuery.data.data : filteredData}
         getRowCanExpand={() => true}
         renderSubComponent={({ row }) => <OrdersTableExpanded row={row} />}
-        fallback={fallback}
+        fallback={defaultFallback}
         isOrdersRoute
       />
     </div>
