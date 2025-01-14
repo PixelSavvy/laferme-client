@@ -66,13 +66,16 @@ export const DistributionTableExpanded = ({
         ...product.distributionDetails,
       })),
       dueDateAt: payload.dueDateAt,
-      total: payload.products.reduce((acc, product) => {
-        return (
-          acc +
-          product.distributionDetails.price *
-            product.distributionDetails.distributedWeight
-        );
-      }, 0),
+      total:
+        payload.status === statuses.all.DELIVERING
+          ? payload.total
+          : payload.products.reduce((acc, product) => {
+              return (
+                acc +
+                product.distributionDetails.price *
+                  product.distributionDetails.distributedWeight
+              );
+            }, 0),
     };
 
     updateDistributionItem(
@@ -86,7 +89,7 @@ export const DistributionTableExpanded = ({
           toast.success(data.message);
           row.toggleExpanded();
         },
-      },
+      }
     );
   };
 
