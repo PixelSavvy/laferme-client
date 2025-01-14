@@ -134,7 +134,7 @@ export const ProductsDataTable = ({
           onError: (error) => {
             toast.error(error.message);
           },
-        }
+        },
       );
     }
   };
@@ -155,7 +155,7 @@ export const ProductsDataTable = ({
             setRowSelection({});
             remove(productToRemove.id);
           },
-        }
+        },
       );
     }
   };

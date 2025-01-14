@@ -25,7 +25,7 @@ const badgeVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 type BadgeVariant = keyof typeof badgeVariants;

@@ -77,11 +77,11 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   }, [filteredStatuses, distributionItemQuery.data?.data]);
 
   const { mutate: updateOrder, isPending: isOrderUpdating } = useUpdateOrder(
-    {}
+    {},
   );
 
   const { mutate: deleteOrder, isPending: isOrderDeleting } = useDeleteOrder(
-    {}
+    {},
   );
 
   const transformedProducts: UpdateOrderProduct[] = orderProducts.map(
@@ -92,14 +92,14 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       price: product.orderDetails.price,
       quantity: product.orderDetails.quantity,
       weight: product.orderDetails.weight,
-    })
+    }),
   );
   const defaultValues = useMemo(
     () => ({
       ...order,
       products: transformedProducts,
     }),
-    [order, transformedProducts]
+    [order, transformedProducts],
   );
 
   const form = useForm<UpdateOrder>({
@@ -131,7 +131,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      }
+      },
     );
   };
 
@@ -142,7 +142,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      }
+      },
     );
   };
 

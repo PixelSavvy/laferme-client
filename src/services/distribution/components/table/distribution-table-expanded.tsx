@@ -86,7 +86,7 @@ export const DistributionTableExpanded = ({
           toast.success(data.message);
           row.toggleExpanded();
         },
-      }
+      },
     );
   };
 
