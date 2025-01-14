@@ -1,5 +1,6 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 
+import { statuses } from "@/config";
 import { useDistributionItems } from "../../api";
 import { useDistributionColumns } from "./distribution-table-cols";
 import { DistributionTableExpanded } from "./distribution-table-expanded";
@@ -15,6 +16,21 @@ export const DistributionTable = () => {
 
   if (!distributionQuery?.data) return null;
 
+  const notDeliveredOrders = distributionQuery.data.data.filter(
+    (distributionItem) => {
+      return (
+        distributionItem.status !== statuses.all.CANCELLED &&
+        distributionItem.status !== statuses.all.RETURNED &&
+        distributionItem.status !== statuses.all.DELIVERED
+      );
+    }
+  );
+
+  const defaultFallback =
+    notDeliveredOrders.length === 0 ? "შეკვეთები ვერ მოიძებნა" : fallback;
+
+  console.log("defaultFallback", defaultFallback);
+
   return (
     <div className="space-y-6 mt-10">
       {/* Actions */}
@@ -28,7 +44,7 @@ export const DistributionTable = () => {
         renderSubComponent={({ row }) => (
           <DistributionTableExpanded row={row} />
         )}
-        fallback={fallback}
+        fallback={defaultFallback}
         isDistributionRoute
       />
     </div>

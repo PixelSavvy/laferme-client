@@ -38,7 +38,7 @@ const distributionItemSchema = z.object({
   status: z.enum(distributionStatuses, {
     required_error: REQUIRED_ERROR_MSG,
   }),
-  total: z.number().nonnegative(),
+  total: z.coerce.number().nonnegative(),
   products: z.array(distributionItemProductsSchema),
   customer: customerSchema,
   dueDateAt: z.coerce.date().nullable(),
@@ -75,6 +75,8 @@ const updateDistributionItemSchema = z.object({
       distributedWeight: z.coerce.number().int().positive(),
     }),
   ),
+  dueDateAt: z.date().nullable(),
+  total: z.coerce.number().nonnegative(),
 });
 
 type UpdateDistributionItem = z.infer<typeof updateDistributionItemSchema>;

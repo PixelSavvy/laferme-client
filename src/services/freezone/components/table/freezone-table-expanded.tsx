@@ -16,7 +16,9 @@ import { FreezoneProductsList } from "./freezone-products-list";
 
 export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
   const freezoneItem = row.original;
-  const isOrderUpdated = freezoneItem.isUpdated ?? false;
+  const isFreezoneItemUpdated = freezoneItem.isUpdated;
+  const isOrderCancelled = freezoneItem.status === statuses.all.CANCELLED;
+  const isOrderUpdated = isOrderCancelled || isFreezoneItemUpdated;
 
   const { mutate: updateFreezoneItem, isPending: isFreezoneItemUpdating } =
     useUpdateFreezoneItem({});
@@ -67,7 +69,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-[45%_1fr] gap-x-6"
+        className="grid grid-cols-[30%_1fr] gap-x-6"
       >
         <FormSection label="შეკვეთის დეტალები" className="items-start">
           <SelectStatusField

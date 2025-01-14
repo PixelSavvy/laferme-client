@@ -46,6 +46,7 @@ export const AddOrderForm = ({ setIsOpen }: AddOrderFormProps) => {
   const onErrorSubmit = (message: string | undefined) => {
     toast.error(message);
   };
+  console.log(form.formState.errors);
 
   const handleSubmit: SubmitHandler<NewOrder> = (payload) => {
     addOrder(payload, {

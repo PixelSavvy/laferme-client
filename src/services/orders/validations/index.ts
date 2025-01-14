@@ -1,4 +1,4 @@
-import { orderStatuses, statuses } from "@/config";
+import { allStatuses, statuses } from "@/config";
 import { customerSchema } from "@/services/customers";
 import { productSchema } from "@/services/products";
 import { z } from "zod";
@@ -59,14 +59,14 @@ type UpdateOrderProduct = z.infer<typeof updateOrderProductSchema>;
 const newOrderSchema = z.object({
   customerId: z.number().int().nonnegative(),
   products: z.array(newOrderProductSchema),
-  status: z.enum(orderStatuses),
+  status: z.enum(allStatuses),
   dueDateAt: z.coerce.date().nullable(),
 });
 
 const updateOrderSchema = z.object({
   id: z.number().int().nonnegative(),
   products: z.array(updateOrderProductSchema),
-  status: z.enum(orderStatuses),
+  status: z.enum(allStatuses),
   dueDateAt: z.coerce.date().nullable(),
 });
 
@@ -74,7 +74,7 @@ const orderSchema = z.object({
   id: z.number().int().nonnegative(),
   customer: customerSchema,
   products: z.array(orderProductSchema),
-  status: z.enum(orderStatuses),
+  status: z.enum(allStatuses),
   dueDateAt: z.coerce.date().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),

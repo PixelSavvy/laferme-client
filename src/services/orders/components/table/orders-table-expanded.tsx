@@ -7,6 +7,7 @@ import {
 } from "@/components/ui";
 import { statuses } from "@/config";
 import { useStatus } from "@/hooks";
+import { useDistributionItem } from "@/services/distribution";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
@@ -27,6 +28,17 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
   const order = row.original;
   const orderProducts: OrderProduct[] = order.products;
 
+  const distributionItemQuery = useDistributionItem({
+    id: order.id,
+  });
+
+  const isOrderDelivered = order.status === statuses.all.DELIVERED;
+  const isOrderCancelled =
+    order.status === statuses.all.CANCELLED ||
+    order.status === statuses.all.RETURNED;
+
+  const isOrderFormDisabled = isOrderDelivered || isOrderCancelled;
+
   const [isFormDisabled, setIsFormDisabled] = useState(true);
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);
 
@@ -34,6 +46,35 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     data: statuses.order,
     status: order.status,
   });
+
+  const adjustedStatuses = useMemo(() => {
+    if (!distributionItemQuery.data?.data) {
+      // If the distribution item does not exist, return the filtered statuses as-is
+      return filteredStatuses;
+    }
+
+    const distributionItemStatus = distributionItemQuery.data.data.status;
+
+    const statusesToExcludeREADYTODELIVER = [
+      statuses.all.DELIVERING,
+      statuses.all.DELIVERED,
+      statuses.all.CANCELLED,
+      statuses.all.RETURNED,
+    ];
+
+    return filteredStatuses.filter((orderStatus) => {
+      // Exclude READYTODELIVER if the current status is DELIVERING
+      if (
+        orderStatus.value === statuses.all.READYTODELIVER &&
+        statusesToExcludeREADYTODELIVER.includes(distributionItemStatus)
+      ) {
+        return false;
+      }
+
+      // Keep all other statuses
+      return true;
+    });
+  }, [filteredStatuses, distributionItemQuery.data?.data]);
 
   const { mutate: updateOrder, isPending: isOrderUpdating } = useUpdateOrder(
     {}
@@ -121,7 +162,7 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
           <SelectStatusField
             form={form}
             name="status"
-            items={filteredStatuses}
+            items={adjustedStatuses}
             label="სტატუსი"
             className="w-64 -mt-1.5"
             isDisabled={isFormDisabled}
@@ -148,14 +189,16 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
         </FormSection>
 
         {/* Form Actions */}
-        <FormUpdateActions
-          form={form}
-          isFormDisabled={isFormDisabled}
-          setIsFormDisabled={setIsFormDisabled}
-          isProcessing={isOrderUpdating}
-          isDeleting={isOrderDeleting}
-          onDelete={handleDelete}
-        />
+        {!isOrderFormDisabled && (
+          <FormUpdateActions
+            form={form}
+            isFormDisabled={isFormDisabled}
+            setIsFormDisabled={setIsFormDisabled}
+            isProcessing={isOrderUpdating}
+            isDeleting={isOrderDeleting}
+            onDelete={handleDelete}
+          />
+        )}
       </form>
     </Form>
   );
