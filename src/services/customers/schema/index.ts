@@ -1,4 +1,9 @@
-import { paymentOptions, priceIndex } from "@/config";
+import {
+  customerType,
+  customerTypes,
+  paymentOptions,
+  priceIndex,
+} from "@/config";
 import { productDefaultValues, productSchema } from "@/services/products";
 import { z } from "zod";
 
@@ -8,6 +13,32 @@ const GEORGIAN_REGEX = new RegExp(
 );
 
 const customerProductsSchema = productSchema;
+
+const customerResponsibleSchema = z
+  .object({
+    name: z
+      .string({ required_error: REQUIRED_ERROR_MSG })
+      .min(1, {
+        message: REQUIRED_ERROR_MSG,
+      })
+      .regex(GEORGIAN_REGEX, {
+        message: "მხოლოდ ქართული ასოები",
+      }),
+    phone: z
+      .string({
+        required_error: REQUIRED_ERROR_MSG,
+      })
+      .min(1, {
+        message: REQUIRED_ERROR_MSG,
+      }),
+    email: z
+      .string({ required_error: REQUIRED_ERROR_MSG })
+      .min(1, {
+        message: REQUIRED_ERROR_MSG,
+      })
+      .email({ message: "არასწორი ფორმატი" }),
+  })
+  .nullable();
 
 type CustomerProduct = z.infer<typeof customerProductsSchema>;
 
@@ -46,6 +77,22 @@ const newCustomerSchema = z.object({
     .email({ message: "არასწორი ფორმატი" }),
   needInvoice: z.enum(["0", "1"]),
   products: z.array(customerProductsSchema).optional(),
+  type: z.enum(customerTypes, {
+    required_error: REQUIRED_ERROR_MSG,
+  }),
+
+  responsible: customerResponsibleSchema,
+  paysVAT: z.enum(["0", "1"]),
+
+  identificationNumber: z
+    .string()
+    .min(9, {
+      message: "მინიმუმ 9 სიმბოლო",
+    })
+    .max(11, {
+      message: "მაქსიმუმ 11 სიმბოლო",
+    })
+    .optional(),
 });
 
 type NewCustomer = z.infer<typeof newCustomerSchema>;
@@ -56,8 +103,16 @@ const newCustomerDefaultValues: NewCustomer = {
   paymentOption: "CASH",
   phone: "",
   email: "",
-  needInvoice: "1",
+  needInvoice: "0",
   products: [],
+  type: customerType.INDIVIDUAL,
+  responsible: {
+    name: "",
+    phone: "",
+    email: "",
+  },
+  paysVAT: "0",
+  identificationNumber: "",
 };
 
 const customerSchema = newCustomerSchema.extend({

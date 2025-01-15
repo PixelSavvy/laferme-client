@@ -23,9 +23,10 @@ export const useOrderColumns = () => {
         cell: (info) => info.getValue(),
         sortDescFirst: true,
       },
+
       {
-        accessorKey: "createdAt",
-        header: () => "წარმოების თარიღი",
+        accessorKey: "dueDateAt",
+        header: () => "რეალიზაციის თარიღი",
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
@@ -37,8 +38,8 @@ export const useOrderColumns = () => {
       },
 
       {
-        accessorKey: "dueDateAt",
-        header: () => "რეალიზაციის თარიღი",
+        accessorKey: "createdAt",
+        header: () => "წარმოების თარიღი",
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
@@ -50,7 +51,7 @@ export const useOrderColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

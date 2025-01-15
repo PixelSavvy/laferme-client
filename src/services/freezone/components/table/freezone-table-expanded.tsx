@@ -61,7 +61,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
@@ -69,19 +69,8 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-[30%_1fr] gap-x-6"
+        className="grid grid-cols-[1fr_40%] gap-x-16"
       >
-        <FormSection label="შეკვეთის დეტალები" className="items-start">
-          <SelectStatusField
-            form={form}
-            name="status"
-            items={filteredStatuses}
-            placeholder={currentStatus?.label}
-            label="სტატუსი"
-            className="w-64"
-            isDisabled={isOrderUpdated}
-          />
-        </FormSection>
         <FormSection label="პროდუქცია" className="flex-col items-start gap-0">
           <FreezoneProductsList
             fields={fields}
@@ -89,6 +78,18 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
             isDisabled={isOrderUpdated}
           />
         </FormSection>
+        <FormSection label="შეკვეთის დეტალები" className="items-start">
+          <SelectStatusField
+            form={form}
+            name="status"
+            items={filteredStatuses}
+            placeholder={currentStatus?.label}
+            label="სტატუსი"
+            className="w-64 -mt-1.5"
+            isDisabled={isOrderUpdated}
+          />
+        </FormSection>
+
         {/* Form Actions */}
         {!isOrderUpdated ? (
           <div className="col-span-full justify-self-end mt-10">

@@ -21,8 +21,8 @@ export const FormAddActions = <T extends FieldValues>({
   return (
     <div
       className={cn(
-        "gap-2 w-full flex justify-end items-center mt-auto",
-        className,
+        "gap-2 w-full flex justify-end items-center mt-auto pb-10",
+        className
       )}
     >
       <Button type="submit" disabled={isProcessing}>

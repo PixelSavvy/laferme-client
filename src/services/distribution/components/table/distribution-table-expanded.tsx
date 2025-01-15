@@ -97,8 +97,16 @@ export const DistributionTableExpanded = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-2 gap-x-2"
+        className="grid grid-cols-[1fr_40%] gap-x-16"
       >
+        <FormSection label="პროდუქტები">
+          <DistributionProductsList
+            fields={fields}
+            form={form}
+            isDisabled={isFormDisabled}
+          />
+        </FormSection>
+
         <FormSection label="ძირითადი ინფორმაცია">
           <SelectStatusField
             form={form}
@@ -107,13 +115,6 @@ export const DistributionTableExpanded = ({
             isDisabled={isFormDisabled}
             className="w-64 -mt-1.5"
             items={filteredStatuses}
-          />
-        </FormSection>
-        <FormSection label="პროდუქტები">
-          <DistributionProductsList
-            fields={fields}
-            form={form}
-            isDisabled={isFormDisabled}
           />
         </FormSection>
 

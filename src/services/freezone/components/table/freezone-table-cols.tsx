@@ -23,9 +23,10 @@ const useFreezoneColumns = () => {
         cell: (info) => info.getValue(),
         sortDescFirst: true,
       },
+
       {
-        accessorKey: "createdAt",
-        header: () => "წარმოების თარიღი1",
+        accessorKey: "dueDateAt",
+        header: () => "რეალიზაციის თარიღი",
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
@@ -35,8 +36,8 @@ const useFreezoneColumns = () => {
         cell: ({ row }) => <FreezoneTableCustomerCell row={row} />,
       },
       {
-        accessorKey: "dueDateAt",
-        header: () => "რეალიზაციის თარიღი",
+        accessorKey: "createdAt",
+        header: () => "წარმოების თარიღი",
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
@@ -48,7 +49,7 @@ const useFreezoneColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

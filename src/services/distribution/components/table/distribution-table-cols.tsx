@@ -26,15 +26,20 @@ export const useDistributionColumns = () => {
       },
       {
         accessorKey: "dueDateAt",
-        header: () => <span className="font-sans">დისტრიბუციის თარიღი</span>,
+        header: () => "რეალიზაციის თარიღი",
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
-
       {
         accessorKey: "customerId",
         header: "სარეალიზაციო პუნქტი",
         cell: ({ row }) => <DistributionTableCustomerCell row={row} />,
+      },
+
+      {
+        accessorKey: "createdAt",
+        header: "წარმოების თარიღი",
+        cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
       },
       {
         accessorKey: "total",
@@ -44,7 +49,7 @@ export const useDistributionColumns = () => {
       },
       {
         accessorKey: "paymentMethod",
-        header: () => "გადახდის მეთოდი",
+        header: () => "გადახდა",
         cell: ({ row }) => (
           <CustomersTablePaymentCell
             paymentOption={row.original.customer.paymentOption}
@@ -59,7 +64,7 @@ export const useDistributionColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

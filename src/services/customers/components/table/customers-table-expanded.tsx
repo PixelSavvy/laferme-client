@@ -64,7 +64,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
@@ -75,7 +75,7 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
       },
       {
         onSuccess: (data) => onSuccessDelete(data.message),
-      },
+      }
     );
   };
 
@@ -83,88 +83,127 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
     <Form {...form}>
       <form
         onSubmit={(e) => void form.handleSubmit(handleSubmit)(e)}
-        className="grid grid-cols-2 gap-x-24"
+        className="grid grid-cols-2 items-start gap-x-24"
       >
-        <div className="space-y-4">
+        <div>
           {/* General Details */}
           <FormSection
             label="მომხმარებელი"
-            className="flex justify-between items-center gap-4"
+            className="flex flex-col items-start"
           >
-            <SelectField
-              form={form}
-              label="ინდექსი"
-              name="priceIndex"
-              items={priceIndexes}
-              placeholder="ინდექსი"
-              className="flex-1"
-              isDisabled={isFormDisabled}
-            />
-            <SelectField
-              form={form}
-              label="ზედნადები"
-              name="needInvoice"
-              items={invoiceOptions}
-              className="flex-1"
-              isDisabled={isFormDisabled}
-            />
-            <SelectField
-              form={form}
-              label="გადახდა"
-              name="paymentOption"
-              items={paymentOptionValues}
-              placeholder="მეთოდი"
-              className="flex-1"
-              isDisabled={isFormDisabled}
-            />
+            {/* Selectables */}
+            <div className="flex w-full gap-4">
+              <SelectField
+                form={form}
+                label="ინდექსი"
+                name="priceIndex"
+                items={priceIndexes}
+                placeholder="ინდექსი"
+                className="flex-1"
+                isDisabled={isFormDisabled}
+              />
+              <SelectField
+                form={form}
+                label="ზედნადები"
+                name="needInvoice"
+                items={invoiceOptions}
+                className="flex-1"
+                isDisabled={isFormDisabled}
+              />
+              <SelectField
+                form={form}
+                label="გადახდა"
+                name="paymentOption"
+                items={paymentOptionValues}
+                placeholder="მეთოდი"
+                className="flex-1"
+                isDisabled={isFormDisabled}
+              />
+            </div>
+            {/* General Details */}
+            <div className="w-full">
+              <div className="flex gap-4">
+                <InputField
+                  form={form}
+                  name="name"
+                  label="სახელი"
+                  type="text"
+                  disabled={isFormDisabled}
+                />
+                <InputField
+                  form={form}
+                  name="identificationNumber"
+                  label="პირადი ნომერი / საინდ. კოდი "
+                  type="text"
+                  disabled={isFormDisabled}
+                />
+              </div>
+              <div className="flex gap-4">
+                <InputField
+                  form={form}
+                  name="phone"
+                  label="ტელეფონი"
+                  type="phone"
+                  disabled={isFormDisabled}
+                />
+                <InputField
+                  form={form}
+                  name="email"
+                  label="ელ.ფოსტა"
+                  type="email"
+                  disabled={isFormDisabled}
+                />
+              </div>
+            </div>
           </FormSection>
 
-          <FormSection>
+          {/* Responsible Person */}
+          <FormSection
+            label="პასუხისმგებელი პირი"
+            className="flex flex-col justify-start"
+          >
             <InputField
               form={form}
-              name="name"
-              label="სახელი"
+              name="responsible.name"
+              label="სახელი / გვარი"
               type="text"
               disabled={isFormDisabled}
             />
-          </FormSection>
-
-          <FormSection>
-            <InputField
-              form={form}
-              name="phone"
-              label="ტელეფონი"
-              type="phone"
-              disabled={isFormDisabled}
-            />
-            <InputField
-              form={form}
-              name="email"
-              label="ელ.ფოსტა"
-              type="email"
-              disabled={isFormDisabled}
-            />
-          </FormSection>
-        </div>
-
-        <div className="">
-          {/* CustomerProducts */}
-          <FormSection className="flex flex-col items-start" label="პროდუქცია">
-            <CustomerProductsList
-              fields={fields}
-              remove={remove}
-              isDisabled={isFormDisabled}
-              className="mt-6"
-            />
-            <CustomerProductsAppendAction
-              isDisabled={isFormDisabled}
-              isSelectingProduct={isSelectingProduct}
-              productSelectFn={setIsSelectingProduct}
-              selectedProductCodes={fields.map((field) => field.productCode)}
-              appendFn={append as never}
-            />
+            <div className="flex justify-between items-center gap-4 w-full">
+              <InputField
+                form={form}
+                name="responsible.phone"
+                label="ტელეფონი"
+                type="text"
+                disabled={isFormDisabled}
+              />
+              <InputField
+                form={form}
+                name="responsible.email"
+                label="ელ.ფოსტა"
+                type="text"
+                disabled={isFormDisabled}
+              />
+            </div>
           </FormSection>
         </div>
+
+        {/* CustomerProducts */}
+        <FormSection className="flex flex-col items-start" label="პროდუქცია">
+          <CustomerProductsList
+            fields={fields}
+            remove={remove}
+            isDisabled={isFormDisabled}
+            className="mt-6"
+          />
+          <CustomerProductsAppendAction
+            isDisabled={isFormDisabled}
+            isSelectingProduct={isSelectingProduct}
+            productSelectFn={setIsSelectingProduct}
+            selectedProductCodes={fields.map((field) => field.productCode)}
+            appendFn={append as never}
+          />
+        </FormSection>
 
         {/* Form Actions */}
         <div className="col-span-full ">
