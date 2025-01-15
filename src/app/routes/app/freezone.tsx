@@ -15,7 +15,7 @@ export const freezoneLoader = async (queryClient: QueryClient) => {
 
 export const FreezoneRoute = () => {
   return (
-    <ContentLayout title="თავისუფალი ზონა">
+    <ContentLayout title="სუფთა ზონა">
       <div className="mt-6">
         <FreezoneTable />
       </div>
