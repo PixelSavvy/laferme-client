@@ -133,11 +133,18 @@ export const CustomersTableExpanded = ({ row }: { row: Row<Customer> }) => {
                 <InputField
                   form={form}
                   name="identificationNumber"
-                  label="პირადი ნომერი / საინდ. კოდი "
+                  label="პირადი ნომერი / საინდ. კოდი"
                   type="text"
                   disabled={isFormDisabled}
                 />
               </div>
+              <InputField
+                form={form}
+                name="address"
+                label="მისამართი"
+                type="text"
+                disabled={isFormDisabled}
+              />
               <div className="flex gap-4">
                 <InputField
                   form={form}

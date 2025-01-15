@@ -137,6 +137,12 @@ export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
               type="email"
             />
           </div>
+          <InputField
+            form={form}
+            name="address"
+            label="მისამართი"
+            type="text"
+          />
         </FormSection>
 
         {/* Responsible Details */}

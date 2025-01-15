@@ -1,5 +1,6 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
-import { statuses } from "@/config";
+import { apiPaths, statuses } from "@/config";
+import { DownloadButton } from "@/services/excel";
 import { useOrders } from "../../api";
 import { AddOrderTrigger } from "../add-order";
 import { useOrderColumns } from "./orders-table-cols";
@@ -32,8 +33,13 @@ export const OrdersTable = () => {
       {/* Actions */}
       <div className="flex gap-4 justify-between">
         <CalendarFilter {...rest} />
-        <AddOrderTrigger />
+
+        <div className="flex gap-2">
+          <AddOrderTrigger />
+          <DownloadButton url={apiPaths.excel.getOrders} />
+        </div>
       </div>
+
       <DataTable
         columns={columns}
         data={showAll ? ordersQuery.data.data : filteredData}

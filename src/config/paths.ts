@@ -58,4 +58,11 @@ export const apiPaths = {
     signup: "/auth/signup",
     resetPassword: "/auth/reset-password",
   },
+  excel: {
+    getOrders: "/excel/orders",
+    getFreezoneItems: "/excel/freezone-items",
+    getDistributionItems: "/excel/distribution-items",
+    getProducts: "/excel/products",
+    getCustomers: "/excel/customers",
+  },
 } as const;
