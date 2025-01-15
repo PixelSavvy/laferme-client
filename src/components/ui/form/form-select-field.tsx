@@ -8,7 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../select";
-import { FormControl, FormField, FormItem, FormLabel } from "./form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./form";
 
 type SelectFieldProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -38,7 +44,6 @@ export const SelectField = <T extends FieldValues>({
       control={form.control}
       name={name}
       render={({ field }) => {
-        console.log(field.value);
         return (
           <FormItem className={cn("w-auto ", className)}>
             <FormLabel htmlFor={name}>{label}</FormLabel>
@@ -56,6 +61,7 @@ export const SelectField = <T extends FieldValues>({
                 ))}
               </SelectContent>
             </Select>
+            <FormMessage />
           </FormItem>
         );
       }}

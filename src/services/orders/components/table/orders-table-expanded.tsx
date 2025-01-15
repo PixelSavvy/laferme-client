@@ -150,25 +150,8 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-2 gap-x-2"
+        className="grid grid-cols-[1fr_40%] gap-x-16"
       >
-        <FormSection label="შეკვეთის დეტალები" className="items-start">
-          <FormCalendarField
-            form={form}
-            name="dueDateAt"
-            isDisabled={isFormDisabled}
-            label="რეალიზაციის თარიღი"
-          />
-          <SelectStatusField
-            form={form}
-            name="status"
-            items={adjustedStatuses}
-            label="სტატუსი"
-            className="w-64 -mt-1.5"
-            isDisabled={isFormDisabled}
-          />
-        </FormSection>
-
         <FormSection label="პროდუქცია" className="flex-col items-start gap-0">
           <AddOrderProductsList
             fields={fields}
@@ -185,6 +168,23 @@ export const OrdersTableExpanded = ({ row }: { row: Row<Order> }) => {
             isDisabled={isFormDisabled}
             selectedProductsIds={fields.map((field) => field.productId)}
             customer={order.customer}
+          />
+        </FormSection>
+
+        <FormSection label="შეკვეთის დეტალები" className="items-start">
+          <FormCalendarField
+            form={form}
+            name="dueDateAt"
+            isDisabled={isFormDisabled}
+            label="რეალიზაციის თარიღი"
+          />
+          <SelectStatusField
+            form={form}
+            name="status"
+            items={adjustedStatuses}
+            label="სტატუსი"
+            className="w-64 -mt-1.5"
+            isDisabled={isFormDisabled}
           />
         </FormSection>
 

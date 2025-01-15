@@ -34,6 +34,32 @@ export const invoiceOptions = [
   { label: "არა", value: "0" },
 ];
 
+export const customerType = {
+  INDIVIDUAL: "INDIVIDUAL",
+  SOLE_SMALL: "SOLE_SMALL",
+  SOLE_STANDARD: "SOLE_STANDARD",
+  LLC: "LLC",
+};
+
+export const customerTypeItems = [
+  {
+    label: "ფიზიკური პირი",
+    value: "INDIVIDUAL",
+  },
+  {
+    label: "იდ. მეწარმე (მცირე)",
+    value: "SOLE_SMALL",
+  },
+  {
+    label: "იდ. მეწარმე (სტანდ.)",
+    value: "SOLE_STANDARD",
+  },
+  {
+    label: "შპს",
+    value: "LLC",
+  },
+];
+
 export const statuses = {
   order: {
     READYTODELIVER: "1003",
@@ -80,3 +106,8 @@ export const distributionStatuses = Object.values(statuses.distribution) as [
 ];
 
 export const allStatuses = Object.values(statuses.all) as [string, ...string[]];
+
+export const customerTypes = Object.values(customerType) as [
+  string,
+  ...string[],
+];
