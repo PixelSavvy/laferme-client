@@ -23,7 +23,7 @@ export const DistributionTable = () => {
         distributionItem.status !== statuses.all.RETURNED &&
         distributionItem.status !== statuses.all.DELIVERED
       );
-    },
+    }
   );
 
   const defaultFallback =

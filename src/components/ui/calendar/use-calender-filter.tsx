@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
 type K = {
-  createdAt: Date | null;
+  dueDateAt: Date | null;
 };
 
 type useCalendarFilterProps<T extends K> = {
@@ -52,10 +52,10 @@ export const UseCalendarFilter = <T extends K>({
     }
 
     const filtered = responseData.filter((data) => {
-      if (data.createdAt === null || !date.from || !date.to) return;
+      if (data.dueDateAt === null || !date.from || !date.to) return;
 
-      const isCreatedAfterFrom = isBefore(data.createdAt, date.from);
-      const isCreatedBeforeTo = isBefore(date.to, data.createdAt);
+      const isCreatedAfterFrom = isBefore(data.dueDateAt, date.from);
+      const isCreatedBeforeTo = isBefore(date.to, data.dueDateAt);
       const result = !isCreatedAfterFrom && !isCreatedBeforeTo;
 
       return result;
@@ -94,11 +94,11 @@ export const UseCalendarFilter = <T extends K>({
       setCurrentDay(newPrevDay);
 
       const filtered = responseData.filter((data) => {
-        if (data.createdAt === null) return;
+        if (data.dueDateAt === null) return;
 
         const returnedData = isEqual(
-          startOfDay(data.createdAt),
-          startOfDay(newPrevDay),
+          startOfDay(data.dueDateAt),
+          startOfDay(newPrevDay)
         );
 
         if (!returnedData) setFallback("ვერ მოიძებნა");
@@ -119,11 +119,11 @@ export const UseCalendarFilter = <T extends K>({
       setCurrentDay(newNextDay);
 
       const filtered = responseData.filter((data) => {
-        if (data.createdAt === null) return;
+        if (data.dueDateAt === null) return;
 
         const returnedData = isEqual(
-          startOfDay(data.createdAt),
-          startOfDay(newPrevDay),
+          startOfDay(data.dueDateAt),
+          startOfDay(newPrevDay)
         );
 
         if (!returnedData) setFallback("ვერ მოიძებნა");
