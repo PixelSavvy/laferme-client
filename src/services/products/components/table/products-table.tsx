@@ -1,3 +1,5 @@
+import { apiPaths } from "@/config";
+import { DownloadButton } from "@/services/excel";
 import { useProducts } from "../../api";
 import { AddProductTrigger } from "../add-product";
 import { ProductsDataTable } from "./products-data-table";
@@ -13,6 +15,7 @@ export const ProductsTable = () => {
     <div className="space-y-6 mt-10">
       <div className="flex gap-4 justify-end">
         <AddProductTrigger />
+        <DownloadButton url={apiPaths.excel.getProducts} />
       </div>
 
       <ProductsDataTable

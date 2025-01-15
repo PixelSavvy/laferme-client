@@ -1,4 +1,6 @@
 import { DataTable } from "@/components/ui";
+import { apiPaths } from "@/config";
+import { DownloadButton } from "@/services/excel";
 import { useCustomers } from "../../api";
 import { AddCustomerTrigger } from "../add-customer";
 import { useCustomerColumns } from "./customers-table-cols";
@@ -11,12 +13,11 @@ export const CustomersTable = () => {
 
   if (!customers?.data) return null;
 
-  console.log(customers.data);
-
   return (
     <div className="space-y-6 mt-10">
       <div className="flex gap-4 justify-end">
         <AddCustomerTrigger />
+        <DownloadButton url={apiPaths.excel.getCustomers} />
       </div>
       <DataTable
         columns={columns}

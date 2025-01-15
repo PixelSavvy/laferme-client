@@ -1,6 +1,7 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 
-import { statuses } from "@/config";
+import { apiPaths, statuses } from "@/config";
+import { DownloadButton } from "@/services/excel";
 import { useDistributionItems } from "../../api";
 import { useDistributionColumns } from "./distribution-table-cols";
 import { DistributionTableExpanded } from "./distribution-table-expanded";
@@ -29,13 +30,12 @@ export const DistributionTable = () => {
   const defaultFallback =
     notDeliveredOrders.length === 0 ? "შეკვეთები ვერ მოიძებნა" : fallback;
 
-  console.log("defaultFallback", defaultFallback);
-
   return (
     <div className="space-y-6 mt-10">
       {/* Actions */}
       <div className="flex gap-4 justify-between">
         <CalendarFilter {...rest} />
+        <DownloadButton url={apiPaths.excel.getDistributionItems} />
       </div>
       <DataTable
         columns={columns}

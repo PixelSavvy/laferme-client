@@ -1,6 +1,7 @@
 import { CalendarFilter, DataTable, UseCalendarFilter } from "@/components/ui";
 
-import { statuses } from "@/config";
+import { apiPaths, statuses } from "@/config";
+import { DownloadButton } from "@/services/excel";
 import { useFreezoneItems } from "../../api/get-freezone-items";
 import useFreezoneColumns from "./freezone-table-cols";
 import { FreezoneTableExpanded } from "./freezone-table-expanded";
@@ -28,6 +29,7 @@ export const FreezoneTable = () => {
       {/* Actions */}
       <div className="flex gap-4 justify-between">
         <CalendarFilter {...rest} />
+        <DownloadButton url={apiPaths.excel.getFreezoneItems} />
       </div>
       <DataTable
         columns={columns}

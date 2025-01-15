@@ -93,6 +93,10 @@ const newCustomerSchema = z.object({
       message: "მაქსიმუმ 11 სიმბოლო",
     })
     .optional(),
+
+  address: z.string().min(1, {
+    message: REQUIRED_ERROR_MSG,
+  }),
 });
 
 type NewCustomer = z.infer<typeof newCustomerSchema>;
@@ -113,6 +117,7 @@ const newCustomerDefaultValues: NewCustomer = {
   },
   paysVAT: "0",
   identificationNumber: "",
+  address: "",
 };
 
 const customerSchema = newCustomerSchema.extend({
