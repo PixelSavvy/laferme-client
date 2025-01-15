@@ -21,7 +21,6 @@ export const downloadXLSFile = async (
     const noData = response.status === 204;
 
     if (noData) {
-      console.log("No data found");
       toast.message("მონაცემები ვერ მოიძებნა");
       return null;
     }
