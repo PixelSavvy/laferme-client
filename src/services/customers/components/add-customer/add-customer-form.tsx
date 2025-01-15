@@ -25,7 +25,7 @@ type AddCustomerFormProps = {
 
 export const AddCustomerForm = ({ setIsOpen }: AddCustomerFormProps) => {
   const { mutate: addCustomer, isPending: isCustomerAdding } = useAddCustomer(
-    {}
+    {},
   );
 
   const [isSelectingProduct, setIsSelectingProduct] = useState(false);

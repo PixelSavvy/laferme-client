@@ -98,7 +98,7 @@ export const UseCalendarFilter = <T extends K>({
 
         const returnedData = isEqual(
           startOfDay(data.createdAt),
-          startOfDay(newPrevDay)
+          startOfDay(newPrevDay),
         );
 
         if (!returnedData) setFallback("ვერ მოიძებნა");
@@ -123,7 +123,7 @@ export const UseCalendarFilter = <T extends K>({
 
         const returnedData = isEqual(
           startOfDay(data.createdAt),
-          startOfDay(newPrevDay)
+          startOfDay(newPrevDay),
         );
 
         if (!returnedData) setFallback("ვერ მოიძებნა");
