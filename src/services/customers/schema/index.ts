@@ -86,12 +86,10 @@ const newCustomerSchema = z.object({
 
   identificationNumber: z
     .string()
-    .min(9, {
+    .min(1, {
       message: "მინიმუმ 9 სიმბოლო",
     })
-    .max(11, {
-      message: "მაქსიმუმ 11 სიმბოლო",
-    })
+
     .optional(),
 
   address: z.string().min(1, {

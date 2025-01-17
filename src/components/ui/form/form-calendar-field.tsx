@@ -41,7 +41,7 @@ export const FormCalendarField = <T extends FieldValues>({
                   variant={"outline"}
                   className={cn(
                     " pl-3 text-left font-normal group  ",
-                    !field.value && "text-neutral-700",
+                    !field.value && "text-neutral-700"
                   )}
                 >
                   {field.value ? (
@@ -60,6 +60,7 @@ export const FormCalendarField = <T extends FieldValues>({
                 mode="single"
                 initialFocus
                 locale={ka}
+                className="cursor-pointer"
               />
             </PopoverContent>
           </Popover>

@@ -43,7 +43,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
     toast.success(message);
     row.toggleExpanded();
   };
-
+  console.log(form.formState.errors);
   const handleSubmit: SubmitHandler<FreezoneItem> = (payload) => {
     const transformedPayload: UpdateFreezoneItem = {
       ...payload,
@@ -61,7 +61,7 @@ export const FreezoneTableExpanded = ({ row }: { row: Row<FreezoneItem> }) => {
       },
       {
         onSuccess: (data) => onSuccessSubmit(data.message),
-      },
+      }
     );
   };
 
