@@ -60,6 +60,7 @@ export const FormCalendarField = <T extends FieldValues>({
                 mode="single"
                 initialFocus
                 locale={ka}
+                className="cursor-pointer"
               />
             </PopoverContent>
           </Popover>

@@ -23,21 +23,22 @@ const useFreezoneColumns = () => {
         cell: (info) => info.getValue(),
         sortDescFirst: true,
       },
-
       {
-        accessorKey: "dueDateAt",
-        header: () => "რეალიზაციის თარიღი",
+        accessorKey: "createdAt",
+        header: () => "წარმოების თარიღი",
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
+
       {
         accessorKey: "customerId",
         header: "სარეალიზაციო პუნქტი",
         cell: ({ row }) => <FreezoneTableCustomerCell row={row} />,
       },
+
       {
-        accessorKey: "createdAt",
-        header: () => "წარმოების თარიღი",
+        accessorKey: "dueDateAt",
+        header: () => "რეალიზაციის თარიღი",
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
