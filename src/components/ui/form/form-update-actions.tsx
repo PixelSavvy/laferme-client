@@ -17,7 +17,7 @@ type FormUpdateActionsProps<T extends FieldValues> = {
 };
 
 export const FormUpdateActions = <T extends FieldValues>(
-  props: FormUpdateActionsProps<T>,
+  props: FormUpdateActionsProps<T>
 ) => {
   const {
     form,
@@ -64,9 +64,9 @@ export const FormUpdateActions = <T extends FieldValues>(
 
           {/* Form Delete Action */}
           <DeleteAlertDialog
-            deleteFn={handleDelete}
-            isPending={isDeleting ?? false}
-            isDisabled={!showEditActions}
+            onDelete={handleDelete}
+            isDeleting={isDeleting ?? false}
+            disabled={!showEditActions}
           />
         </>
       )}

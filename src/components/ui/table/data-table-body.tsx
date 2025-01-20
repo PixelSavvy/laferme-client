@@ -1,4 +1,3 @@
-import { cn } from "@/lib";
 import { ColumnDef, flexRender, Row, Table } from "@tanstack/react-table";
 import { Fragment, ReactNode } from "react";
 import { DataTableExpandedRow } from "./data-table-expanded-row";
@@ -22,12 +21,9 @@ export const DataTableBody = <Data, Value>({
       {table.getRowModel().rows.length ? (
         table.getRowModel().rows.map((row) => (
           <Fragment key={row.id}>
-            <TableRow
-              onClick={() => row.toggleExpanded()}
-              className="cursor-pointer"
-            >
+            <TableRow onClick={() => row.toggleExpanded()}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className={cn("border-b")}>
+                <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

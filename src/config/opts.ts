@@ -1,45 +1,97 @@
-export const paymentOptions = [
-  "CASH",
-  "CONSIGNMENT",
-  "TRANSFER",
-  "TRIAL",
-  "DISCOUNT",
-] as [string, ...string[]];
+// Payment methods
+export const paymentMethodsObj = {
+  CASH: "CASH",
+  CONSIGNMENT: "CONSIGNMENT",
+  TRANSFER: "TRANSFER",
+  TRIAL: "TRIAL",
+  DISCOUNT: "DISCOUNT",
+};
 
-export const priceIndex = ["TR1", "TR2", "TR3", "TR4", "TR5", "TRD", "TRC"] as [
+export const paymentMethods = Object.values(paymentMethodsObj) as [
   string,
   ...string[],
 ];
 
-export const paymentOptionValues = [
-  { label: "ქეში", value: "CASH" },
-  { label: "ტრანსფერი", value: "TRANSFER" },
-  { label: "კონსიგნაცია", value: "CONSIGNMENT" },
-  { label: "სატესტო", value: "TRIAL" },
-  { label: "ფასდაკლებული", value: "DISCOUNT" },
+// Price indexes
+export const priceIndexesObj = {
+  TR1: "TR1",
+  TR2: "TR2",
+  TR3: "TR3",
+  TR4: "TR4",
+  TR5: "TR5",
+  TRD: "TRD",
+  TRC: "TRC",
+};
+export const priceIndexes = Object.values(priceIndexesObj) as [
+  string,
+  ...string[],
 ];
 
-export const priceIndexes = [
-  { label: "TR1", value: "TR1" },
-  { label: "TR2", value: "TR2" },
-  { label: "TR3", value: "TR3" },
-  { label: "TR4", value: "TR4" },
-  { label: "TR5", value: "TR5" },
-  { label: "TRD", value: "TRC" },
-  { label: "TRC", value: "TRD" },
-];
+// Order stages
+export const stagesObj = {
+  ORDER: "ORDER",
+  CLEANZONE: "CLEANZONE",
+  DISTRIBUTION: "DISTRIBUTION",
+  DELIVERED: "DELIVERED",
+};
 
-export const invoiceOptions = [
-  { label: "კი", value: "1" },
-  { label: "არა", value: "0" },
-];
+export const stages = Object.values(stagesObj) as [string, ...string[]];
 
-export const customerType = {
+// Customer types
+export const customerTypesObj = {
   INDIVIDUAL: "INDIVIDUAL",
   SOLE_SMALL: "SOLE_SMALL",
   SOLE_STANDARD: "SOLE_STANDARD",
   LLC: "LLC",
 };
+
+export const customerTypes = Object.values(customerTypesObj) as [
+  string,
+  ...string[],
+];
+
+// Order statuses
+export const statusesObj = {
+  order: {
+    ACCEPTED: "ACCEPTED",
+    PREPARING: "PREPARING",
+    PREPARED: "PREPARED",
+    DELIVERED: "DELIVERED",
+    CANCELLED: "CANCELLED",
+    RETURNED: "RETURNED",
+  },
+  cleanZone: {
+    ACCEPTED: "ACCEPTED",
+    PREPARING: "PREPARING",
+    PREPARED: "PREPARED",
+    CANCELLED: "CANCELLED",
+  },
+
+  distribution: {
+    DELIVERED: "DELIVERED",
+    CANCELLED: "CANCELLED",
+    RETURNED: "RETURNED",
+  },
+};
+
+export const orderStatuses = Object.values(statusesObj.order) as [
+  string,
+  ...string[],
+];
+export const cleanZoneStatuses = Object.values(statusesObj.cleanZone) as [
+  string,
+  ...string[],
+];
+export const distributionStatuses = Object.values(statusesObj.distribution) as [
+  string,
+  ...string[],
+];
+
+// Selectable items
+export const booleanItems = [
+  { label: "კი", value: "1" },
+  { label: "არა", value: "0" },
+];
 
 export const customerTypeItems = [
   {
@@ -60,54 +112,56 @@ export const customerTypeItems = [
   },
 ];
 
-export const statuses = {
-  order: {
-    READYTODELIVER: "1003",
-    CANCELLED: "1006",
-    RETURNED: "1007",
+export const paymentMethodsItems = [
+  {
+    label: "ქეში",
+    value: "CASH",
   },
-
-  freezone: {
-    PREPARING: "1001",
-    PREPARED: "1002",
+  {
+    label: "კონსიგნაცია",
+    value: "CONSIGNMENT",
   },
-
-  distribution: {
-    DELIVERING: "1004",
-    DELIVERED: "1005",
-    CANCELLED: "1006",
-    RETURNED: "1007",
+  {
+    label: "გადარიცხვა",
+    value: "TRANSFER",
   },
-  all: {
-    ACCEPTED: "1000",
-    READYTODELIVER: "1003",
-    CANCELLED: "1006",
-    RETURNED: "1007",
-    PREPARING: "1001",
-    PREPARED: "1002",
-    DELIVERING: "1004",
-    DELIVERED: "1005",
+  {
+    label: "სატესტო",
+    value: "TRIAL",
   },
-};
-
-export const orderStatuses = Object.values(statuses.order) as [
-  string,
-  ...string[],
+  {
+    label: "ფასდაკლება",
+    value: "DISCOUNT",
+  },
 ];
 
-export const freezoneStatuses = Object.values(statuses.freezone) as [
-  string,
-  ...string[],
-];
-
-export const distributionStatuses = Object.values(statuses.distribution) as [
-  string,
-  ...string[],
-];
-
-export const allStatuses = Object.values(statuses.all) as [string, ...string[]];
-
-export const customerTypes = Object.values(customerType) as [
-  string,
-  ...string[],
+export const priceIndexesItems = [
+  {
+    label: "TR1",
+    value: "TR1",
+  },
+  {
+    label: "TR2",
+    value: "TR2",
+  },
+  {
+    label: "TR3",
+    value: "TR3",
+  },
+  {
+    label: "TR4",
+    value: "TR4",
+  },
+  {
+    label: "TR5",
+    value: "TR5",
+  },
+  {
+    label: "TRD",
+    value: "TRD",
+  },
+  {
+    label: "TRC",
+    value: "TRC",
+  },
 ];

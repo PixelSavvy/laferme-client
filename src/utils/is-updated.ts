@@ -1,4 +1,4 @@
-import { Product } from "@/services/products";
+import { Product } from "@/features/products";
 import _ from "lodash";
 
 export const isUpdated = (original: Product, updated: Product) => {

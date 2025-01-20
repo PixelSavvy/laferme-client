@@ -19,15 +19,17 @@ import {
 type SelectFieldProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
   name: Path<T>;
-  label: string;
+  label?: string;
   className?: string;
+  triggerClassName?: string;
   placeholder?: string;
   items: {
     label: string;
     value: string;
   }[];
 
-  isDisabled?: boolean;
+  showMessage?: boolean;
+  disabled?: boolean;
 };
 
 export const SelectField = <T extends FieldValues>({
@@ -36,8 +38,10 @@ export const SelectField = <T extends FieldValues>({
   label,
   items,
   className,
+  triggerClassName = "",
   placeholder,
-  isDisabled,
+  disabled,
+  showMessage = true,
 }: SelectFieldProps<T>) => {
   return (
     <FormField
@@ -46,10 +50,13 @@ export const SelectField = <T extends FieldValues>({
       render={({ field }) => {
         return (
           <FormItem className={cn("w-auto ", className)}>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
+            {label && <FormLabel>{label}</FormLabel>}
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger disabled={isDisabled}>
+                <SelectTrigger
+                  disabled={disabled}
+                  className={cn(triggerClassName)}
+                >
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
               </FormControl>
@@ -61,7 +68,7 @@ export const SelectField = <T extends FieldValues>({
                 ))}
               </SelectContent>
             </Select>
-            <FormMessage />
+            {showMessage && <FormMessage />}
           </FormItem>
         );
       }}

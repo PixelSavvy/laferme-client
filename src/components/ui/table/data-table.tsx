@@ -20,11 +20,7 @@ type DataTableProps<Data, Value> = {
   getRowCanExpand?: (row: Row<Data>) => boolean;
   renderSubComponent?: (props: { row: Row<Data> }) => ReactNode;
   fallback?: string;
-  isProductsRoute?: boolean;
-  isCustomersRoute?: boolean;
-  isOrdersRoute?: boolean;
-  isFreezeRoute?: boolean;
-  isDistributionRoute?: boolean;
+  route: "products" | "customers" | "orders" | "clean-zone" | "distribution";
 };
 
 export const DataTable = <Data, Value>({
