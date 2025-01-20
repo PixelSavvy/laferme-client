@@ -1,11 +1,14 @@
 import { RowSelectionState } from "@tanstack/react-table";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
 import { UpdateEntity } from "@/shared/types";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { Dispatch, SetStateAction } from "react";
-import { getProductsQueryOptions, useUpdateProduct as useUpdate } from "../api";
+import {
+  getProductsQueryOptions,
+  useUpdateProduct as useUpdateMutation,
+} from "../api";
 import { Product } from "../schema";
 
 export const useUpdateProduct = ({
@@ -13,7 +16,7 @@ export const useUpdateProduct = ({
 }: {
   onRowSelect: Dispatch<SetStateAction<RowSelectionState>>;
 }) => {
-  const { mutate: updateProduct } = useUpdate();
+  const { mutate: updateProduct } = useUpdateMutation();
   const queryClient = useQueryClient();
 
   const onUpdateSuccess = async (data: UpdateEntity<Product>) => {

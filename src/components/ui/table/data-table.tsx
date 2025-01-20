@@ -16,11 +16,12 @@ import { Table } from "./table";
 
 type DataTableProps<Data, Value> = {
   columns: ColumnDef<Data, Value>[];
-  data: Data[];
+  data: Data[] | [];
+  fallback?: string;
+
+  // Subcomponent props
   getRowCanExpand?: (row: Row<Data>) => boolean;
   renderSubComponent?: (props: { row: Row<Data> }) => ReactNode;
-  fallback?: string;
-  route: "products" | "customers" | "orders" | "clean-zone" | "distribution";
 };
 
 export const DataTable = <Data, Value>({

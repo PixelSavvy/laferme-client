@@ -15,10 +15,11 @@ export const ProductsDataTableBody = ({
   columns,
   fallback,
 }: ProductsDataTableBodyProps) => {
+  const rows = table?.getRowModel().rows ?? [];
   return (
     <TableBody>
-      {table.getRowModel().rows.length ? (
-        table.getRowModel().rows.map((row) => (
+      {rows.length ? (
+        rows.map((row) => (
           <TableRow key={row.id}>
             {row.getVisibleCells().map((cell) => (
               <TableCell
@@ -33,7 +34,7 @@ export const ProductsDataTableBody = ({
       ) : (
         <TableRow>
           <TableCell colSpan={columns.length} className="font-medium p-4 ">
-            {fallback}
+            {fallback || "No data available."}
           </TableCell>
         </TableRow>
       )}

@@ -14,7 +14,7 @@ export const updateProduct = ({
   id: number;
   data: Product;
 }): Promise<UpdateEntity<Product>> => {
-  const path = apiPaths.app.product + `/${id}`;
+  const path = `${apiPaths.app.product}/${id}`;
   return api.put(path, data);
 };
 
@@ -32,7 +32,7 @@ export const useUpdateProduct = ({
   return useMutation({
     onSuccess: (data, ...args) => {
       queryClient.refetchQueries({
-        queryKey: getProductQueryOptions(data.data.id).queryKey,
+        queryKey: getProductQueryOptions(data.data.data.id).queryKey,
       });
       onSuccess?.(data, ...args);
     },

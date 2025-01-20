@@ -79,17 +79,19 @@ const productSchema = z.object({
 
 const newProductSchema = productSchema.omit({ id: true });
 
-const orderProductSchema = z.object({
-  id: z.number().nonnegative(),
-  price: z.number().nonnegative(),
+const orderProductSchema = z
+  .object({
+    id: z.coerce.number().nonnegative(),
+    price: z.coerce.number().nonnegative(),
 
-  quantity: z.number().nonnegative(),
-  preparedQuantity: z.number().nonnegative(),
+    quantity: z.coerce.number().nonnegative(),
+    // preparedQuantity: z.coerce.number().nonnegative(),
 
-  weight: z.number().nonnegative(),
-  preparedWeight: z.number().nonnegative(),
-  distributedWeight: z.number().nonnegative(),
-});
+    weight: z.coerce.number().nonnegative(),
+    // preparedWeight: z.coerce.number().nonnegative(),
+    // distributedWeight: z.coerce.number().nonnegative(),
+  })
+  .extend(productSchema.pick({ title: true, productCode: true }).shape);
 
 type Product = z.infer<typeof productSchema>;
 type NewProduct = z.infer<typeof newProductSchema>;

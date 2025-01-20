@@ -13,7 +13,7 @@ import {
 import { booleanItems } from "@/config";
 
 import { Product } from "../../schema";
-import { useDeleteProduct, useUpdateProduct } from "../../services";
+import { useRemoveProduct, useUpdateProduct } from "../../services";
 
 type Products = {
   products: Product[];
@@ -29,7 +29,7 @@ export const useProductColumns = ({
   onRowSelect,
 }: UseProductsColumnsProps) => {
   const { update } = useUpdateProduct({ onRowSelect });
-  const { remove, isDeleting } = useDeleteProduct();
+  const { remove, isRemoving } = useRemoveProduct();
 
   const handleUpdate = (index: number) => {
     const updatedProduct = form.getValues().products[index];
@@ -211,8 +211,8 @@ export const useProductColumns = ({
               <Edit />
             </Button>
             <DeleteAlertDialog
-              onDelete={() => remove(info.row.original.id)}
-              isDeleting={isDeleting}
+              onRemove={() => remove(info.row.original.id)}
+              isRemoving={isRemoving}
               disabled={!info.row.getIsSelected()}
               size={"sm"}
             />

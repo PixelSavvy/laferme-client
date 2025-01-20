@@ -3,14 +3,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiPaths } from "@/config";
 import { api, MutationConfig } from "@/lib";
 import { AddEntity } from "@/shared/types";
-import { NewProduct, Product } from "../schema";
+import { NewProduct } from "../schema";
 import { getProductsQueryOptions } from "./get-products";
 
 export const addProduct = ({
   data,
 }: {
   data: NewProduct;
-}): Promise<AddEntity<Product>> => {
+}): Promise<AddEntity<NewProduct>> => {
   const path = apiPaths.app.product;
   return api.post(path, data);
 };

@@ -1,20 +1,16 @@
 import { cn } from "@/lib";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Button } from "../button";
 import { DrawerClose } from "../drawer";
 
-type FormAddActionProps<T extends FieldValues> = {
-  form: UseFormReturn<T>;
+type FormAddActionProps = {
   isAdding: boolean;
   className?: string;
 };
 
-export const FormAddAction = <T extends FieldValues>({
-  form,
-  isAdding,
-  className,
-}: FormAddActionProps<T>) => {
+export const FormAddAction = ({ isAdding, className }: FormAddActionProps) => {
+  const form = useFormContext();
   const handleCancel = () => {
     form.reset();
   };

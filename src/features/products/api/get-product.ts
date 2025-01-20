@@ -11,13 +11,13 @@ export const getProduct = ({
 }: {
   id: number;
 }): Promise<GetEntity<Product>> => {
-  const path = apiPaths.app.product + `/${id}`;
+  const path = `${apiPaths.app.product}/${id}`;
   return api.get(path);
 };
 
 export const getProductQueryOptions = (id: number) => {
   return queryOptions({
-    queryKey: ["discussions", id],
+    queryKey: ["products", id],
     queryFn: () => getProduct({ id }),
   });
 };

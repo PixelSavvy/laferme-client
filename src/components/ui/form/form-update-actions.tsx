@@ -1,49 +1,41 @@
 import { Button, DeleteAlertDialog } from "@/components/ui";
 import { Edit, Save } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import ClipLoader from "react-spinners/ClipLoader";
 
-type FormUpdateActionsProps<T extends FieldValues> = {
-  form: UseFormReturn<T>;
+type FormUpdateActionsProps = {
+  isUpdating: boolean;
 
-  isProcessing: boolean;
-
-  onDelete?: () => void;
-  isDeleting?: boolean;
+  onRemove: (id: number) => void;
+  isRemoving: boolean;
 
   isFormDisabled: boolean;
-  setIsFormDisabled?: Dispatch<SetStateAction<boolean>>;
+  onFormDisable?: Dispatch<SetStateAction<boolean>>;
 };
 
-export const FormUpdateActions = <T extends FieldValues>(
-  props: FormUpdateActionsProps<T>
-) => {
-  const {
-    form,
-    isProcessing,
-    isDeleting,
-    onDelete,
-    isFormDisabled,
-    setIsFormDisabled,
-  } = props;
+export const FormUpdateActions = (props: FormUpdateActionsProps) => {
+  const { isUpdating, isRemoving, onRemove, isFormDisabled, onFormDisable } =
+    props;
+
+  const form = useFormContext();
 
   const handleDisabled = () => {
-    if (setIsFormDisabled) {
-      setIsFormDisabled(false);
+    if (onFormDisable) {
+      onFormDisable(false);
     }
   };
   const handleCancel = () => {
     form.reset();
-    if (setIsFormDisabled) {
-      setIsFormDisabled(true);
+    if (onFormDisable) {
+      onFormDisable(true);
     }
   };
 
   const handleDelete = () => {
-    if (onDelete) {
-      onDelete();
-    }
+    const id = form.getValues("id");
+
+    onRemove(id);
   };
 
   const showEditActions = isFormDisabled;
@@ -64,17 +56,17 @@ export const FormUpdateActions = <T extends FieldValues>(
 
           {/* Form Delete Action */}
           <DeleteAlertDialog
-            onDelete={handleDelete}
-            isDeleting={isDeleting ?? false}
+            onRemove={handleDelete}
+            isRemoving={isRemoving ?? false}
             disabled={!showEditActions}
           />
         </>
       )}
       {!showEditActions && (
         <>
-          <Button type="submit" disabled={isProcessing || !isFormEdited}>
+          <Button type="submit" disabled={isUpdating || !isFormEdited}>
             <span className="flex justify-center items-center gap-2">
-              {isProcessing ? (
+              {isUpdating ? (
                 <ClipLoader className="inline-flex" size={16} color="white" />
               ) : (
                 <Save className="inline-flex" />
@@ -86,7 +78,8 @@ export const FormUpdateActions = <T extends FieldValues>(
           <Button
             variant="outline"
             onClick={handleCancel}
-            disabled={isProcessing}
+            disabled={isUpdating}
+            type="reset"
           >
             გაუქმება
           </Button>

@@ -5,8 +5,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { Product } from "../schema";
 
 export const getProducts = (): Promise<GetEntities<Product[]>> => {
-  const path = apiPaths.app.product;
-  return api.get(path);
+  return api.get(apiPaths.app.product);
 };
 
 export const getProductsQueryOptions = () => {

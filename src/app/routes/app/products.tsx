@@ -25,6 +25,7 @@ const ProductsRoute = () => {
   if (!productsData?.data) return null;
 
   const products = productsData.data.data.flat();
+  const fallback = productsData.data.message;
 
   return (
     <ContentLayout title="პროდუქტები">
@@ -39,7 +40,7 @@ const ProductsRoute = () => {
           </AppDrawer>
         </div>
       </DrawerProvider>
-      <ProductsTable data={products} fallback={productsData.data.message} />
+      <ProductsTable data={products} fallback={fallback} />
     </ContentLayout>
   );
 };

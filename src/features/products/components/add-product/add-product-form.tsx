@@ -14,10 +14,10 @@ import {
   newProductDefaultValues,
   newProductSchema,
 } from "../../schema";
-import { useAddProduct } from "../../services";
+import { useCreateProduct } from "../../services";
 
 export const AddProductForm = () => {
-  const { create, isProductCreating } = useAddProduct();
+  const { create, isProductCreating } = useCreateProduct();
 
   const form = useForm<NewProduct>({
     resolver: zodResolver(newProductSchema),
@@ -62,11 +62,7 @@ export const AddProductForm = () => {
         </FormSection>
 
         {/* Form Actions */}
-        <FormAddAction
-          form={form}
-          isAdding={isProductCreating}
-          className="mt-auto"
-        />
+        <FormAddAction isAdding={isProductCreating} className="mt-auto" />
       </form>
     </Form>
   );

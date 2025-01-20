@@ -16,7 +16,7 @@ type FormSelectStatusFieldProps<T extends FieldValues> = {
     value: string;
   }[];
 
-  isDisabled?: boolean;
+  disabled?: boolean;
 };
 
 export const SelectStatusField = <T extends FieldValues>({
@@ -25,18 +25,18 @@ export const SelectStatusField = <T extends FieldValues>({
   label,
   items,
   className,
-  isDisabled,
+  disabled,
 }: FormSelectStatusFieldProps<T>) => {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("w-auto ", className)}>
+        <FormItem className={cn("w-full", className)}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger disabled={isDisabled}>
+              <SelectTrigger disabled={disabled}>
                 <span className="disabled:opacity-50">
                   {convertStatus(field.value)}
                 </span>

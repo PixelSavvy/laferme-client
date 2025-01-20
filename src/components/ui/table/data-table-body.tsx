@@ -16,10 +16,12 @@ export const DataTableBody = <Data, Value>({
   renderSubComponent,
   fallback,
 }: DataTableBodyProps<Data, Value>) => {
+  const rows = table?.getRowModel().rows ?? [];
+
   return (
     <TableBody>
-      {table.getRowModel().rows.length ? (
-        table.getRowModel().rows.map((row) => (
+      {rows.length ? (
+        rows.map((row) => (
           <Fragment key={row.id}>
             <TableRow onClick={() => row.toggleExpanded()}>
               {row.getVisibleCells().map((cell) => (
@@ -38,7 +40,9 @@ export const DataTableBody = <Data, Value>({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={columns.length}>{fallback}</TableCell>
+          <TableCell colSpan={columns.length} className="font-medium p-4 ">
+            {fallback || "No data available."}
+          </TableCell>
         </TableRow>
       )}
     </TableBody>

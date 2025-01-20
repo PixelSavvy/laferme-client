@@ -1,4 +1,5 @@
 import { orderStatuses, stages, stagesObj, statusesObj } from "@/config";
+import { customerSchema, newCustomerDefaultValues } from "@/features/customer";
 import { orderProductSchema } from "@/features/products";
 import { addDays } from "date-fns";
 import { z } from "zod";
@@ -7,6 +8,7 @@ const orderSchema = z.object({
   // Order Info
   id: z.coerce.number().nonnegative(),
   customerId: z.number().nonnegative(),
+  customer: customerSchema,
   status: z.enum(orderStatuses),
   stage: z.enum(stages),
 
@@ -17,7 +19,7 @@ const orderSchema = z.object({
   products: z.array(orderProductSchema),
 
   // Payment Info
-  total: z.number().nonnegative(),
+  total: z.coerce.number().nonnegative(),
 
   // Timestamps
   // Handled by DB
@@ -55,6 +57,10 @@ type NewOrder = z.infer<typeof newOrderSchema>;
 
 // New Order  default values for form
 const newOrderDefaultValues: NewOrder = {
+  customer: {
+    id: 0,
+    ...newCustomerDefaultValues,
+  },
   customerId: 0,
   status: statusesObj.order.ACCEPTED,
   stage: stagesObj.ORDER,

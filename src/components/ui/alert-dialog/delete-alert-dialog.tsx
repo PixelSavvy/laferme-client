@@ -17,8 +17,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { ButtonVariants } from "../button";
 
 type DeleteAlertDialogProps = {
-  onDelete: () => void;
-  isDeleting: boolean;
+  onRemove: () => void;
+  isRemoving: boolean;
   disabled?: boolean;
   className?: string;
   variant?: ButtonVariants["variant"];
@@ -26,14 +26,14 @@ type DeleteAlertDialogProps = {
 };
 
 export const DeleteAlertDialog = ({
-  onDelete,
-  isDeleting,
+  onRemove,
+  isRemoving,
   disabled,
   className,
   variant = "destructive",
   size = "default",
 }: DeleteAlertDialogProps) => {
-  const alertDialogActionLabel = isDeleting ? (
+  const alertDialogActionLabel = isRemoving ? (
     <ClipLoader
       loading={true}
       aria-label="Loading Spinner"
@@ -68,7 +68,7 @@ export const DeleteAlertDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-6">
           <AlertDialogAction asChild>
-            <Button onClick={onDelete} type="button" variant="destructive">
+            <Button onClick={onRemove} type="button" variant="destructive">
               {alertDialogActionLabel}
             </Button>
           </AlertDialogAction>
