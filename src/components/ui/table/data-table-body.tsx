@@ -1,4 +1,3 @@
-import { cn } from "@/lib";
 import { ColumnDef, flexRender, Row, Table } from "@tanstack/react-table";
 import { Fragment, ReactNode } from "react";
 import { DataTableExpandedRow } from "./data-table-expanded-row";
@@ -17,17 +16,16 @@ export const DataTableBody = <Data, Value>({
   renderSubComponent,
   fallback,
 }: DataTableBodyProps<Data, Value>) => {
+  const rows = table?.getRowModel().rows ?? [];
+
   return (
     <TableBody>
-      {table.getRowModel().rows.length ? (
-        table.getRowModel().rows.map((row) => (
+      {rows.length ? (
+        rows.map((row) => (
           <Fragment key={row.id}>
-            <TableRow
-              onClick={() => row.toggleExpanded()}
-              className="cursor-pointer"
-            >
+            <TableRow onClick={() => row.toggleExpanded()}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className={cn("border-b")}>
+                <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -42,7 +40,9 @@ export const DataTableBody = <Data, Value>({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={columns.length}>{fallback}</TableCell>
+          <TableCell colSpan={columns.length} className="font-medium p-4 ">
+            {fallback || "No data available."}
+          </TableCell>
         </TableRow>
       )}
     </TableBody>

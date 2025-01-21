@@ -1,23 +1,59 @@
-import { ContentLayout } from "@/components/layout";
-import { CustomersTable } from "@/services/customers";
-
-import { getCustomersQueryOptions } from "@/services/customers";
 import { QueryClient } from "@tanstack/react-query";
 
-export const customersLoader = async (queryClient: QueryClient) => {
+import { ContentLayout } from "@/components/layout";
+import { AppDrawer, DataTable } from "@/components/ui";
+import { apiPaths } from "@/config";
+import { DrawerProvider } from "@/context";
+import {
+  AddCustomerForm,
+  CustomerRowExpanded,
+  getCustomersQueryOptions,
+  useCustomerColumns,
+  useCustomers,
+} from "@/features/customer";
+import { DownloadButton } from "@/features/excel";
+
+export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getCustomersQueryOptions();
+
   return (
     queryClient.getQueryData(query.queryKey) ??
     (await queryClient.fetchQuery(query))
   );
 };
 
-export const CustomersRoute = () => {
+const CustomersRoute = () => {
+  const { data: customersData } = useCustomers();
+  const columns = useCustomerColumns();
+
+  if (!customersData?.data) return null;
+
+  const customers = customersData.data.data.flat();
+  const fallback = customersData.data.message;
+
   return (
-    <ContentLayout title="სარეალიზაციო პუნქტი">
-      <div className="mt-6">
-        <CustomersTable />
-      </div>
+    <ContentLayout title="სარეალიზაციო პუნქტები">
+      <DrawerProvider>
+        <div className="mb-6 flex justify-between">
+          <DownloadButton url={apiPaths.excel.getCustomers} />
+          <AppDrawer
+            title="სარეალიზაციო პუნქტები"
+            label="დაამატე სარეალიზაციო პუნქტი"
+            className="max-w-xl"
+          >
+            <AddCustomerForm />
+          </AppDrawer>
+        </div>
+      </DrawerProvider>
+      <DataTable
+        data={customers}
+        columns={columns}
+        fallback={fallback}
+        renderSubComponent={({ row }) => <CustomerRowExpanded row={row} />}
+        getRowCanExpand={() => true}
+      />
     </ContentLayout>
   );
 };
+
+export default CustomersRoute;

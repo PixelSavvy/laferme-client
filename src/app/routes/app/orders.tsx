@@ -1,23 +1,64 @@
-import { ContentLayout } from "@/components/layout";
-import { OrdersTable } from "@/services/orders/components";
-
-import { getOrdersQueryOptions } from "@/services/orders";
 import { QueryClient } from "@tanstack/react-query";
 
-export const ordersLoader = async (queryClient: QueryClient) => {
+import { ContentLayout } from "@/components/layout";
+import {
+  AppDrawer,
+  CalendarFilter,
+  DataTable,
+  useCalendarFilter,
+} from "@/components/ui";
+import { apiPaths } from "@/config";
+import { DrawerProvider } from "@/context";
+import { DownloadButton } from "@/features/excel";
+import {
+  AddOrderForm,
+  getOrdersQueryOptions,
+  OrderRowExpanded,
+  useOrders,
+  useOrdersColumns,
+} from "@/features/orders";
+
+export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getOrdersQueryOptions();
+
   return (
     queryClient.getQueryData(query.queryKey) ??
     (await queryClient.fetchQuery(query))
   );
 };
 
-export const OrdersRoute = () => {
+const OrdersRoute = () => {
+  const { data: ordersData } = useOrders();
+  const columns = useOrdersColumns();
+
+  const { filteredData, fallback, ...rest } = useCalendarFilter();
+
+  if (!ordersData?.data) return null;
+
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
-      <div className="mt-6">
-        <OrdersTable />
+      <div className="flex justify-between items-center mb-6 gap-2">
+        <DownloadButton url={apiPaths.excel.getOrders} />
+        <CalendarFilter props={rest} className="mr-auto" />
+        <DrawerProvider>
+          <AppDrawer
+            title="მიმდინარე შეკვეთები"
+            label="დაამატე შეკვეთა"
+            className="max-w-3xl"
+          >
+            <AddOrderForm />
+          </AppDrawer>
+        </DrawerProvider>
       </div>
+      <DataTable
+        data={filteredData}
+        columns={columns}
+        fallback={fallback}
+        renderSubComponent={({ row }) => <OrderRowExpanded row={row} />}
+        getRowCanExpand={() => true}
+      />
     </ContentLayout>
   );
 };
+
+export default OrdersRoute;

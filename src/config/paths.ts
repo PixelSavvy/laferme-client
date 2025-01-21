@@ -25,9 +25,9 @@ export const appPaths = {
       path: "/app/orders",
       getHref: () => "/app/orders",
     },
-    freezone: {
-      path: "/app/freezone",
-      getHref: () => "/app/freezone",
+    cleanzone: {
+      path: "/app/cleanzone",
+      getHref: () => "/app/cleanzone",
     },
     distribution: {
       path: "/app/distribution",
@@ -50,8 +50,8 @@ export const apiPaths = {
     product: "/products",
     customer: "/customers",
     order: "/orders",
-    freezone: "/freezone-items",
-    distribution: "/distribution-items",
+    cleanzone: "/cleanzone",
+    distribution: "/distribution",
   },
   auth: {
     signin: "/auth/signin",
@@ -60,8 +60,8 @@ export const apiPaths = {
   },
   excel: {
     getOrders: "/excel/orders",
-    getFreezoneItems: "/excel/freezone-items",
-    getDistributionItems: "/excel/distribution-items",
+    getCleanzoneItems: "/excel/cleanzone",
+    getDistributionItems: "/excel/distribution",
     getProducts: "/excel/products",
     getCustomers: "/excel/customers",
   },

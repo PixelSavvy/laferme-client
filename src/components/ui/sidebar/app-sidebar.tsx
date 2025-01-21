@@ -68,11 +68,11 @@ const MENU_ITEMS: MenuItem[] = [
     subMenu: [
       {
         title: "მიმდინარე",
-        url: appPaths.app.freezone.getHref(),
+        url: appPaths.app.cleanzone.getHref(),
       },
       {
         title: "რეპორტები",
-        url: appPaths.app.freezone.getHref(),
+        url: appPaths.app.cleanzone.getHref(),
       },
     ],
   },

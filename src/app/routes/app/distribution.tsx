@@ -1,23 +1,49 @@
-import { ContentLayout } from "@/components/layout";
-import { DistributionTable } from "@/services/distribution";
-
-import { getDistributionItemsQueryOptions } from "@/services/distribution";
 import { QueryClient } from "@tanstack/react-query";
 
-export const distributionLoader = async (queryClient: QueryClient) => {
-  const query = getDistributionItemsQueryOptions();
+import { ContentLayout } from "@/components/layout";
+import { CalendarFilter, DataTable, useCalendarFilter } from "@/components/ui";
+import { apiPaths } from "@/config";
+import {
+  DistributionItemRowExpanded,
+  useDistributionColumns,
+} from "@/features/distribution";
+import { DownloadButton } from "@/features/excel";
+import { getOrdersQueryOptions, useOrders } from "@/features/orders";
+
+export const clientLoader = (queryClient: QueryClient) => async () => {
+  const query = getOrdersQueryOptions();
+
   return (
     queryClient.getQueryData(query.queryKey) ??
     (await queryClient.fetchQuery(query))
   );
 };
 
-export const DistributionRoute = () => {
+const DistributionRoute = () => {
+  const { data: distributionData } = useOrders();
+  const columns = useDistributionColumns();
+
+  const { filteredData, fallback, ...rest } = useCalendarFilter();
+
+  if (!distributionData?.data) return null;
+
   return (
     <ContentLayout title="დისტრიბუცია">
-      <div className="mt-6">
-        <DistributionTable />
+      <div className="flex justify-between items-center mb-6 gap-2">
+        <DownloadButton url={apiPaths.excel.getDistributionItems} />
+        <CalendarFilter props={rest} className="mr-auto" />
       </div>
+      <DataTable
+        data={filteredData}
+        columns={columns}
+        fallback={fallback}
+        renderSubComponent={({ row }) => (
+          <DistributionItemRowExpanded row={row} />
+        )}
+        getRowCanExpand={() => true}
+      />
     </ContentLayout>
   );
 };
+
+export default DistributionRoute;

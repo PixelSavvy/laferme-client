@@ -1,22 +1,18 @@
-export type BaseResponse = {
-  message?: string;
-};
+import { AxiosResponse } from "axios";
 
-export type GetEntities<T> = BaseResponse & {
-  data: T[];
-};
-
-export type GetEntity<T> = BaseResponse & {
+export type BaseResponse<T> = {
+  message: string;
   data: T;
 };
 
-export type AddEntity = BaseResponse;
+export type GetEntities<T> = AxiosResponse<BaseResponse<T>>;
 
-export type UpdateEntity<T> = BaseResponse & {
-  id: number;
-  data: T;
-};
+export type GetEntity<T> = AxiosResponse<BaseResponse<T>>;
 
-export type DeleteEntity = BaseResponse;
+export type AddEntity<T> = AxiosResponse<BaseResponse<T>>;
 
-export type ErrorApiResponse = BaseResponse;
+export type UpdateEntity<T> = AxiosResponse<BaseResponse<T>>;
+
+export type DeleteEntity<T> = AxiosResponse<BaseResponse<T>>;
+
+export type ErrorApiResponse<T> = AxiosResponse<BaseResponse<T>>;
