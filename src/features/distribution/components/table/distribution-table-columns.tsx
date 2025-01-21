@@ -64,7 +64,7 @@ export const useDistributionColumns = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return columns;

@@ -42,7 +42,7 @@ export const CalendarField = <T extends FieldValues>({
                   variant={"outline"}
                   className={cn(
                     " pl-3 text-left font-normal group  ",
-                    !field.value && "text-neutral-700"
+                    !field.value && "text-neutral-700",
                   )}
                 >
                   {field.value ? (

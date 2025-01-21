@@ -27,7 +27,7 @@ export const SelectedOrderProducts = ({
               key={field.id}
               className={cn(
                 "text-sm grid grid-cols-[4rem_1fr_repeat(3,4rem)_min-content] items-center gap-2",
-                disabled && "opacity-50"
+                disabled && "opacity-50",
               )}
             >
               <InputField

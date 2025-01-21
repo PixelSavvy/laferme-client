@@ -74,7 +74,7 @@ const createAppRouter = (queryClient: QueryClient) => {
         v7_relativeSplatPath: true,
         v7_skipActionErrorRevalidation: true,
       },
-    }
+    },
   );
 };
 

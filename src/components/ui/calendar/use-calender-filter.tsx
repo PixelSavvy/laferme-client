@@ -48,7 +48,7 @@ export const useCalendarFilter = () => {
       // Filter by deliver date
       const isDueAfterFrom = isBefore(
         order.deliverDueAt,
-        startOfDay(range.from)
+        startOfDay(range.from),
       );
       const isDueBeforeTo = isBefore(startOfDay(range.to), order.deliverDueAt);
 
@@ -80,7 +80,7 @@ export const useCalendarFilter = () => {
 
         const isDeliverDueToday = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(today)
+          startOfDay(today),
         );
 
         if (!isDeliverDueToday) setFallback("შეკვეთები ვერ მოიძებნა");
@@ -106,7 +106,7 @@ export const useCalendarFilter = () => {
 
         const isDeliverDueBeforePrev = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay)
+          startOfDay(newPrevDay),
         );
 
         if (!isDeliverDueBeforePrev) setFallback("შეკვეთები ვერ მოიძებნა");
@@ -128,7 +128,7 @@ export const useCalendarFilter = () => {
 
         const isDeliverDueAfterNext = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay)
+          startOfDay(newPrevDay),
         );
 
         if (!isDeliverDueAfterNext) setFallback("შეკვეთები ვერ მოიძებნა");
