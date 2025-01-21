@@ -25,6 +25,7 @@ export const useUpdateOrder = ({ row }: { row: Row<Order> }) => {
   };
 
   const update: SubmitHandler<Order> = (payload) => {
+    console.log(payload.products);
     updateOrder(
       {
         id: payload.id,

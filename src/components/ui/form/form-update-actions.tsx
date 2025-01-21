@@ -7,8 +7,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 type FormUpdateActionsProps = {
   isUpdating: boolean;
 
-  onRemove: (id: number) => void;
-  isRemoving: boolean;
+  onRemove?: (id: number) => void;
+  isRemoving?: boolean;
 
   isFormDisabled: boolean;
   onFormDisable?: Dispatch<SetStateAction<boolean>>;
@@ -35,7 +35,9 @@ export const FormUpdateActions = (props: FormUpdateActionsProps) => {
   const handleDelete = () => {
     const id = form.getValues("id");
 
-    onRemove(id);
+    if (onRemove) {
+      onRemove(id);
+    }
   };
 
   const showEditActions = isFormDisabled;

@@ -1,11 +1,12 @@
-import { CustomerCell, StatusCell } from "@/components/ui";
-import { statusesObj } from "@/config";
+import * as React from "react";
+
+import { CustomerCell, PaymentMethodCell, StatusCell } from "@/components/ui";
+import { paymentMethodsObj, statusesObj } from "@/config";
+import { Order } from "@/features/orders";
 import { formatDate } from "@/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
-import { Order } from "../../schema";
 
-export const useOrdersColumns = () => {
+export const useDistributionColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
   //   const vatA = rowA.original.hasVAT;
   //   const vatB = rowB.original.hasVAT;
@@ -13,7 +14,7 @@ export const useOrdersColumns = () => {
   //   return vatOrder.indexOf(vatA) - vatOrder.indexOf(vatB);
   // };
 
-  const columns = useMemo<ColumnDef<Order>[]>(
+  const columns = React.useMemo<ColumnDef<Order>[]>(
     () => [
       {
         accessorKey: "id",
@@ -22,11 +23,12 @@ export const useOrdersColumns = () => {
         sortDescFirst: true,
       },
       {
-        accessorKey: "prepareDueAt",
-        header: () => "მომზადების თარიღი",
+        accessorKey: "deliverDueAt",
+        header: () => "მიწოდების თარიღი",
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
+
       {
         accessorKey: "customer",
         header: "სარეალიზაციო პუნქტი",
@@ -38,18 +40,26 @@ export const useOrdersColumns = () => {
         ),
       },
       {
-        accessorKey: "deliverDueAt",
-        header: () => "მიტანის თარიღი",
-        cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
-        sortDescFirst: true,
+        accessorKey: "total",
+        header: () => "თანხა",
+        cell: (info) => `${info.getValue()} ₾`,
+      },
+      {
+        accessorKey: "customer.paymentMethod",
+        header: () => "გადახდა",
+        cell: (info) => (
+          <PaymentMethodCell
+            paymentOption={info.getValue() as keyof typeof paymentMethodsObj}
+          />
+        ),
       },
       {
         accessorKey: "status",
         header: () => "სტატუსი",
         cell: (info) => (
           <StatusCell
-            data={statusesObj.all}
             status={info.getValue() as keyof typeof statusesObj}
+            data={statusesObj.all}
           />
         ),
       },

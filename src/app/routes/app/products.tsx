@@ -2,7 +2,9 @@ import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
 import { AppDrawer } from "@/components/ui";
+import { apiPaths } from "@/config";
 import { DrawerProvider } from "@/context";
+import { DownloadButton } from "@/features/excel";
 import {
   AddProductForm,
   getProductsQueryOptions,
@@ -30,7 +32,8 @@ const ProductsRoute = () => {
   return (
     <ContentLayout title="პროდუქტები">
       <DrawerProvider>
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 flex justify-between">
+          <DownloadButton url={apiPaths.excel.getProducts} />
           <AppDrawer
             title="პროდუქტები"
             label="დაამატე პროდუქტი"

@@ -85,11 +85,11 @@ const orderProductSchema = z
     price: z.coerce.number().nonnegative(),
 
     quantity: z.coerce.number().nonnegative(),
-    // preparedQuantity: z.coerce.number().nonnegative(),
+    preparedQuantity: z.coerce.number().nonnegative().default(0),
 
     weight: z.coerce.number().nonnegative(),
-    // preparedWeight: z.coerce.number().nonnegative(),
-    // distributedWeight: z.coerce.number().nonnegative(),
+    preparedWeight: z.coerce.number().nonnegative().default(0),
+    distributedWeight: z.coerce.number().nonnegative().default(0),
   })
   .extend(productSchema.pick({ title: true, productCode: true }).shape);
 

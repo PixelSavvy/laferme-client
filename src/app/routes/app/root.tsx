@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useRouteError } from "react-router-dom";
 
 import { AppLayout } from "@/components/layout";
 
@@ -11,5 +11,8 @@ export const AppRoot = () => {
 };
 
 export const AppRootErrorBoundary = () => {
+  const error = useRouteError();
+
+  console.log(error);
   return <div>Something went wrong!</div>;
 };

@@ -1,9 +1,9 @@
 import { useFieldArray, useForm } from "react-hook-form";
 
 import {
+  CalendarField,
   Form,
   FormAddAction,
-  FormCalendarField,
   FormSection,
 } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,12 +51,12 @@ export const AddOrderForm = () => {
         {isCustomerSelected && (
           <Fragment>
             <FormSection title="შეკვეთის დეტალები" className="justify-between ">
-              <FormCalendarField
+              <CalendarField
                 form={form}
                 name="prepareDueAt"
                 label="დამზადების თარიღი"
               />
-              <FormCalendarField
+              <CalendarField
                 form={form}
                 name="deliverDueAt"
                 label="დისტრიბუციის თარიღი"

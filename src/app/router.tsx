@@ -43,6 +43,18 @@ const createAppRouter = (queryClient: QueryClient) => {
             lazy: () =>
               import("./routes/app/orders").then(convert(queryClient)),
           },
+          // CleanZone
+          {
+            path: appPaths.app.cleanzone.path,
+            lazy: () =>
+              import("./routes/app/cleanzone").then(convert(queryClient)),
+          },
+          // Distribution
+          {
+            path: appPaths.app.distribution.path,
+            lazy: () =>
+              import("./routes/app/distribution").then(convert(queryClient)),
+          },
 
           {
             path: "*",

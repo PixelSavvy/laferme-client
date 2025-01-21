@@ -29,6 +29,7 @@ export const priceIndexes = Object.values(priceIndexesObj) as [
 
 // Order stages
 export const stagesObj = {
+  ALL: "ALL",
   ORDER: "ORDER",
   CLEANZONE: "CLEANZONE",
   DISTRIBUTION: "DISTRIBUTION",
@@ -52,7 +53,7 @@ export const customerTypes = Object.values(customerTypesObj) as [
 
 // Order statuses
 export const statusesObj = {
-  order: {
+  all: {
     ACCEPTED: "ACCEPTED",
     PREPARING: "PREPARING",
     PREPARED: "PREPARED",
@@ -60,11 +61,13 @@ export const statusesObj = {
     CANCELLED: "CANCELLED",
     RETURNED: "RETURNED",
   },
-  cleanZone: {
-    ACCEPTED: "ACCEPTED",
+  order: {
+    CANCELLED: "CANCELLED",
+    RETURNED: "RETURNED",
+  },
+  cleanzone: {
     PREPARING: "PREPARING",
     PREPARED: "PREPARED",
-    CANCELLED: "CANCELLED",
   },
 
   distribution: {
@@ -74,11 +77,16 @@ export const statusesObj = {
   },
 };
 
+export const allStatuses = Object.values(statusesObj.all) as [
+  string,
+  ...string[],
+];
+
 export const orderStatuses = Object.values(statusesObj.order) as [
   string,
   ...string[],
 ];
-export const cleanZoneStatuses = Object.values(statusesObj.cleanZone) as [
+export const cleanzoneStatuses = Object.values(statusesObj.cleanzone) as [
   string,
   ...string[],
 ];

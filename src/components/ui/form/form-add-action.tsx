@@ -19,7 +19,7 @@ export const FormAddAction = ({ isAdding, className }: FormAddActionProps) => {
     <div
       className={cn(
         "gap-2 w-full flex justify-end items-center mt-auto pb-4",
-        className
+        className,
       )}
     >
       <Button type="submit" disabled={isAdding}>

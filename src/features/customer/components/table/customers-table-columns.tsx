@@ -1,6 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import * as React from "react";
 
+import { PaymentMethodCell } from "@/components/ui";
+import { paymentMethodsObj } from "@/config";
 import { Customer } from "../../schema";
 
 export const useCustomerColumns = () => {
@@ -34,7 +36,11 @@ export const useCustomerColumns = () => {
       {
         accessorKey: "paymentMethod",
         header: () => "გადახდა",
-        cell: (info) => info.getValue(),
+        cell: (info) => (
+          <PaymentMethodCell
+            paymentOption={info.getValue() as keyof typeof paymentMethodsObj}
+          />
+        ),
       },
       {
         accessorKey: "needsInvoice",

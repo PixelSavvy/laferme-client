@@ -39,13 +39,13 @@ export const SelectCustomerProductField = ({
 
   // Filter out already appended products
   const productsToAppend = products?.filter(
-    (product) => !appendedProducts?.includes(product.productCode)
+    (product) => !appendedProducts?.includes(product.productCode),
   );
 
   // Append product to the form
   const handleSelect = (value: string) => {
     const selectedProduct = products?.find(
-      (product) => product.id === Number(value)
+      (product) => product.id === Number(value),
     ) as Product;
 
     if (selectedProduct) {

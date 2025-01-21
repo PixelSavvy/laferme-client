@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import {
+  CalendarField,
   Form,
-  FormCalendarField,
   FormSection,
   FormUpdateActions,
   SelectStatusField,
@@ -72,26 +72,25 @@ export const OrderRowExpanded = ({ row }: OrderRowExpandedProps) => {
           />
         </FormSection>
         {/* General details */}
-        <FormSection title="შეკვეთის დეტალები" className="items-start">
-          <FormCalendarField
+        <FormSection title="შეკვეთის დეტალები" className="items-stretch">
+          <CalendarField
             form={form}
             name="prepareDueAt"
             label="მომზადების თარიღი"
             disabled={isFormDisabled}
           />
-          <FormCalendarField
+          <CalendarField
             form={form}
             name="deliverDueAt"
             label="დისტრიბუციის თარიღი"
             disabled={isFormDisabled}
           />
-
           <SelectStatusField
             form={form}
             name="status"
             items={filteredStatuses}
             label="სტატუსი"
-            className="w-full -mt-1.5"
+            className="w-full self-end"
             placeholder={currentStatus.label}
             disabled={isFormDisabled}
           />

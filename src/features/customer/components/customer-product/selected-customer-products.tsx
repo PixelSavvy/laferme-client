@@ -26,7 +26,7 @@ export const SelectedCustomerProducts = ({
               key={field.id}
               className={cn(
                 "border p-2 rounded-md text-sm flex gap-4 items-center",
-                disabled && "opacity-50"
+                disabled && "opacity-50",
               )}
             >
               <Badge>{field.productCode}</Badge>

@@ -1,8 +1,15 @@
 import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
-import { AppDrawer, DataTable } from "@/components/ui";
+import {
+  AppDrawer,
+  CalendarFilter,
+  DataTable,
+  useCalendarFilter,
+} from "@/components/ui";
+import { apiPaths } from "@/config";
 import { DrawerProvider } from "@/context";
+import { DownloadButton } from "@/features/excel";
 import {
   AddOrderForm,
   getOrdersQueryOptions,
@@ -24,15 +31,16 @@ const OrdersRoute = () => {
   const { data: ordersData } = useOrders();
   const columns = useOrdersColumns();
 
-  if (!ordersData?.data) return null;
+  const { filteredData, fallback, ...rest } = useCalendarFilter();
 
-  const customers = ordersData.data.data.flat();
-  const fallback = ordersData.data.message;
+  if (!ordersData?.data) return null;
 
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
-      <DrawerProvider>
-        <div className="mb-6 flex justify-end">
+      <div className="flex justify-between items-center mb-6 gap-2">
+        <DownloadButton url={apiPaths.excel.getOrders} />
+        <CalendarFilter props={rest} className="mr-auto" />
+        <DrawerProvider>
           <AppDrawer
             title="მიმდინარე შეკვეთები"
             label="დაამატე შეკვეთა"
@@ -40,10 +48,10 @@ const OrdersRoute = () => {
           >
             <AddOrderForm />
           </AppDrawer>
-        </div>
-      </DrawerProvider>
+        </DrawerProvider>
+      </div>
       <DataTable
-        data={customers}
+        data={filteredData}
         columns={columns}
         fallback={fallback}
         renderSubComponent={({ row }) => <OrderRowExpanded row={row} />}

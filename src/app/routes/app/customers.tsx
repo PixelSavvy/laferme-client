@@ -2,6 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
 import { AppDrawer, DataTable } from "@/components/ui";
+import { apiPaths } from "@/config";
 import { DrawerProvider } from "@/context";
 import {
   AddCustomerForm,
@@ -10,6 +11,7 @@ import {
   useCustomerColumns,
   useCustomers,
 } from "@/features/customer";
+import { DownloadButton } from "@/features/excel";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getCustomersQueryOptions();
@@ -32,7 +34,8 @@ const CustomersRoute = () => {
   return (
     <ContentLayout title="სარეალიზაციო პუნქტები">
       <DrawerProvider>
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 flex justify-between">
+          <DownloadButton url={apiPaths.excel.getCustomers} />
           <AppDrawer
             title="სარეალიზაციო პუნქტები"
             label="დაამატე სარეალიზაციო პუნქტი"

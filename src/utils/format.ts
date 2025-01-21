@@ -7,7 +7,7 @@ import "dayjs/locale/ka"; // Georgian locale example
 export const formatDate = (date: string | Date) => {
   // Get locale from the <html> lang attribute
   const locale = ka;
-  const pattern = "d MMMM, y";
+  const pattern = "d MMM, y";
 
   // Format the date
   const formattedDate = format(date, pattern, { locale });

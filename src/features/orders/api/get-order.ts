@@ -6,7 +6,7 @@ import { GetEntity } from "@/shared/types";
 
 import { Order } from "../schema";
 
-export const getOrder = ({ id }: { id: number }): Promise<GetEntity<Order>> => {
+export const getOrder = (id: number): Promise<GetEntity<Order>> => {
   const path = `${apiPaths.app.order}/${id}`;
   return api.get(path);
 };
@@ -14,7 +14,7 @@ export const getOrder = ({ id }: { id: number }): Promise<GetEntity<Order>> => {
 export const getOrderQueryOptions = (id: number) => {
   return queryOptions({
     queryKey: ["orders", id],
-    queryFn: () => getOrder({ id }),
+    queryFn: () => getOrder(id),
   });
 };
 

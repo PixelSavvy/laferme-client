@@ -47,8 +47,11 @@ export const SelectOrderCustomer = ({
             product.prices[
               selectedOrderCustomer.priceIndex as keyof typeof product.prices
             ],
+          preparedQuantity: 0,
           quantity: 1,
           weight: 0,
+          preparedWeight: 0,
+          distributedWeight: 0,
         }) as OrderProduct
     );
 

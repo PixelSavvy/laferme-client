@@ -14,7 +14,7 @@ export const SelectedCustomer = ({ className = "" }: SelectedCustomerProps) => {
     <div
       className={cn(
         "bg-neutral-50 rounded-md p-4 w-full text-sm space-y-2",
-        className
+        className,
       )}
     >
       <div className="space-x-2">

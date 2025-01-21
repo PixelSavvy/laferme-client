@@ -1,11 +1,13 @@
+import * as React from "react";
+
 import { CustomerCell, StatusCell } from "@/components/ui";
 import { statusesObj } from "@/config";
-import { formatDate } from "@/utils";
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
-import { Order } from "../../schema";
 
-export const useOrdersColumns = () => {
+import { Order } from "@/features/orders";
+import { formatDate } from "@/utils/format";
+import { ColumnDef } from "@tanstack/react-table";
+
+export const useCleanzoneColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
   //   const vatA = rowA.original.hasVAT;
   //   const vatB = rowB.original.hasVAT;
@@ -13,7 +15,7 @@ export const useOrdersColumns = () => {
   //   return vatOrder.indexOf(vatA) - vatOrder.indexOf(vatB);
   // };
 
-  const columns = useMemo<ColumnDef<Order>[]>(
+  const columns = React.useMemo<ColumnDef<Order>[]>(
     () => [
       {
         accessorKey: "id",
@@ -24,7 +26,7 @@ export const useOrdersColumns = () => {
       {
         accessorKey: "prepareDueAt",
         header: () => "მომზადების თარიღი",
-        cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
+        cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
       {
@@ -38,9 +40,9 @@ export const useOrdersColumns = () => {
         ),
       },
       {
-        accessorKey: "deliverDueAt",
+        accessorKey: "prepareDueAt",
         header: () => "მიტანის თარიღი",
-        cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
+        cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
       {

@@ -22,12 +22,11 @@ export const SelectedOrderProducts = ({
     <div className="w-full">
       {fields && fields.length > 0 ? (
         <ul className="flex flex-col w-full gap-3">
-          <h4 className="text-sm font-medium mb-2">არჩეული პროდუქტები:</h4>
           {fields.map((field, index) => (
             <li
               key={field.id}
               className={cn(
-                "bg-neutral-50 p-2  rounded-md text-sm grid grid-cols-[4rem_1fr_repeat(3,4rem)_min-content] items-center gap-2",
+                "text-sm grid grid-cols-[4rem_1fr_repeat(3,4rem)_min-content] items-center gap-2",
                 disabled && "opacity-50"
               )}
             >
@@ -65,8 +64,7 @@ export const SelectedOrderProducts = ({
               />
 
               <Button
-                size="icon"
-                className="size-7 ml-2"
+                size={"icon"}
                 variant="destructive"
                 onClick={() => remove(index)}
                 type="button"

@@ -1,189 +1,160 @@
-import { GetEntities } from "@/shared/types";
-import { UseQueryResult } from "@tanstack/react-query";
-import { addDays, endOfDay, isBefore, startOfDay, subDays } from "date-fns";
-import { isEqual } from "lodash";
+import { addDays, isBefore, isEqual, startOfDay, subDays } from "date-fns";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
-type K = {
-  dueDateAt: Date | null;
-};
+import { Order } from "@/features/orders";
+import { GetEntities } from "@/shared/types";
+import { useLoaderData } from "react-router-dom";
 
-type useCalendarFilterProps<T extends K> = {
-  response: UseQueryResult<GetEntities<T>>;
-};
+export const useCalendarFilter = () => {
+  const data = useLoaderData() as GetEntities<Order[]>;
 
-export const UseCalendarFilter = <T extends K>({
-  response,
-}: useCalendarFilterProps<T>) => {
   const today = new Date();
 
-  const responseData = response.data?.data;
-  const responseMessage = response.data?.message;
+  const orders = data.data?.data;
+  const message = data.data?.message;
 
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
-  const [showAll, setShowAll] = useState(true);
+  const [filteredData, setFilteredData] = useState<Order[]>(orders);
+  const [fallback, setFallback] = useState<string>();
 
-  const [prevDay, setPrevDay] = useState(today);
-  const [nextDay, setNextDay] = useState(today);
-  const [currentDay, setCurrentDay] = useState(today);
+  const [date, setDate] = useState<DateRange | undefined>(undefined);
+  const [prev, setPrev] = useState(today);
+  const [next, setNext] = useState(today);
+  const [current, setCurrent] = useState(today);
 
-  const [filteredData, setFilteredData] = useState<T[]>([]);
-  const [fallback, setFallback] = useState<string | undefined>(responseMessage);
-
-  if (!responseData)
+  if (!data?.data) {
     return {
       filteredData: [],
-      fallback: responseMessage,
-      content: null,
-      showAll: true,
+      fallback: message || "No data available",
+      date: undefined,
+      prev: today,
+      next: today,
+      current: today,
     };
+  }
 
-  const adjustDateRange = (date: DateRange | undefined) => {
-    setDate(date);
+  // Filter by date range
+  const handleDateByRange = (range: DateRange | undefined) => {
+    setDate(range);
 
-    if (!date || !date.from || !date.to) {
-      setFilteredData(responseData);
-      setShowAll(true);
+    if (!range || !range.from || !range.to) {
+      setFilteredData(orders);
       return;
     }
 
-    const filtered = responseData.filter((data) => {
-      if (data.dueDateAt === null || !date.from || !date.to) return;
+    const filtered = orders.filter((order) => {
+      if (!order.deliverDueAt || !range || !range.from || !range.to) return;
 
-      const isCreatedAfterFrom = isBefore(data.dueDateAt, date.from);
-      const isCreatedBeforeTo = isBefore(date.to, data.dueDateAt);
-      const result = !isCreatedAfterFrom && !isCreatedBeforeTo;
+      // Filter by deliver date
+      const isDueAfterFrom = isBefore(
+        order.deliverDueAt,
+        startOfDay(range.from)
+      );
+      const isDueBeforeTo = isBefore(startOfDay(range.to), order.deliverDueAt);
 
-      return result;
+      const isDueBetweenRange = !isDueAfterFrom && !isDueBeforeTo;
+
+      if (!isDueBetweenRange) setFallback("შეკვეთები ვერ მოიძებნა");
+
+      return isDueBetweenRange;
     });
 
-    setShowAll(false);
     setFilteredData(filtered);
-    setFallback("ვერ მოიძებნა");
   };
 
-  const adjustDays = (direction: "prev" | "next" | "all") => {
+  // Filter by days
+  const handleDateByDays = (type: "prev" | "next" | "today") => {
     let newPrevDay: Date;
     let newNextDay: Date;
 
-    if (direction === "all") {
-      // Reset to initial state
-      newPrevDay = today;
-      newNextDay = today;
+    if (type === "today") {
+      newPrevDay = startOfDay(today);
+      newNextDay = startOfDay(today);
 
-      setPrevDay(newPrevDay);
-      setNextDay(newNextDay);
-      setCurrentDay(today);
-      setDate(undefined);
-      setShowAll(true);
-      setFilteredData(() => []);
-      setFallback(!filteredData.length ? responseMessage : undefined);
-      return;
-    }
+      setPrev(newPrevDay);
+      setNext(newNextDay);
+      setCurrent(today);
 
-    if (direction === "prev") {
-      newPrevDay = subDays(prevDay, 1);
-      newNextDay = subDays(nextDay, 1);
+      const filtered = orders.filter((order) => {
+        if (!order.deliverDueAt) return;
 
-      setPrevDay(newPrevDay);
-      setNextDay(newNextDay);
-      setCurrentDay(newPrevDay);
-
-      const filtered = responseData.filter((data) => {
-        if (data.dueDateAt === null) return;
-
-        const returnedData = isEqual(
-          startOfDay(data.dueDateAt),
-          startOfDay(newPrevDay),
+        const isDeliverDueToday = isEqual(
+          startOfDay(order.deliverDueAt),
+          startOfDay(today)
         );
 
-        if (!returnedData) setFallback("ვერ მოიძებნა");
+        if (!isDeliverDueToday) setFallback("შეკვეთები ვერ მოიძებნა");
 
-        return returnedData;
+        return isDeliverDueToday;
       });
 
-      setShowAll(false);
-      setFilteredData((prev) => [...prev, ...filtered]);
-    }
+      setDate({
+        from: today,
+        to: today,
+      });
+      setFilteredData(filtered);
+    } else if (type === "prev") {
+      newPrevDay = subDays(prev, 1);
+      newNextDay = subDays(next, 1);
 
-    if (direction === "next") {
-      newPrevDay = addDays(prevDay, 1);
-      newNextDay = addDays(nextDay, 1);
+      setPrev(newPrevDay);
+      setNext(newNextDay);
+      setCurrent(newPrevDay);
 
-      setPrevDay(newPrevDay);
-      setNextDay(newNextDay);
-      setCurrentDay(newNextDay);
+      const filtered = orders.filter((order) => {
+        if (!order.deliverDueAt) return;
 
-      const filtered = responseData.filter((data) => {
-        if (data.dueDateAt === null) return;
-
-        const returnedData = isEqual(
-          startOfDay(data.dueDateAt),
-          startOfDay(newPrevDay),
+        const isDeliverDueBeforePrev = isEqual(
+          startOfDay(order.deliverDueAt),
+          startOfDay(newPrevDay)
         );
 
-        if (!returnedData) setFallback("ვერ მოიძებნა");
+        if (!isDeliverDueBeforePrev) setFallback("შეკვეთები ვერ მოიძებნა");
 
-        return returnedData;
+        return isDeliverDueBeforePrev;
       });
 
-      setShowAll(false);
-      setFilteredData((prev) => [...prev, ...filtered]);
+      setFilteredData(filtered);
+    } else {
+      newPrevDay = addDays(prev, 1);
+      newNextDay = addDays(next, 1);
+
+      setPrev(newPrevDay);
+      setNext(newNextDay);
+      setCurrent(newNextDay);
+
+      const filtered = orders.filter((order) => {
+        if (!order.deliverDueAt) return;
+
+        const isDeliverDueAfterNext = isEqual(
+          startOfDay(order.deliverDueAt),
+          startOfDay(newPrevDay)
+        );
+
+        if (!isDeliverDueAfterNext) setFallback("შეკვეთები ვერ მოიძებნა");
+
+        return isDeliverDueAfterNext;
+      });
+
+      setFilteredData(filtered);
     }
   };
 
-  const handleSelectDateRange = (value: string) => {
-    let from: Date = today;
-    let to: Date = today;
-
-    if (value === "-1") {
-      from = startOfDay(subDays(today, 1));
-      to = endOfDay(subDays(today, 1));
-      setCurrentDay(subDays(today, 1));
-    }
-
-    if (value === "0") {
-      from = startOfDay(today);
-      to = endOfDay(today);
-      setCurrentDay(today);
-    }
-
-    if (value === "1") {
-      from = startOfDay(addDays(today, 1));
-      to = endOfDay(addDays(today, 1));
-      setCurrentDay(addDays(today, 1));
-    }
-
-    if (value === "7") {
-      from = startOfDay(addDays(today, 7));
-      to = endOfDay(addDays(today, 7));
-      setCurrentDay(addDays(today, 7));
-    }
-
-    adjustDateRange({ from, to });
-  };
-
-  const handleDateReset = () => {
-    setDate(undefined);
-    setShowAll(true);
-    setFilteredData(responseData);
+  const handleDateRangeRest = () => {
+    handleDateByRange(undefined);
   };
 
   return {
     filteredData,
     fallback,
-    showAll,
-    adjustDays,
-    handleSelectDateRange,
-    handleDateReset,
-    currentDay,
+    handleDateByDays,
+    handleDateByRange,
+    handleDateRangeRest,
     date,
-    prevDay,
-    nextDay,
-    adjustDateRange,
+    prev,
+    next,
+    current,
   };
 };
+
+export type UseCalendarFitler = ReturnType<typeof useCalendarFilter>;

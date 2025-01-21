@@ -1,4 +1,4 @@
-import { orderStatuses, stages, stagesObj, statusesObj } from "@/config";
+import { allStatuses, stages, stagesObj, statusesObj } from "@/config";
 import { customerSchema, newCustomerDefaultValues } from "@/features/customer";
 import { orderProductSchema } from "@/features/products";
 import { addDays } from "date-fns";
@@ -9,7 +9,7 @@ const orderSchema = z.object({
   id: z.coerce.number().nonnegative(),
   customerId: z.number().nonnegative(),
   customer: customerSchema,
-  status: z.enum(orderStatuses),
+  status: z.enum(allStatuses),
   stage: z.enum(stages),
 
   // For tracking how many times order has been updated in freezone
@@ -62,7 +62,7 @@ const newOrderDefaultValues: NewOrder = {
     ...newCustomerDefaultValues,
   },
   customerId: 0,
-  status: statusesObj.order.ACCEPTED,
+  status: statusesObj.all.ACCEPTED,
   stage: stagesObj.ORDER,
   updateCount: 0,
   products: [],

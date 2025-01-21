@@ -15,19 +15,19 @@ import {
   FormMessage,
 } from "./form";
 
-type FormCalendarFieldProps<T extends FieldValues> = {
+type CalendarFieldProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
   name: Path<T>;
   disabled?: boolean;
   label?: string;
 };
 
-export const FormCalendarField = <T extends FieldValues>({
+export const CalendarField = <T extends FieldValues>({
   form,
   name,
   label,
   disabled,
-}: FormCalendarFieldProps<T>) => {
+}: CalendarFieldProps<T>) => {
   return (
     <FormField
       control={form.control}
