@@ -13,12 +13,17 @@ import {
 import { cn } from "@/lib";
 import { formatDate } from "@/utils";
 
-type CalenderFilterProps = {
-  props: Omit<UseCalendarFitler, "filteredData" | "fallback">;
+type CalendarFilterProps = Omit<
+  UseCalendarFitler,
+  "fallback" | "filteredData"
+> & {
   className?: string;
 };
 
-export const CalendarFilter = ({ className, props }: CalenderFilterProps) => {
+export const CalendarFilter = ({
+  className,
+  ...props
+}: CalendarFilterProps) => {
   const formattedDateRange = props.date?.from ? (
     props.date.to ? (
       `${formatDate(props.date.from)} - ${formatDate(props.date.to)}`
@@ -38,7 +43,7 @@ export const CalendarFilter = ({ className, props }: CalenderFilterProps) => {
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("prev")}
-          disabled={!props.prev}
+          disabled={!props.prev || props.isDisabled}
         >
           <ChevronLeft />
           {formatDate(subDays(props.prev, 1))}
@@ -46,13 +51,14 @@ export const CalendarFilter = ({ className, props }: CalenderFilterProps) => {
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("today")}
+          disabled={props.isDisabled}
         >
           დღეს
         </Button>
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("next")}
-          disabled={!props.next}
+          disabled={!props.next || props.isDisabled}
         >
           {formatDate(addDays(props.next, 1))}
           <ChevronRight />
@@ -65,6 +71,7 @@ export const CalendarFilter = ({ className, props }: CalenderFilterProps) => {
           <Button
             variant="outline"
             className={cn(!props.date && "text-neutral-800", "w-[17.375rem]")}
+            disabled={props.isDisabled}
           >
             {formattedDateRange}
           </Button>

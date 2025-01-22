@@ -33,7 +33,7 @@ const ProductsRoute = () => {
     <ContentLayout title="პროდუქტები">
       <DrawerProvider>
         <div className="mb-6 flex justify-between">
-          <DownloadButton url={apiPaths.excel.getProducts} />
+          <DownloadButton url={apiPaths.excel.product} />
           <AppDrawer
             title="პროდუქტები"
             label="დაამატე პროდუქტი"

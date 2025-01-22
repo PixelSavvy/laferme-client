@@ -2,7 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
 import { CalendarFilter, DataTable, useCalendarFilter } from "@/components/ui";
-import { apiPaths } from "@/config";
+import { apiPaths, stagesObj } from "@/config";
 import {
   DistributionItemRowExpanded,
   useDistributionColumns,
@@ -21,20 +21,29 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const DistributionRoute = () => {
   const { data: distributionData } = useOrders();
+
   const columns = useDistributionColumns();
 
-  const { filteredData, fallback, ...rest } = useCalendarFilter();
+  const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
+    data: distributionData,
+  });
 
   if (!distributionData?.data) return null;
+
+  const distributionItems = filteredData.filter(
+    (item) =>
+      item.stage === stagesObj.DISTRIBUTION ||
+      item.stage === stagesObj.DELIVERED
+  );
 
   return (
     <ContentLayout title="დისტრიბუცია">
       <div className="flex justify-between items-center mb-6 gap-2">
-        <DownloadButton url={apiPaths.excel.getDistributionItems} />
-        <CalendarFilter props={rest} className="mr-auto" />
+        <DownloadButton url={apiPaths.excel.distribution} />
+        <CalendarFilter {...restCalendarProps} className="mr-auto" />
       </div>
       <DataTable
-        data={filteredData}
+        data={distributionItems}
         columns={columns}
         fallback={fallback}
         renderSubComponent={({ row }) => (
