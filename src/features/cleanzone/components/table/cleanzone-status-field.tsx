@@ -20,30 +20,32 @@ export const CleanzoneStatusField = ({
       disabled={disabled}
       render={({ field }) => (
         <ul className="flex gap-2">
-          {Object.entries(statusesObj.cleanzone).map(([key, value]) => (
-            <li
-              key={key}
-              className={cn(
-                "w-full mt-5 ",
-                disabled && "cursor-not-allowed opacity-50",
-              )}
-            >
-              <Badge
+          {Object.entries(statusesObj.cleanzone).map(([key, value]) => {
+            console.log(field.value);
+            return (
+              <li
+                key={key}
                 className={cn(
-                  "px-4 py-2 rounded-md transition-all w-full h-10",
-                  disabled && "pointer-events-none ",
-
-                  form.watch("status") === key
-                    ? "bg-primary"
-                    : "bg-neutral-200 text-neutral-800 hover:bg-neutral-300",
+                  "w-full mt-5 ",
+                  disabled && "cursor-not-allowed opacity-50",
                 )}
-                onClick={() => field.onChange(key)}
-                onBlur={field.onBlur}
               >
-                {convertStatus(value)}
-              </Badge>
-            </li>
-          ))}
+                <Badge
+                  className={cn(
+                    "px-4 py-2 rounded-md transition-all w-full h-10",
+                    disabled && "pointer-events-none ",
+
+                    form.watch("status") === key
+                      ? "bg-primary"
+                      : "bg-neutral-200 text-neutral-800 hover:bg-neutral-300",
+                  )}
+                  onClick={() => field.onChange(key)}
+                >
+                  {convertStatus(value)}
+                </Badge>
+              </li>
+            );
+          })}
         </ul>
       )}
     />

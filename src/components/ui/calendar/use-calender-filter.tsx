@@ -1,18 +1,19 @@
 import { addDays, isBefore, isEqual, startOfDay, subDays } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 
 import { Order } from "@/features/orders";
 import { GetEntities } from "@/shared/types";
-import { useLoaderData } from "react-router-dom";
 
-export const useCalendarFilter = () => {
-  const data = useLoaderData() as GetEntities<Order[]>;
+type UseCalendarFitlerProps = {
+  data: GetEntities<Order[]> | undefined;
+};
 
+export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
   const today = new Date();
 
-  const orders = data.data?.data;
-  const message = data.data?.message;
+  const orders = data?.data.data as Order[];
+  const message = data?.data.message;
 
   const [filteredData, setFilteredData] = useState<Order[]>(orders);
   const [fallback, setFallback] = useState<string>();
@@ -22,14 +23,21 @@ export const useCalendarFilter = () => {
   const [next, setNext] = useState(today);
   const [current, setCurrent] = useState(today);
 
-  if (!data?.data) {
+  const isDisabled = !orders?.length;
+
+  useEffect(() => {
+    setFilteredData(orders);
+  }, [orders]);
+
+  if (!data?.data.data.length) {
     return {
       filteredData: [],
-      fallback: message || "No data available",
+      fallback: message,
       date: undefined,
       prev: today,
       next: today,
       current: today,
+      isDisabled,
     };
   }
 
@@ -154,6 +162,7 @@ export const useCalendarFilter = () => {
     prev,
     next,
     current,
+    isDisabled,
   };
 };
 

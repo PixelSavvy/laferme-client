@@ -23,15 +23,17 @@ const CleanzoneRoute = () => {
   const { data: cleanzoneData } = useOrders();
   const columns = useCleanzoneColumns();
 
-  const { filteredData, fallback, ...rest } = useCalendarFilter();
+  const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
+    data: cleanzoneData,
+  });
 
   if (!cleanzoneData?.data) return null;
 
   return (
     <ContentLayout title="სუფთა ზონა">
       <div className="flex justify-between items-center mb-6 gap-2">
-        <DownloadButton url={apiPaths.excel.getCleanzoneItems} />
-        <CalendarFilter props={rest} className="mr-auto" />
+        <DownloadButton url={apiPaths.excel.cleanzone} />
+        <CalendarFilter {...restCalendarProps} className="mr-auto" />
       </div>
       <DataTable
         data={filteredData}

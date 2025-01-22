@@ -13,6 +13,7 @@ export const DownloadButton = ({ url, className }: DownloadButtonProps) => {
   const handleDownload = () => {
     downloadXLSFile(url, name);
   };
+
   return (
     <Button onClick={handleDownload} variant={"outline"} className={className}>
       <Download />

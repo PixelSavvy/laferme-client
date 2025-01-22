@@ -24,6 +24,7 @@ export const useCleanzoneColumns = () => {
         sortDescFirst: true,
       },
       {
+        id: "cleanzone",
         accessorKey: "prepareDueAt",
         header: () => "მომზადების თარიღი",
         cell: (info) => formatDate(info.getValue() as string),

@@ -31,15 +31,17 @@ const OrdersRoute = () => {
   const { data: ordersData } = useOrders();
   const columns = useOrdersColumns();
 
-  const { filteredData, fallback, ...rest } = useCalendarFilter();
+  const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
+    data: ordersData,
+  });
 
   if (!ordersData?.data) return null;
 
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
       <div className="flex justify-between items-center mb-6 gap-2">
-        <DownloadButton url={apiPaths.excel.getOrders} />
-        <CalendarFilter props={rest} className="mr-auto" />
+        <DownloadButton url={apiPaths.excel.order} />
+        <CalendarFilter className="mr-auto" {...restCalendarProps} />
         <DrawerProvider>
           <AppDrawer
             title="მიმდინარე შეკვეთები"

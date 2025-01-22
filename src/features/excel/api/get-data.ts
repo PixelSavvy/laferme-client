@@ -18,10 +18,8 @@ export const downloadXLSFile = async (
   try {
     const response = await api(config);
 
-    const noData = response.status === 204;
-
-    if (noData) {
-      toast.message("მონაცემები ვერ მოიძებნა");
+    if (response.status === 204) {
+      toast.message("მონაცემები გადმოსაწერად არ მოიძებნა");
       return null;
     }
 

@@ -5,7 +5,6 @@ import { api, QueryConfig } from "@/lib";
 import { GetEntity } from "@/shared/types";
 
 import { Order } from "../schema";
-
 export const getOrder = (id: number): Promise<GetEntity<Order>> => {
   const path = `${apiPaths.app.order}/${id}`;
   return api.get(path);
