@@ -60,9 +60,9 @@ export const SelectOrderProductField = ({
         ],
       quantity: 1,
       weight: 0,
-      distributedWeight: 0,
       preparedQuantity: 0,
       preparedWeight: 0,
+      distributedWeight: 0,
     };
 
     if (selectedProduct) {

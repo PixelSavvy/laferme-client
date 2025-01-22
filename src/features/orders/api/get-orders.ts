@@ -6,7 +6,7 @@ import { GetEntity } from "@/shared/types";
 import { Order } from "../schema";
 
 const getOrders = (): Promise<GetEntity<Order[]>> => {
-  const path = apiPaths.app.order;
+  const path = `${apiPaths.app.order}`;
   return api.get(path);
 };
 

@@ -50,8 +50,6 @@ export const apiPaths = {
     product: "/products",
     customer: "/customers",
     order: "/orders",
-    cleanzone: "/cleanzone",
-    distribution: "/distribution",
   },
   auth: {
     signin: "/auth/signin",
@@ -59,10 +57,10 @@ export const apiPaths = {
     resetPassword: "/auth/reset-password",
   },
   excel: {
-    getOrders: "/excel/orders",
-    getCleanzoneItems: "/excel/cleanzone",
-    getDistributionItems: "/excel/distribution",
-    getProducts: "/excel/products",
-    getCustomers: "/excel/customers",
+    order: "/excel/orders",
+    product: "/excel/products",
+    distribution: "/excel/distribution",
+    cleanzone: "/excel/cleanzone",
+    customer: "/excel/customers",
   },
 } as const;

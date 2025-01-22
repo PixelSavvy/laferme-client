@@ -35,7 +35,7 @@ const CustomersRoute = () => {
     <ContentLayout title="სარეალიზაციო პუნქტები">
       <DrawerProvider>
         <div className="mb-6 flex justify-between">
-          <DownloadButton url={apiPaths.excel.getCustomers} />
+          <DownloadButton url={apiPaths.excel.customer} />
           <AppDrawer
             title="სარეალიზაციო პუნქტები"
             label="დაამატე სარეალიზაციო პუნქტი"
