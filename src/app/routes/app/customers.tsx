@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
-import { AppDrawer, DataTable } from "@/components/ui";
+import { AppDrawer, DataTable, DebouncedInput } from "@/components/ui";
 import { apiPaths } from "@/config";
 import { DrawerProvider } from "@/context";
 import {
@@ -12,6 +12,7 @@ import {
   useCustomers,
 } from "@/features/customer";
 import { DownloadButton } from "@/features/excel";
+import { useState } from "react";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getCustomersQueryOptions();
@@ -23,6 +24,7 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 };
 
 const CustomersRoute = () => {
+  const [globalFilter, setGlobalFilter] = useState("");
   const { data: customersData } = useCustomers();
   const columns = useCustomerColumns();
 
@@ -34,8 +36,14 @@ const CustomersRoute = () => {
   return (
     <ContentLayout title="სარეალიზაციო პუნქტები">
       <DrawerProvider>
-        <div className="mb-6 flex justify-between">
+        <div className="mb-6 flex justify-between gap-2">
           <DownloadButton url={apiPaths.excel.customer} />
+          <DebouncedInput
+            value={globalFilter}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            placeholder="მოძებნე"
+            className="w-96 mr-auto"
+          />
           <AppDrawer
             title="სარეალიზაციო პუნქტები"
             label="დაამატე სარეალიზაციო პუნქტი"
@@ -51,6 +59,8 @@ const CustomersRoute = () => {
         fallback={fallback}
         renderSubComponent={({ row }) => <CustomerRowExpanded row={row} />}
         getRowCanExpand={() => true}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
       />
     </ContentLayout>
   );
