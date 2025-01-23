@@ -20,11 +20,13 @@ export const useCustomerColumns = () => {
         header: () => <span className="font-sans">ID</span>,
         cell: (info) => info.getValue(),
         sortDescFirst: true,
+        filterFn: "fuzzy",
       },
       {
         accessorKey: "priceIndex",
         header: "ინდექსი",
         cell: (info) => <span>{info.getValue() as string}</span>,
+        filterFn: "fuzzy",
       },
 
       {
@@ -32,6 +34,7 @@ export const useCustomerColumns = () => {
         header: () => "სარეალიზაციო პუქნტი",
         cell: (info) => <span>{info.getValue() as string}</span>,
         sortDescFirst: true,
+        filterFn: "fuzzy",
       },
       {
         accessorKey: "paymentMethod",
@@ -41,6 +44,7 @@ export const useCustomerColumns = () => {
             paymentOption={info.getValue() as keyof typeof paymentMethodsObj}
           />
         ),
+        filterFn: "fuzzy",
       },
       {
         accessorKey: "needsInvoice",
@@ -51,14 +55,16 @@ export const useCustomerColumns = () => {
         accessorKey: "phone",
         header: () => "ტელეფონი",
         cell: (info) => <span>{info.getValue() as string}</span>,
+        filterFn: "fuzzy",
       },
       {
         accessorKey: "email",
         header: () => "ელ. ფოსტა",
         cell: (info) => <span>{info.getValue() as string}</span>,
+        filterFn: "fuzzy",
       },
     ],
-    [],
+    []
   );
 
   return columns;

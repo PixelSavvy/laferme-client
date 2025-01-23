@@ -37,7 +37,7 @@ export const CalendarFilter = ({
   );
 
   return (
-    <div className={cn("grid grid-cols-2 gap-2", className)}>
+    <div className={cn("flex items-center gap-2", className)}>
       {/* Day Navigation */}
       <div className="grid grid-cols-3 gap-2">
         <Button

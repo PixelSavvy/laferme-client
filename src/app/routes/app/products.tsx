@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
-import { AppDrawer } from "@/components/ui";
+import { AppDrawer, DebouncedInput } from "@/components/ui";
 import { apiPaths } from "@/config";
 import { DrawerProvider } from "@/context";
 import { DownloadButton } from "@/features/excel";
@@ -11,6 +11,7 @@ import {
   ProductsTable,
   useProducts,
 } from "@/features/products";
+import { useState } from "react";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getProductsQueryOptions();
@@ -22,6 +23,7 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 };
 
 const ProductsRoute = () => {
+  const [globalFilter, setGlobalFilter] = useState("");
   const { data: productsData } = useProducts();
 
   if (!productsData?.data) return null;
@@ -32,8 +34,14 @@ const ProductsRoute = () => {
   return (
     <ContentLayout title="პროდუქტები">
       <DrawerProvider>
-        <div className="mb-6 flex justify-between">
+        <div className="mb-6  gap-2 flex justify-between">
           <DownloadButton url={apiPaths.excel.product} />
+          <DebouncedInput
+            value={globalFilter}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            placeholder="მოძებნე"
+            className="w-96 mr-auto"
+          />
           <AppDrawer
             title="პროდუქტები"
             label="დაამატე პროდუქტი"
@@ -43,7 +51,12 @@ const ProductsRoute = () => {
           </AppDrawer>
         </div>
       </DrawerProvider>
-      <ProductsTable data={products} fallback={fallback} />
+      <ProductsTable
+        data={products}
+        fallback={fallback}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
+      />
     </ContentLayout>
   );
 };

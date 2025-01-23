@@ -1,15 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   getCoreRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   RowSelectionState,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { DataTableHeaders, Form, Table } from "@/components/ui";
+import { fuzzyFilter } from "@/utils";
 import { Product, productSchema } from "../../schema";
 import { useProductColumns } from "./product-table-columns";
 import { ProductsDataTableBody } from "./products-table-body";
@@ -17,13 +19,20 @@ import { ProductsDataTableBody } from "./products-table-body";
 type ProductsTableProps = {
   data: Product[];
   fallback?: string;
+  globalFilter: string;
+  setGlobalFilter: Dispatch<SetStateAction<string>>;
 };
 
 type Products = {
   products: Product[];
 };
 
-export const ProductsTable = ({ data, fallback }: ProductsTableProps) => {
+export const ProductsTable = ({
+  data,
+  fallback,
+  globalFilter,
+  setGlobalFilter,
+}: ProductsTableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -50,6 +59,10 @@ export const ProductsTable = ({ data, fallback }: ProductsTableProps) => {
     data,
     columns,
 
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+
     getCoreRowModel: getCoreRowModel(),
 
     // Sorting
@@ -64,9 +77,13 @@ export const ProductsTable = ({ data, fallback }: ProductsTableProps) => {
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
 
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+
     state: {
       sorting,
       rowSelection,
+      globalFilter,
     },
   });
 

@@ -5,6 +5,7 @@ import {
   AppDrawer,
   CalendarFilter,
   DataTable,
+  DebouncedInput,
   useCalendarFilter,
 } from "@/components/ui";
 import { apiPaths } from "@/config";
@@ -17,6 +18,7 @@ import {
   useOrders,
   useOrdersColumns,
 } from "@/features/orders";
+import { useState } from "react";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getOrdersQueryOptions();
@@ -28,6 +30,8 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 };
 
 const OrdersRoute = () => {
+  const [globalFilter, setGlobalFilter] = useState("");
+
   const { data: ordersData } = useOrders();
   const columns = useOrdersColumns();
 
@@ -39,9 +43,22 @@ const OrdersRoute = () => {
 
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
-      <div className="flex justify-between items-center mb-6 gap-2">
+      {/* Filters */}
+      <div className="flex items-center gap-2 mb-6">
+        {/* Excel Download button */}
         <DownloadButton url={apiPaths.excel.order} />
-        <CalendarFilter className="mr-auto" {...restCalendarProps} />
+        {/* Calendar Filter */}
+        <CalendarFilter {...restCalendarProps} />
+
+        {/* Global Filter */}
+        <DebouncedInput
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          placeholder="მოძებნე"
+          className="flex-1"
+        />
+
+        {/* Add Order Form */}
         <DrawerProvider>
           <AppDrawer
             title="მიმდინარე შეკვეთები"
@@ -58,6 +75,8 @@ const OrdersRoute = () => {
         fallback={fallback}
         renderSubComponent={({ row }) => <OrderRowExpanded row={row} />}
         getRowCanExpand={() => true}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
       />
     </ContentLayout>
   );
