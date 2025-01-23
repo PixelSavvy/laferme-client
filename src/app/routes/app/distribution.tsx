@@ -40,7 +40,7 @@ const DistributionRoute = () => {
   const distributionItems = filteredData.filter(
     (item) =>
       item.stage === stagesObj.DISTRIBUTION ||
-      item.stage === stagesObj.DELIVERED
+      item.stage === stagesObj.DELIVERED,
   );
 
   return (

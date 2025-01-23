@@ -64,7 +64,7 @@ export const useCustomerColumns = () => {
         filterFn: "fuzzy",
       },
     ],
-    []
+    [],
   );
 
   return columns;
