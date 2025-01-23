@@ -173,3 +173,62 @@ export const priceIndexesItems = [
     value: "TRC",
   },
 ];
+
+export const remainderProductItems = [
+  {
+    value: "Q1",
+    label: "ქათამი - თავფეხით, ჯიგარით",
+  },
+  {
+    value: "V1",
+    label: "ვარია - თავფეხით, ჯიგრით",
+  },
+  {
+    value: "J1",
+    label: "წიწილა - თავფეხით, ჯიგარით",
+  },
+  {
+    value: "Q2",
+    label: "ქათამი - უთავფეხოდ",
+  },
+  {
+    value: "V2",
+    label: "ვარია - უთავფეხოდ",
+  },
+  {
+    value: "J2",
+    label: "წიწილა - უთავფეხოდ",
+  },
+  {
+    value: "QM1",
+    label: "მკერდი",
+  },
+  {
+    value: "QM2",
+    label: "ფილე",
+  },
+  {
+    value: "QB1",
+    label: "ბარკალი, ბარკლის ძირით",
+  },
+  {
+    value: "QF1",
+    label: "ფრთა, ფრთის ძირით",
+  },
+  {
+    value: "G2",
+    label: "გულ-ღვიძლი",
+  },
+  {
+    value: "G3",
+    label: "კუჭი",
+  },
+  {
+    value: "K1",
+    label: "კისერი + კარკასი",
+  },
+  {
+    value: "X1",
+    label: "ნარჩენი",
+  },
+];

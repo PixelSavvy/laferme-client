@@ -2,11 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import { Form, FormSection } from "@/components/ui";
+import { DialogContentTrigger, Form, FormSection } from "@/components/ui";
 import { statusesObj } from "@/config";
 import { Order, orderSchema } from "@/features/orders";
 
 import { useUpdateOrder } from "@/features/orders/services";
+import { AddRemainderForm } from "@/features/remainder";
 import { CleanzoneEditAction } from "./cleanzone-edit-action";
 import { CleanzoneStatusField } from "./cleanzone-status-field";
 import { CleanzoneTableRowProducts } from "./cleanzone-table-row-products";
@@ -40,7 +41,7 @@ export const CleanzoneItemRowExpanded = ({
   return (
     <Form {...form}>
       <form
-        className="grid grid-cols-[1fr_24rem] gap-x-24"
+        className="grid grid-cols-[1fr_repeat(2,max-content)] gap-x-8"
         onSubmit={(e) => void form.handleSubmit(update)(e)}
       >
         {/* Products */}
@@ -53,6 +54,18 @@ export const CleanzoneItemRowExpanded = ({
         {/* Status */}
         <FormSection title="შეკვეთის სტატუსი" className="flex-col items-start">
           <CleanzoneStatusField disabled={isFormDisabled} />
+        </FormSection>
+
+        {/* Remainder Form */}
+        <FormSection title="ნაშთი" className="flex-col items-start">
+          <DialogContentTrigger
+            label="ნაშთის მართვა"
+            header="დაამატე ნაშთი"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            className="mt-5"
+          >
+            <AddRemainderForm />
+          </DialogContentTrigger>
         </FormSection>
 
         {/* Form Actions */}
