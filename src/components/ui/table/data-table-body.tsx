@@ -23,9 +23,12 @@ export const DataTableBody = <Data, Value>({
       {rows.length ? (
         rows.map((row) => (
           <Fragment key={row.id}>
-            <TableRow onClick={() => row.toggleExpanded()}>
+            <TableRow
+              onClick={() => row.toggleExpanded()}
+              className="even:bg-neutral-50"
+            >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell key={cell.id} className="border-b">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

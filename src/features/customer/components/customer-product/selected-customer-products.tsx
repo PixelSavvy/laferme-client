@@ -17,16 +17,15 @@ export const SelectedCustomerProducts = ({
   disabled,
 }: SelectedCustomerProductsProps) => {
   return (
-    <div>
+    <>
       {fields && fields.length > 0 ? (
-        <ul className="flex flex-col w-full gap-3">
-          <h4 className="text-sm font-medium mb-2">არჩეული პროდუქტები:</h4>
+        <ul className="flex flex-col w-full gap-3 ">
           {fields.map((field, index) => (
             <li
               key={field.id}
               className={cn(
-                "border p-2 rounded-md text-sm flex gap-4 items-center",
-                disabled && "opacity-50",
+                "border p-2 rounded-md text-sm flex gap-4 items-center ",
+                disabled && "opacity-50"
               )}
             >
               <Badge>{field.productCode}</Badge>
@@ -50,6 +49,6 @@ export const SelectedCustomerProducts = ({
           პროდუქტები არ არის არჩეული
         </span>
       )}
-    </div>
+    </>
   );
 };

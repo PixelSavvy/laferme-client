@@ -159,15 +159,15 @@ export const AddCustomerForm = () => {
           title="პროდუქტები"
           className="flex flex-col gap-4 items-start"
         >
-          <SelectCustomerProductField
-            disabled={false}
-            fields={fields}
-            append={append as never}
-          />
           <SelectedCustomerProducts
             fields={fields}
             remove={remove}
             disabled={false}
+          />
+          <SelectCustomerProductField
+            disabled={false}
+            fields={fields}
+            append={append as never}
           />
         </FormSection>
 
