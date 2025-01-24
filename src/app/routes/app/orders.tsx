@@ -39,8 +39,6 @@ const OrdersRoute = () => {
     data: ordersData,
   });
 
-  if (!ordersData?.data) return null;
-
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
       <div className="grid grid-cols-2 gap-6 mb-7">

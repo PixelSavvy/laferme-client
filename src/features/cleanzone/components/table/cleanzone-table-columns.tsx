@@ -21,7 +21,9 @@ export const useCleanzoneColumns = () => {
       {
         accessorKey: "id",
         header: () => <span className="font-sans">ID</span>,
-        cell: (info) => info.getValue(),
+        cell: (info) => (
+          <span className="text-primary/80">{info.getValue() as number}</span>
+        ),
         sortDescFirst: true,
       },
       {
@@ -37,7 +39,7 @@ export const useCleanzoneColumns = () => {
         sortDescFirst: true,
       },
       {
-        accessorKey: "customer",
+        accessorKey: "customer.name",
         header: () => (
           <span className="flex gap-1 items-center">
             <User size={16} />
@@ -78,7 +80,7 @@ export const useCleanzoneColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

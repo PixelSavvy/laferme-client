@@ -19,8 +19,10 @@ export const useOrdersColumns = () => {
       {
         accessorKey: "id",
         header: () => <span className="font-sans">ID</span>,
-        cell: (info) => info.getValue(),
-        sortDescFirst: true,
+        cell: (info) => (
+          <span className="text-primary/80">{info.getValue() as number}</span>
+        ),
+        sortDescFirst: false,
       },
       {
         accessorKey: "prepareDueAt",
@@ -34,7 +36,7 @@ export const useOrdersColumns = () => {
         sortDescFirst: true,
       },
       {
-        accessorKey: "customer",
+        accessorKey: "customer.name",
         header: () => (
           <span className="flex gap-1 items-center">
             <User size={16} />
@@ -75,7 +77,7 @@ export const useOrdersColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

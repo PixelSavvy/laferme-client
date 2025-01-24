@@ -8,6 +8,7 @@ type DataTableBodyProps<Data, Value> = {
   columns: ColumnDef<Data, Value>[];
   renderSubComponent?: (props: { row: Row<Data> }) => ReactNode;
   fallback: string | undefined;
+  isPending?: boolean;
 };
 
 export const DataTableBody = <Data, Value>({
@@ -25,7 +26,7 @@ export const DataTableBody = <Data, Value>({
           <Fragment key={row.id}>
             <TableRow
               onClick={() => row.toggleExpanded()}
-              className="even:bg-neutral-50"
+              className="even:bg-primary/5"
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="border-b">

@@ -55,7 +55,7 @@ const CustomersRoute = () => {
           <AppDrawer
             title="სარეალიზაციო პუნქტები"
             label="დაამატე კლიენტი"
-            className="max-w-2xl"
+            className="max-w-xl"
           >
             <AddCustomerForm />
           </AppDrawer>

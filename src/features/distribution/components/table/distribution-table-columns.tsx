@@ -36,7 +36,7 @@ export const useDistributionColumns = () => {
       },
 
       {
-        accessorKey: "customer",
+        accessorKey: "customer.name",
         header: () => (
           <span className="flex gap-1 items-center">
             <User size={16} />
@@ -90,7 +90,7 @@ export const useDistributionColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;
