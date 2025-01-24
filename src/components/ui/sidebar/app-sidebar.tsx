@@ -1,5 +1,6 @@
+import { appPaths } from "@/config";
 import {
-  ChevronDown,
+  LogOut,
   ShoppingBasket,
   ShoppingCart,
   Truck,
@@ -8,14 +9,17 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { Link } from "react-router-dom";
-
-import { appPaths } from "@/config";
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar/avatar";
+import { Avatar, AvatarImage } from "../avatar";
+import { Button } from "../button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../collapsible/collapsible";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -27,186 +31,76 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
   SidebarSeparator,
 } from "./sidebar";
 
-/** Type Definitions */
-interface SubMenuItem {
-  title: string;
-  url: string;
-}
-
-interface MenuItem {
-  title: string;
-  icon: React.ComponentType;
-  subMenu?: SubMenuItem[];
-}
-
 /** Menu Configuration */
-const MENU_ITEMS: MenuItem[] = [
+const MENU_ITEMS = [
   {
     title: "შეკვეთები",
     icon: ShoppingCart,
-    subMenu: [
-      {
-        title: "მიმდინარე",
-        url: appPaths.app.orders.getHref(),
-      },
-      {
-        title: "რეპორტები",
-        url: appPaths.app.orders.getHref(),
-      },
-    ],
+    url: appPaths.app.orders.getHref(),
   },
   {
     title: "სუფთა ზონა",
     icon: VenetianMask,
-    subMenu: [
-      {
-        title: "მიმდინარე",
-        url: appPaths.app.cleanzone.getHref(),
-      },
-      {
-        title: "რეპორტები",
-        url: appPaths.app.cleanzone.getHref(),
-      },
-    ],
+    url: appPaths.app.cleanzone.getHref(),
   },
   {
     title: "დისტრიბუცია",
     icon: Truck,
-    subMenu: [
-      {
-        title: "მიმდინარე",
-        url: appPaths.app.distribution.getHref(),
-      },
-      {
-        title: "რეპორტები",
-        url: appPaths.app.distribution.getHref(),
-      },
-    ],
+    url: appPaths.app.distribution.getHref(),
+  },
+  {
+    title: "კლიენტები",
+    icon: Users2,
+    url: appPaths.app.customers.path,
+  },
+  {
+    title: "პროდუქტები",
+    icon: ShoppingBasket,
+    url: appPaths.app.products.path,
   },
 ];
 
-/** Sidebar Header Component */
-const SidebarHeaderComponent: React.FC = () => (
-  <SidebarHeader className="flex-row items-center justify-between gap-0 p-0">
-    <Avatar className="">
-      <AvatarImage />
-      <AvatarFallback>გმ</AvatarFallback>
-    </Avatar>
-    <div className="flex flex-col items-start justify-center">
-      <h2>გიორგი მენაბდიშვილი</h2>
-      <span>გაყიდვების დეპარტამენტი</span>
-    </div>
-  </SidebarHeader>
-);
-
-/** Sidebar Menu Item Component */
-interface SidebarMenuItemProps {
-  item: MenuItem;
-  isOpen: boolean;
-  toggle: (title: string) => void;
-}
-
-const SidebarMenuItemComponent: React.FC<SidebarMenuItemProps> = ({
-  item,
-  isOpen,
-  toggle,
-}) => (
-  <SidebarMenuItem key={item.title}>
-    <Collapsible
-      open={isOpen}
-      onOpenChange={() => toggle(item.title)}
-      className="group/collapsible"
-    >
-      <CollapsibleTrigger asChild>
-        <SidebarMenuButton className="h-12 pl-2  md:pl-3 lg:pl-4">
-          <item.icon />
-          <span>{item.title}</span>
-          <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-        </SidebarMenuButton>
-      </CollapsibleTrigger>
-      {item.subMenu && (
-        <CollapsibleContent>
-          <SidebarMenuSub className="mx-6 my-1 gap-0">
-            {item.subMenu.map((subItem) => (
-              <SidebarMenuSubItem key={subItem.title}>
-                <SidebarMenuSubButton asChild className="h-8">
-                  <Link to={subItem.url}>{subItem.title}</Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            ))}
-          </SidebarMenuSub>
-        </CollapsibleContent>
-      )}
-    </Collapsible>
-  </SidebarMenuItem>
-);
-
 /** Main Sidebar Component */
 export const AppSidebar: React.FC = () => {
-  const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({});
-
-  /** Toggles the open state of a menu item */
-  const toggleItem = (title: string) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
-  };
-
   return (
     <Sidebar collapsible="offcanvas">
-      <SidebarContent className="gap-0 p-6 md:px-6 md:py-8">
+      <SidebarContent className="gap-0 p-4">
         {/* Sidebar Header */}
-        <SidebarHeaderComponent />
+        <SidebarHeader className="place-content-center">
+          <Avatar className="w-36 h-14">
+            <AvatarImage
+              src="/logo/laferme-logo.webp"
+              alt="ლა ფერმა - ლოგო"
+              className="aspect-video"
+            />
+          </Avatar>
+        </SidebarHeader>
 
         {/* Separator */}
-        <SidebarSeparator className="my-6" />
+        <SidebarSeparator className="mb-4" />
 
         {/* Sidebar Main Content */}
         <SidebarGroup className="gap-4 p-0">
           <SidebarGroupLabel>მართვის პანელი</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {/* Render Menu Items */}
               {MENU_ITEMS.map((item) => (
-                <SidebarMenuItemComponent
-                  key={item.title}
-                  item={item}
-                  isOpen={openItems[item.title] || false}
-                  toggle={toggleItem}
-                />
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className="h-12 pl-2 md:pl-3 lg:pl-4"
+                  >
+                    <Link to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               ))}
-
-              {/* Additional Static Menu Items */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  className="h-12 pl-2  md:pl-3 lg:pl-4"
-                  asChild
-                >
-                  <Link to={appPaths.app.customers.path}>
-                    <Users2 />
-                    <span>კლიენტები</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  className="h-12 pl-2  md:pl-3 lg:pl-4"
-                  asChild
-                >
-                  <Link to={appPaths.app.products.path}>
-                    <ShoppingBasket />
-                    <span>პროდუქტები</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -215,13 +109,36 @@ export const AppSidebar: React.FC = () => {
         <SidebarSeparator className="mt-auto" />
 
         {/* Sidebar Footer */}
-        <SidebarFooter>
+        <SidebarFooter className="mt-2">
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                className="h-12 pl-4 "
-              ></SidebarMenuButton>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="w-full">
+                  <Button
+                    variant={"ghost"}
+                    className="flex justify-start items-center gap-3 w-full p-0"
+                  >
+                    <Avatar>
+                      <AvatarImage src="https://images.unsplash.com/photo-1640960543409-dbe56ccc30e2?q=80&w=2725&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                    </Avatar>
+                    <div className="text-xs flex flex-col items-start">
+                      <span>გიორგი მენაბდიშვილი</span>
+                      <span className="text-neutral-400">გაყიდები</span>
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40" side="top">
+                  <DropdownMenuLabel>ანგარიში</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>პროფილი</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <LogOut /> გამოსვლა
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
