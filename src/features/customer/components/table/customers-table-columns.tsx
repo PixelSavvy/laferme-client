@@ -19,7 +19,9 @@ export const useCustomerColumns = () => {
       {
         accessorKey: "id",
         header: () => <span className="font-sans">ID</span>,
-        cell: (info) => info.getValue(),
+        cell: (info) => (
+          <span className="text-primary/80">{info.getValue() as number}</span>
+        ),
         sortDescFirst: true,
         filterFn: "fuzzy",
       },

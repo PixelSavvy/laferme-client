@@ -20,14 +20,14 @@ export const ProductsDataTableBody = ({
     <TableBody>
       {rows.length ? (
         rows.map((row) => (
-          <TableRow key={row.id} className="even:bg-neutral-50">
+          <TableRow key={row.id} className="even:bg-primary/5">
             {row.getVisibleCells().map((cell) => (
               <TableCell
                 key={cell.id}
                 className={cn(
                   row.getIsSelected() ? "bg-neutral-100" : "",
                   "",
-                  "p-2 border-b "
+                  "px-1 py-2 border-b "
                 )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

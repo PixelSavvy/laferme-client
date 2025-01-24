@@ -71,6 +71,7 @@ export const DataTable = <Data, Value>({
   return (
     <Table>
       <DataTableHeaders table={table} />
+
       <DataTableBody
         columns={columns}
         table={table}

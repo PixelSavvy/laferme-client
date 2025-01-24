@@ -31,11 +31,12 @@ export const DataTableHeaders = <Data,>({
             >
               {!header.isPlaceholder && (
                 <div
-                  className={
+                  className={cn(
+                    "flex items-center gap-1", // Flexbox for alignment
                     header.column.getCanSort()
                       ? "cursor-pointer select-none"
-                      : undefined
-                  }
+                      : ""
+                  )}
                   onClick={
                     header.column.getCanSort()
                       ? header.column.getToggleSortingHandler()
@@ -51,16 +52,23 @@ export const DataTableHeaders = <Data,>({
                       : undefined
                   }
                 >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  {header.column.getIsSorted() === "asc" && (
-                    <ArrowUp className="inline ml-1 size-4" />
-                  )}
-                  {header.column.getIsSorted() === "desc" && (
-                    <ArrowDown className="inline ml-1 size-4" />
-                  )}
+                  {/* Header Title */}
+                  <span>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </span>
+
+                  {/* Sorting Arrows with Reserved Width */}
+                  <div className="w-4 h-4 flex justify-center items-center">
+                    {header.column.getIsSorted() === "asc" && (
+                      <ArrowUp className="w-4 h-4" />
+                    )}
+                    {header.column.getIsSorted() === "desc" && (
+                      <ArrowDown className="w-4 h-4" />
+                    )}
+                  </div>
                 </div>
               )}
             </TableHead>
