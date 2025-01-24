@@ -5,6 +5,7 @@ import { paymentMethodsObj, statusesObj } from "@/config";
 import { Order } from "@/features/orders";
 import { formatDate } from "@/utils";
 import { ColumnDef } from "@tanstack/react-table";
+import { Bookmark, Calendar, DollarSign, Landmark, User } from "lucide-react";
 
 export const useDistributionColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
@@ -24,14 +25,24 @@ export const useDistributionColumns = () => {
       },
       {
         accessorKey: "deliverDueAt",
-        header: () => "მიწოდების თარიღი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Calendar size={16} />
+            <span>მიტანის თარიღი</span>
+          </span>
+        ),
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
 
       {
         accessorKey: "customer",
-        header: "სარეალიზაციო პუნქტი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <User size={16} />
+            <span>სარეალიზაციო პუნქტი</span>
+          </span>
+        ),
         cell: ({ row }) => (
           <CustomerCell
             customer={row.original.customer}
@@ -41,12 +52,22 @@ export const useDistributionColumns = () => {
       },
       {
         accessorKey: "total",
-        header: () => "თანხა",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <DollarSign size={16} />
+            <span>თანხა</span>
+          </span>
+        ),
         cell: (info) => `${info.getValue()} ₾`,
       },
       {
         accessorKey: "customer.paymentMethod",
-        header: () => "გადახდა",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Landmark size={16} />
+            <span>გადახდა</span>
+          </span>
+        ),
         cell: (info) => (
           <PaymentMethodCell
             paymentOption={info.getValue() as keyof typeof paymentMethodsObj}
@@ -55,7 +76,12 @@ export const useDistributionColumns = () => {
       },
       {
         accessorKey: "status",
-        header: () => "სტატუსი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Bookmark size={16} />
+            <span>სტატუსი</span>
+          </span>
+        ),
         cell: (info) => (
           <StatusCell
             status={info.getValue() as keyof typeof statusesObj}
@@ -64,7 +90,7 @@ export const useDistributionColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

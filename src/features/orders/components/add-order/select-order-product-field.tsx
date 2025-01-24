@@ -8,10 +8,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectItemSkeleton,
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  Skeleton,
 } from "@/components/ui";
 import { OrderProduct, Product, useProducts } from "@/features/products";
 
@@ -42,13 +42,13 @@ export const SelectOrderProductField = ({
 
   // Filter out already appended products
   const productsToAppend = products?.filter(
-    (product) => !appendedProducts.includes(product.productCode),
+    (product) => !appendedProducts.includes(product.productCode)
   );
 
   // Append product to the form
   const handleSelect = (value: string) => {
     const selectedProduct = products?.find(
-      (product) => product.id === Number(value),
+      (product) => product.id === Number(value)
     ) as Product;
 
     const transformedProduct: OrderProduct = {
@@ -60,7 +60,7 @@ export const SelectOrderProductField = ({
         ],
       quantity: 1,
       weight: 0,
-      preparedQuantity: 0,
+      preparedQuantity: 1,
       preparedWeight: 0,
       distributedWeight: 0,
     };
@@ -85,7 +85,7 @@ export const SelectOrderProductField = ({
             <SelectContent>
               <SelectGroup>
                 {isPending ? (
-                  <SelectItemSkeleton />
+                  <Skeleton />
                 ) : isSuccess &&
                   productsToAppend &&
                   productsToAppend.length > 0 ? (

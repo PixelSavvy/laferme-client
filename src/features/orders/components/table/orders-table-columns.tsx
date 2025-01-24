@@ -2,6 +2,7 @@ import { CustomerCell, StatusCell } from "@/components/ui";
 import { statusesObj } from "@/config";
 import { formatDate } from "@/utils";
 import { ColumnDef } from "@tanstack/react-table";
+import { Bookmark, Calendar, User } from "lucide-react";
 import { useMemo } from "react";
 import { Order } from "../../schema";
 
@@ -23,13 +24,23 @@ export const useOrdersColumns = () => {
       },
       {
         accessorKey: "prepareDueAt",
-        header: () => "მომზადების თარიღი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Calendar size={16} />
+            <span>მომზადების თარიღი</span>
+          </span>
+        ),
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
       {
         accessorKey: "customer",
-        header: "სარეალიზაციო პუნქტი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <User size={16} />
+            <span>სარეალიზაციო პუნქტი</span>
+          </span>
+        ),
         cell: ({ row }) => (
           <CustomerCell
             customer={row.original.customer}
@@ -39,13 +50,23 @@ export const useOrdersColumns = () => {
       },
       {
         accessorKey: "deliverDueAt",
-        header: () => "მიტანის თარიღი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Calendar size={16} />
+            <span>მიტანის თარიღი</span>
+          </span>
+        ),
         cell: (info) => <span>{formatDate(info.getValue() as string)}</span>,
         sortDescFirst: true,
       },
       {
         accessorKey: "status",
-        header: () => "სტატუსი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Bookmark size={16} />
+            <span>სტატუსი</span>
+          </span>
+        ),
         cell: (info) => (
           <StatusCell
             data={statusesObj.all}
@@ -54,7 +75,7 @@ export const useOrdersColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

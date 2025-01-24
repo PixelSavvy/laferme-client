@@ -72,28 +72,35 @@ export const OrderRowExpanded = ({ row }: OrderRowExpandedProps) => {
           />
         </FormSection>
         {/* General details */}
-        <FormSection title="შეკვეთის დეტალები" className="items-stretch">
-          <CalendarField
-            form={form}
-            name="prepareDueAt"
-            label="მომზადების თარიღი"
-            disabled={isFormDisabled}
-          />
-          <CalendarField
-            form={form}
-            name="deliverDueAt"
-            label="დისტრიბუციის თარიღი"
-            disabled={isFormDisabled}
-          />
-          <SelectStatusField
-            form={form}
-            name="status"
-            items={filteredStatuses}
-            label="სტატუსი"
-            className="w-full self-end"
-            placeholder={currentStatus.label}
-            disabled={isFormDisabled}
-          />
+        <FormSection
+          title="შეკვეთის დეტალები"
+          className="flex-col items-stretch"
+        >
+          {/* Data */}
+          <FormSection>
+            {/* Details */}
+            <CalendarField
+              form={form}
+              name="prepareDueAt"
+              label="მომზადების თარიღი"
+              disabled={isFormDisabled}
+            />
+            <CalendarField
+              form={form}
+              name="deliverDueAt"
+              label="დისტრიბუციის თარიღი"
+              disabled={isFormDisabled}
+            />
+            <SelectStatusField
+              form={form}
+              name="status"
+              items={filteredStatuses}
+              label="სტატუსი"
+              className="w-full self-end"
+              placeholder={currentStatus.label}
+              disabled={isFormDisabled}
+            />
+          </FormSection>
         </FormSection>
 
         {/* Form Actions */}

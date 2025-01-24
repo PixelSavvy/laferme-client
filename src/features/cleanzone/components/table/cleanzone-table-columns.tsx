@@ -6,6 +6,7 @@ import { statusesObj } from "@/config";
 import { Order } from "@/features/orders";
 import { formatDate } from "@/utils/format";
 import { ColumnDef } from "@tanstack/react-table";
+import { Bookmark, Calendar, User } from "lucide-react";
 
 export const useCleanzoneColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
@@ -26,13 +27,23 @@ export const useCleanzoneColumns = () => {
       {
         id: "cleanzone",
         accessorKey: "prepareDueAt",
-        header: () => "მომზადების თარიღი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Calendar size={16} />
+            <span>მომზადების თარიღი</span>
+          </span>
+        ),
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
       {
         accessorKey: "customer",
-        header: "სარეალიზაციო პუნქტი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <User size={16} />
+            <span>სარეალიზაციო პუნქტი</span>
+          </span>
+        ),
         cell: ({ row }) => (
           <CustomerCell
             customer={row.original.customer}
@@ -42,13 +53,23 @@ export const useCleanzoneColumns = () => {
       },
       {
         accessorKey: "prepareDueAt",
-        header: () => "მიტანის თარიღი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Calendar size={16} />
+            <span>მიტანის თარიღი</span>
+          </span>
+        ),
         cell: (info) => formatDate(info.getValue() as string),
         sortDescFirst: true,
       },
       {
         accessorKey: "status",
-        header: () => "სტატუსი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Bookmark size={16} />
+            <span>სტატუსი</span>
+          </span>
+        ),
         cell: (info) => (
           <StatusCell
             data={statusesObj.all}
@@ -57,7 +78,7 @@ export const useCleanzoneColumns = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   return columns;

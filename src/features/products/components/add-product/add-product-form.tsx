@@ -27,7 +27,7 @@ export const AddProductForm = () => {
   return (
     <Form {...form}>
       <form
-        className="h-full flex flex-col gap-8"
+        className="h-full flex flex-col gap-8 "
         onSubmit={(e) => void form.handleSubmit(create)(e)}
       >
         {/* Product info */}

@@ -1,6 +1,7 @@
 import { allStatuses, stages, stagesObj, statusesObj } from "@/config";
 import { customerSchema, newCustomerDefaultValues } from "@/features/customer";
 import { orderProductSchema } from "@/features/products";
+import { surplusSchema } from "@/features/surplus";
 import { addDays } from "date-fns";
 import { z } from "zod";
 
@@ -11,6 +12,12 @@ const orderSchema = z.object({
   customer: customerSchema,
   status: z.enum(allStatuses),
   stage: z.enum(stages),
+
+  // Surplus
+  surplus: surplusSchema.nullable(),
+
+  // Notes
+  note: z.string().nullable(),
 
   // For tracking how many times order has been updated in freezone
   updateCount: z.number().int().nonnegative(),
@@ -41,6 +48,7 @@ const orderSchema = z.object({
 const newOrderSchema = orderSchema
   .omit({
     id: true,
+    note: true,
   })
   .superRefine((data) => {
     // If prepareDueAt is not provided, set it to the next day
@@ -64,6 +72,9 @@ const newOrderDefaultValues: NewOrder = {
   customerId: 0,
   status: statusesObj.all.ACCEPTED,
   stage: stagesObj.ORDER,
+
+  surplus: null,
+
   updateCount: 0,
   products: [],
   total: 0,
