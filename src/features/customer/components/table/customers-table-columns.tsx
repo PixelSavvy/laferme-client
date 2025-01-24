@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { PaymentMethodCell } from "@/components/ui";
 import { paymentMethodsObj } from "@/config";
+import { Landmark, Mail, Paperclip, Phone, Users } from "lucide-react";
 import { Customer } from "../../schema";
 
 export const useCustomerColumns = () => {
@@ -24,21 +25,31 @@ export const useCustomerColumns = () => {
       },
       {
         accessorKey: "priceIndex",
-        header: "ინდექსი",
+        header: () => <span>ინდექსი</span>,
         cell: (info) => <span>{info.getValue() as string}</span>,
         filterFn: "fuzzy",
       },
 
       {
         accessorKey: "name",
-        header: () => "სარეალიზაციო პუქნტი",
+        header: () => (
+          <span className="flex items-center gap-1">
+            <Users size={16} />
+            სარეალიზაციო პუქნტი
+          </span>
+        ),
         cell: (info) => <span>{info.getValue() as string}</span>,
         sortDescFirst: true,
         filterFn: "fuzzy",
       },
       {
         accessorKey: "paymentMethod",
-        header: () => "გადახდა",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Landmark size={16} />
+            <span>გადახდა</span>
+          </span>
+        ),
         cell: (info) => (
           <PaymentMethodCell
             paymentOption={info.getValue() as keyof typeof paymentMethodsObj}
@@ -48,23 +59,38 @@ export const useCustomerColumns = () => {
       },
       {
         accessorKey: "needsInvoice",
-        header: () => "ზედნადები",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Paperclip size={16} />
+            <span>ზედნადები</span>
+          </span>
+        ),
         cell: (info) => <span>{info.getValue() === "1" ? "კი" : "არა"}</span>,
       },
       {
         accessorKey: "phone",
-        header: () => "ტელეფონი",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Phone size={16} />
+            <span>ტელეფონი</span>
+          </span>
+        ),
         cell: (info) => <span>{info.getValue() as string}</span>,
         filterFn: "fuzzy",
       },
       {
         accessorKey: "email",
-        header: () => "ელ. ფოსტა",
+        header: () => (
+          <span className="flex gap-1 items-center">
+            <Mail size={16} />
+            <span>ელ. ფოსტა</span>
+          </span>
+        ),
         cell: (info) => <span>{info.getValue() as string}</span>,
         filterFn: "fuzzy",
       },
     ],
-    [],
+    []
   );
 
   return columns;
