@@ -26,7 +26,7 @@ export const CleanzoneStatusField = ({
                 key={key}
                 className={cn(
                   "w-full mt-5 ",
-                  disabled && "cursor-not-allowed opacity-50"
+                  disabled && "cursor-not-allowed opacity-50",
                 )}
               >
                 <Badge
@@ -36,7 +36,7 @@ export const CleanzoneStatusField = ({
 
                     form.watch("status") === key
                       ? "bg-primary"
-                      : "bg-neutral-200 text-neutral-800 hover:bg-neutral-300"
+                      : "bg-neutral-200 text-neutral-800 hover:bg-neutral-300",
                   )}
                   onClick={() => field.onChange(key)}
                 >
