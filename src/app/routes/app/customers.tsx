@@ -3,7 +3,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { ContentLayout } from "@/components/layout";
 import { AppDrawer, DataTable, DebouncedInput } from "@/components/ui";
 import { apiPaths } from "@/config";
-import { DrawerProvider } from "@/context";
 import {
   AddCustomerForm,
   CustomerRowExpanded,
@@ -35,24 +34,23 @@ const CustomersRoute = () => {
 
   return (
     <ContentLayout title="სარეალიზაციო პუნქტები">
-      <DrawerProvider>
-        <div className="mb-6 flex justify-between gap-2">
-          <DownloadButton url={apiPaths.excel.customer} />
-          <DebouncedInput
-            value={globalFilter}
-            onChange={(event) => setGlobalFilter(event.target.value)}
-            placeholder="მოძებნე"
-            className="w-96 mr-auto"
-          />
-          <AppDrawer
-            title="სარეალიზაციო პუნქტები"
-            label="დაამატე სარეალიზაციო პუნქტი"
-            className="max-w-xl"
-          >
-            <AddCustomerForm />
-          </AppDrawer>
-        </div>
-      </DrawerProvider>
+      <div className="mb-6 flex justify-between gap-2">
+        <DownloadButton url={apiPaths.excel.customer} />
+        <DebouncedInput
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          placeholder="მოძებნე"
+          className="w-96 mr-auto"
+        />
+        <AppDrawer
+          title="სარეალიზაციო პუნქტები"
+          label="დაამატე სარეალიზაციო პუნქტი"
+          className="max-w-xl"
+        >
+          <AddCustomerForm />
+        </AppDrawer>
+      </div>
+
       <DataTable
         data={customers}
         columns={columns}

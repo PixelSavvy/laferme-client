@@ -5,9 +5,9 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectItemSkeleton,
   SelectTrigger,
   SelectValue,
+  Skeleton,
 } from "@/components/ui";
 import { useCustomers } from "@/features/customer";
 import { OrderProduct } from "@/features/products";
@@ -47,7 +47,7 @@ export const SelectOrderCustomer = ({
             product.prices[
               selectedOrderCustomer.priceIndex as keyof typeof product.prices
             ],
-          preparedQuantity: 0,
+          preparedQuantity: 1,
           quantity: 1,
           weight: 0,
           preparedWeight: 0,
@@ -66,9 +66,7 @@ export const SelectOrderCustomer = ({
       <SelectContent>
         <SelectGroup>
           {isPending
-            ? Array.from({ length: 5 }).map((_, i) => (
-                <SelectItemSkeleton key={i} />
-              ))
+            ? Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} />)
             : isSuccess &&
               customers?.map((customer) => (
                 <SelectItem key={customer.id} value={customer.id.toString()}>

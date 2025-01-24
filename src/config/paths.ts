@@ -50,6 +50,7 @@ export const apiPaths = {
     product: "/products",
     customer: "/customers",
     order: "/orders",
+    surplus: "/surplus",
   },
   auth: {
     signin: "/auth/signin",

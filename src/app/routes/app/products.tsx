@@ -3,7 +3,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { ContentLayout } from "@/components/layout";
 import { AppDrawer, DebouncedInput } from "@/components/ui";
 import { apiPaths } from "@/config";
-import { DrawerProvider } from "@/context";
 import { DownloadButton } from "@/features/excel";
 import {
   AddProductForm,
@@ -33,24 +32,23 @@ const ProductsRoute = () => {
 
   return (
     <ContentLayout title="პროდუქტები">
-      <DrawerProvider>
-        <div className="mb-6  gap-2 flex justify-between">
-          <DownloadButton url={apiPaths.excel.product} />
-          <DebouncedInput
-            value={globalFilter}
-            onChange={(event) => setGlobalFilter(event.target.value)}
-            placeholder="მოძებნე"
-            className="w-96 mr-auto"
-          />
-          <AppDrawer
-            title="პროდუქტები"
-            label="დაამატე პროდუქტი"
-            className="max-w-2xl"
-          >
-            <AddProductForm />
-          </AppDrawer>
-        </div>
-      </DrawerProvider>
+      <div className="mb-6  gap-2 flex justify-between">
+        <DownloadButton url={apiPaths.excel.product} />
+        <DebouncedInput
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          placeholder="მოძებნე"
+          className="w-96 mr-auto"
+        />
+        <AppDrawer
+          title="პროდუქტები"
+          label="დაამატე პროდუქტი"
+          className="max-w-2xl"
+        >
+          <AddProductForm />
+        </AppDrawer>
+      </div>
+
       <ProductsTable
         data={products}
         fallback={fallback}

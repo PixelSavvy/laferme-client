@@ -21,7 +21,6 @@ export const CleanzoneStatusField = ({
       render={({ field }) => (
         <ul className="flex gap-2">
           {Object.entries(statusesObj.cleanzone).map(([key, value]) => {
-            console.log(field.value);
             return (
               <li
                 key={key}

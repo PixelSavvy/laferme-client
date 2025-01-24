@@ -2,11 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Row } from "@tanstack/react-table";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import { Form, FormSection } from "@/components/ui";
+import { AppDrawer, Form, FormSection } from "@/components/ui";
 import { statusesObj } from "@/config";
 import { Order, orderSchema } from "@/features/orders";
 
 import { useUpdateOrder } from "@/features/orders/services";
+import { AddSurplusForm } from "@/features/surplus";
 import { CleanzoneEditAction } from "./cleanzone-edit-action";
 import { CleanzoneStatusField } from "./cleanzone-status-field";
 import { CleanzoneTableRowProducts } from "./cleanzone-table-row-products";
@@ -40,7 +41,7 @@ export const CleanzoneItemRowExpanded = ({
   return (
     <Form {...form}>
       <form
-        className="grid grid-cols-[1fr_24rem] gap-x-24"
+        className="grid grid-cols-[max-content_1fr] gap-x-64"
         onSubmit={(e) => void form.handleSubmit(update)(e)}
       >
         {/* Products */}
@@ -56,9 +57,18 @@ export const CleanzoneItemRowExpanded = ({
         </FormSection>
 
         {/* Form Actions */}
-        {!isFormDisabled && (
-          <CleanzoneEditAction className="col-span-full justify-self-end mt-10" />
-        )}
+        <div className="flex items-center col-span-full gap-2 justify-end mt-10">
+          {!isFormDisabled && <CleanzoneEditAction />}
+
+          <AppDrawer
+            label="დაამატე ნაშთი"
+            title="ნაშთის მართვა"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            className="max-w-xl"
+          >
+            <AddSurplusForm orderId={cleanzoneItem.id} />
+          </AppDrawer>
+        </div>
       </form>
     </Form>
   );

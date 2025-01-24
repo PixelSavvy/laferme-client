@@ -9,7 +9,6 @@ import {
   useCalendarFilter,
 } from "@/components/ui";
 import { apiPaths } from "@/config";
-import { DrawerProvider } from "@/context";
 import { DownloadButton } from "@/features/excel";
 import {
   AddOrderForm,
@@ -59,15 +58,13 @@ const OrdersRoute = () => {
         />
 
         {/* Add Order Form */}
-        <DrawerProvider>
-          <AppDrawer
-            title="მიმდინარე შეკვეთები"
-            label="დაამატე შეკვეთა"
-            className="max-w-3xl"
-          >
-            <AddOrderForm />
-          </AppDrawer>
-        </DrawerProvider>
+        <AppDrawer
+          title="მიმდინარე შეკვეთები"
+          label="დაამატე შეკვეთა"
+          className="max-w-2xl"
+        >
+          <AddOrderForm />
+        </AppDrawer>
       </div>
       <DataTable
         data={filteredData}

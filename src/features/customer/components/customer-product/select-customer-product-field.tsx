@@ -8,10 +8,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectItemSkeleton,
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  Skeleton,
 } from "@/components/ui";
 import { Product, useProducts } from "@/features/products";
 
@@ -70,7 +70,7 @@ export const SelectCustomerProductField = ({
               <SelectGroup>
                 {isPending ? (
                   Array.from({ length: 5 }).map((_, index) => (
-                    <SelectItemSkeleton key={index} />
+                    <Skeleton key={index} />
                   ))
                 ) : isSuccess &&
                   productsToAppend &&
