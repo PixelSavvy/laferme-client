@@ -32,37 +32,38 @@ const ProductsRoute = () => {
 
   return (
     <ContentLayout title="პროდუქტები">
-      <div className="flex flex-col gap-4 mb-4">
-        {/* Actions */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold mb-1">პროდუქტები</h1>
-            <span className="text-neutral-600 text-sm">
-              პროდუქტების ცხრილის აღწერა
-            </span>
-          </div>
-          <div className="flex justify-between items-center gap-4">
-            <DownloadButton url={apiPaths.excel.product} />
-            <Separator orientation="vertical" className="h-8" />
-            <AppDrawer
-              title="პროდუქტები"
-              label="დაამატე პროდუქტი"
-              className="max-w-2xl"
-            >
-              <AddProductForm />
-            </AppDrawer>
-          </div>
+      <div className="grid grid-cols-2 gap-6 mb-7">
+        {/* Page title */}
+        <div>
+          <h1 className="text-2xl font-semibold mb-1">პროდუქტები</h1>
+          <span className="text-neutral-600 text-sm">
+            პროდუქტების ცხრილის აღწერა
+          </span>
         </div>
 
-        <Separator />
+        {/* Actions */}
+        <div className="flex justify-end items-center gap-4">
+          <DownloadButton url={apiPaths.excel.product} />
+          <Separator orientation="vertical" className="h-8" />
+          <AppDrawer
+            title="პროდუქტები"
+            label="დაამატე პროდუქტი"
+            className="max-w-2xl"
+          >
+            <AddProductForm />
+          </AppDrawer>
+        </div>
+
+        <Separator className="col-span-full" />
 
         {/* Filters */}
-        <div className="flex justify-end">
+        <div className="flex justify-between col-span-full">
+          <div />
           <DebouncedInput
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
             placeholder="მოძებნე"
-            className="w-64"
+            className="w-64 "
           />
         </div>
       </div>
