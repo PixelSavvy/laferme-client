@@ -24,6 +24,7 @@ type InputFieldProps<T extends FieldValues> = {
   hoverCard?: string;
   disabled?: boolean;
   showMessage?: boolean;
+  isCurrency?: boolean;
 };
 
 export const InputField = <T extends FieldValues>({
@@ -37,6 +38,7 @@ export const InputField = <T extends FieldValues>({
   hoverCard,
   disabled,
   showMessage = true,
+  isCurrency,
 }: InputFieldProps<T>) => (
   <FormField
     control={form.control}
@@ -65,8 +67,6 @@ export const InputField = <T extends FieldValues>({
               name={name}
               type={type}
               className={cn("w-full", inputClassName)}
-              min={type === "number" ? 0 : undefined}
-              step={type === "number" ? 0.01 : undefined}
               onChange={(e) => {
                 if (type === "number") {
                   field.onChange(Number(e.target.value));
@@ -75,6 +75,7 @@ export const InputField = <T extends FieldValues>({
                 }
               }}
               onClick={(e) => (e.target as HTMLInputElement).select()}
+              isCurrency={isCurrency}
             />
           </FormControl>
           {showMessage && <FormMessage />}

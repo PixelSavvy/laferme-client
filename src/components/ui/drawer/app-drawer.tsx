@@ -37,7 +37,7 @@ export const AppDrawer = ({
   return (
     <Drawer {...props} direction="right" open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <Button>{label}</Button>
+        <Button size={"default"}>{label}</Button>
       </DrawerTrigger>
       <DrawerContent
         onCloseAutoFocus={(e) => e.preventDefault()}

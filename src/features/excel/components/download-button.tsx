@@ -15,8 +15,14 @@ export const DownloadButton = ({ url, className }: DownloadButtonProps) => {
   };
 
   return (
-    <Button onClick={handleDownload} variant={"outline"} className={className}>
+    <Button
+      onClick={handleDownload}
+      variant={"outline"}
+      size={"default"}
+      className={className}
+    >
       <Download />
+      <span>გადმოწერე CSV</span>
     </Button>
   );
 };

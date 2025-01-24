@@ -20,11 +20,15 @@ export const ProductsDataTableBody = ({
     <TableBody>
       {rows.length ? (
         rows.map((row) => (
-          <TableRow key={row.id}>
+          <TableRow key={row.id} className="even:bg-neutral-50">
             {row.getVisibleCells().map((cell) => (
               <TableCell
                 key={cell.id}
-                className={cn(row.getIsSelected() ? "bg-neutral-100" : "", "")}
+                className={cn(
+                  row.getIsSelected() ? "bg-neutral-100" : "",
+                  "",
+                  "p-2 border-b "
+                )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
@@ -34,7 +38,7 @@ export const ProductsDataTableBody = ({
       ) : (
         <TableRow>
           <TableCell colSpan={columns.length} className="font-medium p-4 ">
-            {fallback || "No data available."}
+            {fallback}
           </TableCell>
         </TableRow>
       )}

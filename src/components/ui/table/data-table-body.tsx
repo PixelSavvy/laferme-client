@@ -41,7 +41,7 @@ export const DataTableBody = <Data, Value>({
       ) : (
         <TableRow>
           <TableCell colSpan={columns.length} className="font-medium p-4 ">
-            {fallback || "No data available."}
+            {fallback}
           </TableCell>
         </TableRow>
       )}

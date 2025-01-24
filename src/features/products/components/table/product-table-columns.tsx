@@ -40,9 +40,15 @@ export const useProductColumns = ({
     return [
       {
         id: "select_col",
+        header: () => (
+          <Checkbox
+            className="border-white size-5 mt-1 disabled:opacity-100 bg-white"
+            disabled
+          />
+        ),
         cell: ({ row }) => (
           <Checkbox
-            className="size-5 mt-1 mr-4"
+            className="size-5 mt-1 mx-2"
             onClick={row.getToggleSelectedHandler()}
             disabled={!row.getCanSelect()}
             checked={row.getIsSelected()}
@@ -52,11 +58,14 @@ export const useProductColumns = ({
       },
       {
         accessorKey: "id",
-        header: "ID",
+        header: () => <span className="font-sans">ID</span>,
+        cell: (info) => (
+          <span className="ml-2">{info.getValue() as number}</span>
+        ),
       },
       {
         accessorKey: "productCode",
-        header: "SKU",
+        header: () => "SKU",
         cell: (info) => (
           <InputField
             form={form}
@@ -65,6 +74,7 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="w-16"
           />
         ),
       },
@@ -77,9 +87,9 @@ export const useProductColumns = ({
             name={`products.${info.row.index}.hasVAT`}
             items={booleanItems}
             showMessage={false}
-            className="min-w-24"
             triggerClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
             disabled={!info.row.getIsSelected()}
+            className="w-20"
           />
         ),
       },
@@ -92,9 +102,9 @@ export const useProductColumns = ({
             name={`products.${info.row.index}.title`}
             type="text"
             showMessage={false}
-            className="min-w-64"
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="min-w-64"
           />
         ),
       },
@@ -109,6 +119,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -123,6 +135,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -137,6 +151,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -151,6 +167,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -165,6 +183,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -179,6 +199,8 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
@@ -193,20 +215,22 @@ export const useProductColumns = ({
             showMessage={false}
             disabled={!info.row.getIsSelected()}
             inputClassName="disabled:bg-transparent disabled:border-transparent disabled:opacity-100"
+            className="max-w-20"
+            isCurrency
           />
         ),
       },
       {
         id: "actions",
-        header: () => <EllipsisVertical size={20} />,
+        header: () => <EllipsisVertical size={20} className="ml-auto" />,
         cell: (info) => (
-          <div className="flex gap-1.5 items-center">
+          <div className="flex items-center -mr-2">
             <Button
               type="button"
-              variant={"default"}
-              size={"sm"}
+              variant={"ghost"}
               onClick={() => handleUpdate(info.row.index)}
               disabled={!info.row.getIsSelected()}
+              className="hover:text-neutral-500 transition-colors size-9"
             >
               <Edit />
             </Button>
@@ -214,7 +238,8 @@ export const useProductColumns = ({
               onRemove={() => remove(info.row.original.id)}
               isRemoving={isRemoving}
               disabled={!info.row.getIsSelected()}
-              size={"sm"}
+              variant={"ghost"}
+              className="hover:text-neutral-500 transition-colors size-9"
             />
           </div>
         ),
