@@ -2,25 +2,17 @@ import * as React from "react";
 
 import { Toaster } from "sonner";
 
-import { getCookie } from "@/utils";
 import { AppSidebar } from "../ui";
 import { LottieCheckIcon } from "../ui/lottie";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "../ui/sidebar/sidebar";
+import { SidebarInset, SidebarTrigger } from "../ui/sidebar/sidebar";
 
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const match = getCookie("sidebar:state");
-  const defaultOpen = match ? match[2] === "true" : false;
-
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <>
       <AppSidebar />
       <SidebarInset>
         <div className="container flex justify-between items-center flex-col min-h-screen">
-          <header className="flex h-32 mb-8 w-full items-center justify-start gap-4">
+          <header className="flex h-24 mb-6 w-full items-center justify-start gap-4">
             <SidebarTrigger variant={"ghost"} className="size-9" />
           </header>
           <main className="size-full flex-1">{children}</main>
@@ -46,6 +38,6 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <footer className="">sidebar layout footer</footer>
         </div>
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 };
