@@ -29,7 +29,7 @@ type Products = {
 
 export const ProductsTable = ({
   data,
-  fallback,
+  fallback = "მონაცემები არ მოიძებნა",
   globalFilter,
   setGlobalFilter,
 }: ProductsTableProps) => {

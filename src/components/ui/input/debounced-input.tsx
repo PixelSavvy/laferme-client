@@ -1,5 +1,6 @@
 import { ChangeEvent, InputHTMLAttributes, useEffect, useState } from "react";
 
+import { Search } from "lucide-react";
 import { Input } from "./input";
 
 type DebouncedInputProps = {
@@ -23,7 +24,7 @@ export const DebouncedInput = ({
         onChange({
           target: { value: inputValue },
         } as ChangeEvent<HTMLInputElement>),
-      debounce,
+      debounce
     );
     return () => clearTimeout(timeout);
   }, [inputValue, debounce]);
@@ -33,6 +34,8 @@ export const DebouncedInput = ({
       {...props}
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
+      showLeftIcon
+      leftIcon={<Search size={16} />}
     />
   );
 };

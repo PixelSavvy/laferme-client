@@ -5,6 +5,7 @@ import {
   CalendarFilter,
   DataTable,
   DebouncedInput,
+  Separator,
   useCalendarFilter,
 } from "@/components/ui";
 import { apiPaths } from "@/config";
@@ -38,19 +39,32 @@ const CleanzoneRoute = () => {
 
   return (
     <ContentLayout title="სუფთა ზონა">
-      <div className="flex items-center gap-2 mb-6">
-        {/* Excel Download button */}
-        <DownloadButton url={apiPaths.excel.cleanzone} />
-        {/* Calendar Filter */}
-        <CalendarFilter {...restCalendarProps} />
+      <div className="grid grid-cols-2 gap-6 mb-7">
+        {/* Page title */}
+        <div>
+          <h1 className="text-2xl font-semibold mb-1">სუფთა ზონა</h1>
+          <span className="text-neutral-600 text-sm">
+            სუფთა ზონის ცხრილის აღწერა
+          </span>
+        </div>
 
-        {/* Global Filter */}
-        <DebouncedInput
-          value={globalFilter}
-          onChange={(event) => setGlobalFilter(event.target.value)}
-          placeholder="მოძებნე"
-          className="flex-1"
-        />
+        {/* Actions */}
+        <div className="flex justify-end items-center gap-4">
+          <DownloadButton url={apiPaths.excel.cleanzone} />
+        </div>
+
+        <Separator className="col-span-full" />
+
+        {/* Filters */}
+        <div className="flex justify-between col-span-full">
+          <CalendarFilter {...restCalendarProps} />
+          <DebouncedInput
+            value={globalFilter}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            placeholder="მოძებნე"
+            className="w-64 "
+          />
+        </div>
       </div>
       <DataTable
         data={filteredData}
