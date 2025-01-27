@@ -33,7 +33,7 @@ export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
       createdAt: null,
       expiresAt: null,
     }),
-    [orderId, products]
+    [orderId, products],
   );
 
   const form = useForm<NewSurplus>({

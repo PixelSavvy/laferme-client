@@ -26,7 +26,7 @@ export const DataTableHeaders = <Data,>({
                   : index === headerGroup.headers.length - 1
                     ? "rounded-r-md"
                     : undefined,
-                "bg-primary text-background "
+                "bg-primary text-background ",
               )}
             >
               {!header.isPlaceholder && (
@@ -35,7 +35,7 @@ export const DataTableHeaders = <Data,>({
                     "flex items-center gap-1", // Flexbox for alignment
                     header.column.getCanSort()
                       ? "cursor-pointer select-none"
-                      : ""
+                      : "",
                   )}
                   onClick={
                     header.column.getCanSort()
@@ -56,7 +56,7 @@ export const DataTableHeaders = <Data,>({
                   <span>
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                   </span>
 

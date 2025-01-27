@@ -27,7 +27,7 @@ export const ProductsDataTableBody = ({
                 className={cn(
                   row.getIsSelected() ? "bg-neutral-100" : "",
                   "",
-                  "px-1 py-2 border-b "
+                  "px-1 py-2 border-b ",
                 )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

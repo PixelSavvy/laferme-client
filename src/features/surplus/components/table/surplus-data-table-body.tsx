@@ -48,5 +48,5 @@ export const SurplusTableBody = <Data,>({
 
 export const MemoizedSurplusTableBody = memo(
   SurplusTableBody,
-  (prev, next) => prev.table.options.data === next.table.options.data
+  (prev, next) => prev.table.options.data === next.table.options.data,
 ) as typeof SurplusTableBody;
