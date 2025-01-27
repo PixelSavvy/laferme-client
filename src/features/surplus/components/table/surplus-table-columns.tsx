@@ -3,13 +3,6 @@ import { useMemo } from "react";
 import { Surplus } from "../../schema";
 
 export const useSurplusColumns = () => {
-  // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
-  //   const vatA = rowA.original.hasVAT;
-  //   const vatB = rowB.original.hasVAT;
-  //   const vatOrder = ["0", "1"];
-  //   return vatOrder.indexOf(vatA) - vatOrder.indexOf(vatB);
-  // };
-
   const columns = useMemo<ColumnDef<Surplus>[]>(
     () => [
       {
