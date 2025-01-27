@@ -24,7 +24,7 @@ export const DebouncedInput = ({
         onChange({
           target: { value: inputValue },
         } as ChangeEvent<HTMLInputElement>),
-      debounce
+      debounce,
     );
     return () => clearTimeout(timeout);
   }, [inputValue, debounce]);

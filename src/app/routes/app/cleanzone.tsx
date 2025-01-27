@@ -32,7 +32,7 @@ const CleanzoneRoute = () => {
   const columns = useCleanzoneColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: cleanzoneData,
+    data: cleanzoneData?.data,
   });
 
   if (!cleanzoneData?.data) return null;

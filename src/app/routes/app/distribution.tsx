@@ -33,7 +33,7 @@ const DistributionRoute = () => {
   const columns = useDistributionColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: distributionData,
+    data: distributionData?.data,
   });
 
   if (!distributionData?.data) return null;
@@ -41,7 +41,7 @@ const DistributionRoute = () => {
   const distributionItems = filteredData.filter(
     (item) =>
       item.stage === stagesObj.DISTRIBUTION ||
-      item.stage === stagesObj.DELIVERED
+      item.stage === stagesObj.DELIVERED,
   );
 
   return (
