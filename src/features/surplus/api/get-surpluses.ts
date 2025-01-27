@@ -2,9 +2,9 @@ import { apiPaths } from "@/config";
 import { api, QueryConfig } from "@/lib";
 import { GetEntities } from "@/shared/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { Surplus } from "../schema";
+import { SurplusData } from "../schema";
 
-export const getSurpluses = (): Promise<GetEntities<Surplus[]>> => {
+export const getSurpluses = (): Promise<GetEntities<SurplusData>> => {
   return api.get(apiPaths.app.surplus);
 };
 

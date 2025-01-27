@@ -56,6 +56,13 @@ const createAppRouter = (queryClient: QueryClient) => {
               import("./routes/app/distribution").then(convert(queryClient)),
           },
 
+          // Surplus
+          {
+            path: appPaths.app.surplus.path,
+            lazy: () =>
+              import("./routes/app/surplus").then(convert(queryClient)),
+          },
+
           {
             path: "*",
             lazy: async () => {
@@ -74,7 +81,7 @@ const createAppRouter = (queryClient: QueryClient) => {
         v7_relativeSplatPath: true,
         v7_skipActionErrorRevalidation: true,
       },
-    },
+    }
   );
 };
 

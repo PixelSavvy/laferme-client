@@ -36,7 +36,7 @@ const OrdersRoute = () => {
   const columns = useOrdersColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: ordersData,
+    data: ordersData?.data,
   });
 
   return (

@@ -6,13 +6,6 @@ const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   config.withCredentials = true;
   return config;
 };
-const handleAxiosError = async (error: unknown): Promise<never> => {
-  if (axios.isAxiosError(error)) {
-    // Reject with error response data or default error message if response is unavailable
-    return Promise.reject(error.response?.data || error.message);
-  }
-  return Promise.reject(error);
-};
 
 const api = axios.create({
   baseURL:
@@ -23,4 +16,4 @@ const api = axios.create({
 
 api.interceptors.request.use(authRequestInterceptor);
 
-export { api, handleAxiosError };
+export { api };

@@ -21,6 +21,10 @@ export const appPaths = {
       path: "/",
       getHref: () => "/",
     },
+    surplus: {
+      path: "/app/surplus",
+      getHref: () => "/app/surplus",
+    },
     orders: {
       path: "/app/orders",
       getHref: () => "/app/orders",
@@ -63,5 +67,6 @@ export const apiPaths = {
     distribution: "/excel/distribution",
     cleanzone: "/excel/cleanzone",
     customer: "/excel/customers",
+    surplus: "/excel/surplus",
   },
 } as const;

@@ -4,10 +4,12 @@ import "dayjs/locale/en"; // import default locale as fallback
 import "dayjs/locale/ka"; // Georgian locale example
 
 // Helper function to format date based on HTML lang attribute
-export const formatDate = (date: string | Date) => {
+export const formatDate = (
+  date: string | Date,
+  pattern: string = "d MMM y",
+) => {
   // Get locale from the <html> lang attribute
   const locale = ka;
-  const pattern = "d MMM, y";
 
   // Format the date
   const formattedDate = format(date, pattern, { locale });

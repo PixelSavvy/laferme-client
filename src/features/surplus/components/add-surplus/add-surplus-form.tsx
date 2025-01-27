@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo } from "react";
 
 import { Form, FormAddAction, InputField, Skeleton } from "@/components/ui";
 import { useProducts } from "@/features/products";
+import { formatDate } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { NewSurplus, newSurplusSchema } from "../../schema";
@@ -26,11 +27,13 @@ export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
           title: product.title,
           quantity: 0,
           weight: 0,
+          identificator:
+            formatDate(new Date(), "ymd") + "/" + product.productCode,
         })) || [],
       createdAt: null,
       expiresAt: null,
     }),
-    [orderId, products],
+    [orderId, products]
   );
 
   const form = useForm<NewSurplus>({

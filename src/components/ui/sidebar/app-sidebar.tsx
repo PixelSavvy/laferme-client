@@ -1,6 +1,7 @@
 import { appPaths } from "@/config";
 import {
   LogOut,
+  RefrigeratorIcon,
   ShoppingBasket,
   ShoppingCart,
   Truck,
@@ -61,6 +62,11 @@ const MENU_ITEMS = [
     title: "პროდუქტები",
     icon: ShoppingBasket,
     url: appPaths.app.products.path,
+  },
+  {
+    title: "ნაშთი",
+    icon: RefrigeratorIcon,
+    url: appPaths.app.surplus.path,
   },
 ];
 

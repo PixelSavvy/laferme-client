@@ -27,7 +27,7 @@ const ProductsRoute = () => {
 
   if (!productsData?.data) return null;
 
-  const products = productsData.data.data.flat();
+  const products = productsData.data.data;
   const fallback = "პროდუქტები ვერ მოიძებნა";
 
   return (

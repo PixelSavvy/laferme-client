@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 
 import { Order } from "@/features/orders";
-import { GetEntities } from "@/shared/types";
+import { BaseResponse } from "@/shared/types";
 
 type UseCalendarFitlerProps = {
-  data: GetEntities<Order[]> | undefined;
+  data: BaseResponse<Order[]> | undefined;
 };
 
 export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
   const today = new Date();
 
-  const orders = data?.data.data as Order[];
-  const message = data?.data.message;
+  const orders = data?.data as Order[];
+  const message = data?.message;
 
   const [filteredData, setFilteredData] = useState<Order[]>(orders);
   const [fallback, setFallback] = useState<string>();
@@ -29,7 +29,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     setFilteredData(orders);
   }, [orders]);
 
-  if (!data?.data.data.length) {
+  if (!data?.data.length) {
     return {
       filteredData: [],
       fallback: message,
@@ -56,7 +56,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
       // Filter by deliver date
       const isDueAfterFrom = isBefore(
         order.deliverDueAt,
-        startOfDay(range.from),
+        startOfDay(range.from)
       );
       const isDueBeforeTo = isBefore(startOfDay(range.to), order.deliverDueAt);
 
@@ -88,7 +88,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
 
         const isDeliverDueToday = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(today),
+          startOfDay(today)
         );
 
         if (!isDeliverDueToday) setFallback("შეკვეთები ვერ მოიძებნა");
@@ -114,7 +114,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
 
         const isDeliverDueBeforePrev = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay),
+          startOfDay(newPrevDay)
         );
 
         if (!isDeliverDueBeforePrev) setFallback("შეკვეთები ვერ მოიძებნა");
@@ -136,7 +136,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
 
         const isDeliverDueAfterNext = isEqual(
           startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay),
+          startOfDay(newPrevDay)
         );
 
         if (!isDeliverDueAfterNext) setFallback("შეკვეთები ვერ მოიძებნა");
