@@ -25,7 +25,7 @@ export const SurplusDataTableHeader = <Data,>({
                   : index === headerGroup.headers.length - 1
                     ? "rounded-r-md"
                     : undefined,
-                "bg-primary text-background relative"
+                "bg-primary text-background relative",
               )}
               style={{
                 width: header.getSize() ? `${header.getSize()}px` : undefined,
@@ -37,7 +37,7 @@ export const SurplusDataTableHeader = <Data,>({
                     "flex items-center gap-1 max-w-full",
                     header.column.getCanSort()
                       ? "cursor-pointer select-none"
-                      : ""
+                      : "",
                   )}
                   onClick={
                     header.column.getCanSort()
@@ -58,7 +58,7 @@ export const SurplusDataTableHeader = <Data,>({
                   <span>
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                   </span>
 
