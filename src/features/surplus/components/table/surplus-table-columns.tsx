@@ -24,7 +24,7 @@ export const useSurplusColumns = () => {
         },
       },
       {
-        header: "title",
+        header: "პროდუქტი",
         accessorFn: (row) => row.products?.[0]?.title,
         cell: (info) => {
           return <span>{info.row.original.products?.[0]?.title}</span>;
@@ -53,7 +53,7 @@ export const useSurplusColumns = () => {
         },
       },
     ],
-    [],
+    []
   );
 
   return columns;
