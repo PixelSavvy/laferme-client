@@ -3,43 +3,39 @@ import { useMemo } from "react";
 import { Surplus } from "../../schema";
 
 export const useSurplusColumns = () => {
-  const columns = useMemo<ColumnDef<Surplus>[]>(
+  const columns = useMemo<ColumnDef<Surplus["products"][number]>[]>(
     () => [
       {
-        accessorKey: "identificator",
+        accessorKey: "details.identificator",
         header: () => <span className="">იდენტ.</span>,
         cell: (info) => {
           return (
-            <span className="text-primary/80">
-              {info.row.original.products?.[0]?.details.identificator}
-            </span>
+            <span className="text-primary/80">{info.getValue() as string}</span>
           );
         },
       },
       {
+        accessorKey: "title",
         header: "პროდუქტი",
-        accessorFn: (row) => row.products?.[0]?.title,
         cell: (info) => {
-          return <span>{info.row.original.products?.[0]?.title}</span>;
+          return <span> {info.getValue() as string}</span>;
         },
         size: 1200,
       },
       {
-        accessorKey: "quantity",
+        accessorKey: "details.quantity",
         header: () => <span className="">რაოდ.</span>,
         cell: (info) => {
-          return (
-            <span>{info.row.original.products?.[0]?.details.quantity}</span>
-          );
+          return <span>{info.getValue() as number}</span>;
         },
       },
       {
-        accessorKey: "weight",
+        accessorKey: "details.weight",
         header: () => <span className="">წონა.</span>,
         cell: (info) => {
           return (
             <span className="space-x-1">
-              <span>{info.row.original.products?.[0]?.details.weight}</span>
+              <span>{info.getValue() as number}</span>
               <span className="text-neutral-800">კგ</span>
             </span>
           );
