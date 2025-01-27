@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const surplusProductSchema = z.object({
+const newSurplusProductSchema = z.object({
   id: z.coerce.number(),
   title: z.string(),
   quantity: z.coerce.number(),
@@ -8,20 +8,20 @@ const surplusProductSchema = z.object({
   identificator: z.string(),
 });
 
+const surplusProductSchema = z.object({
+  id: z.coerce.number(),
+  title: z.string(),
+  details: z.object({
+    quantity: z.coerce.number(),
+    weight: z.coerce.number(),
+    identificator: z.string(),
+  }),
+});
+
 const surplusSchema = z.object({
   id: z.coerce.number(),
   orderId: z.coerce.number(),
-  products: z.array(
-    z.object({
-      id: z.coerce.number(),
-      title: z.string(),
-      details: z.object({
-        quantity: z.coerce.number(),
-        weight: z.coerce.number(),
-        identificator: z.string(),
-      }),
-    }),
-  ),
+  products: z.array(surplusProductSchema),
   createdAt: z.coerce.date().nullable(),
   expiresAt: z.coerce.date().nullable(),
 });
@@ -29,7 +29,7 @@ const surplusSchema = z.object({
 const newSurplusSchema = surplusSchema
   .omit({ id: true, products: true })
   .extend({
-    products: z.array(surplusProductSchema),
+    products: z.array(newSurplusProductSchema),
   });
 
 type Surplus = z.infer<typeof surplusSchema>;

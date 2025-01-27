@@ -1,6 +1,5 @@
 import { TableBody, TableCell, TableRow } from "@/components/ui";
 import { flexRender, Table } from "@tanstack/react-table";
-import { memo } from "react";
 import { Fragment } from "react/jsx-runtime";
 
 type SurplusTableBodyProps<Data> = {
@@ -45,8 +44,3 @@ export const SurplusTableBody = <Data,>({
     </TableBody>
   );
 };
-
-export const MemoizedSurplusTableBody = memo(
-  SurplusTableBody,
-  (prev, next) => prev.table.options.data === next.table.options.data,
-) as typeof SurplusTableBody;

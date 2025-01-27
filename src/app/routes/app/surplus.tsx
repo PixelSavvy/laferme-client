@@ -10,11 +10,11 @@ import {
 } from "@/components/ui";
 import { apiPaths } from "@/config";
 import { DownloadButton } from "@/features/excel";
-import { SurplusTable, useSurplusColumns } from "@/features/surplus";
+import { Surplus, SurplusTable, useSurplusColumns } from "@/features/surplus";
 import { getSurplusesQueryOptions, useSurpluses } from "@/features/surplus/api";
 import { cn } from "@/lib";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
   const query = getSurplusesQueryOptions();
@@ -33,6 +33,9 @@ const SurplusRoute = () => {
     Record<string, boolean>
   >({
     fresh: true,
+    medium: false,
+    old: false,
+    expired: false,
   });
 
   const handleToggle = (key: string) => {
@@ -42,9 +45,15 @@ const SurplusRoute = () => {
     }));
   };
 
-  if (!surplusData?.data) return null;
-
-  const surplusGroups = Object.entries(surplusData.data?.data || {});
+  const precomputedProducts = useMemo(() => {
+    return Object.entries(surplusData?.data?.data || {}).reduce(
+      (acc, [key, surplusArray]) => {
+        acc[key] = surplusArray.flatMap((surplus) => surplus.products || []);
+        return acc;
+      },
+      {} as Record<string, Surplus["products"]>,
+    );
+  }, [surplusData]);
 
   const fallback = "პროდუქტები ვერ მოიძებნა";
 
@@ -72,7 +81,7 @@ const SurplusRoute = () => {
       <SurplusTable columns={columns} data={[]} />
 
       {/* Collapsible Content */}
-      {surplusGroups.map(([key, data]) => (
+      {Object.entries(precomputedProducts).map(([key, products]) => (
         <Collapsible
           key={key}
           open={Boolean(collapsedStates[key])}
@@ -106,19 +115,19 @@ const SurplusRoute = () => {
             <Badge
               className="size-5 flex place-content-center ml-auto"
               variant={
-                !data.length
+                !products.length
                   ? "secondary"
                   : key === "expired"
                     ? "cancelled"
                     : "default"
               }
             >
-              <span>{data.length}</span>
+              <span>{products.length}</span>
             </Badge>
           </CollapsibleTrigger>
           <CollapsibleContent className="py-2">
             <SurplusTable
-              data={data}
+              data={products}
               columns={columns}
               fallback={fallback}
               renderHeader={false}

@@ -8,14 +8,12 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { Table } from "@/components/ui";
 import { fuzzyFilter } from "@/utils";
-import {
-  MemoizedSurplusTableBody,
-  SurplusTableBody,
-} from "./surplus-data-table-body";
+import { Surplus } from "../../schema";
+import { SurplusTableBody } from "./surplus-data-table-body";
 import { SurplusDataTableHeader } from "./surplus-data-table-header";
 
 declare module "@tanstack/react-table" {
@@ -28,9 +26,9 @@ declare module "@tanstack/react-table" {
 }
 
 // Types
-type DataTableProps<Data, Value> = {
-  columns: ColumnDef<Data, Value>[];
-  data: Data[];
+type DataTableProps = {
+  columns: ColumnDef<Surplus["products"][number]>[];
+  data: Surplus["products"];
   fallback?: string;
   renderHeader?: boolean;
   globalFilter?: string;
@@ -38,14 +36,14 @@ type DataTableProps<Data, Value> = {
 };
 
 // DataTable Component
-export const SurplusTable = <Data, Value>({
+export const SurplusTable = ({
   columns,
   data,
   fallback,
   globalFilter,
   setGlobalFilter,
   renderHeader = true,
-}: DataTableProps<Data, Value>) => {
+}: DataTableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -66,33 +64,13 @@ export const SurplusTable = <Data, Value>({
     },
     enableSortingRemoval: false,
     enableMultiSort: false,
-
-    defaultColumn: {
-      enableResizing: true,
-    },
-    columnResizeMode: "onChange",
   });
 
-  const columnSizeVars = useMemo(() => {
-    const headers = table.getFlatHeaders();
-    const colSizes: { [key: string]: number } = {};
-    for (let i = 0; i < headers.length; i++) {
-      const header = headers[i]!;
-      colSizes[`--header-${header.id}-size`] = header.getSize();
-      colSizes[`--col-${header.column.id}-size`] = header.column.getSize();
-    }
-    return colSizes;
-  }, [table.getState().columnSizingInfo, table.getState().columnSizing]);
-
   return (
-    <Table style={{ ...columnSizeVars }}>
+    <Table>
       {renderHeader && <SurplusDataTableHeader table={table} />}
 
-      {table.getState().columnSizingInfo.isResizingColumn ? (
-        <MemoizedSurplusTableBody table={table} fallback={fallback!} />
-      ) : (
-        <SurplusTableBody table={table} fallback={fallback!} />
-      )}
+      <SurplusTableBody table={table} fallback={fallback!} />
     </Table>
   );
 };
