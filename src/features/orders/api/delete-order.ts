@@ -4,14 +4,9 @@ import { apiPaths } from "@/config";
 import { api, MutationConfig } from "@/lib";
 import { DeleteEntity } from "@/shared/types";
 
-import { Order } from "../schema";
 import { getOrdersQueryOptions } from "./get-orders";
 
-export const deleteOrder = ({
-  id,
-}: {
-  id: number;
-}): Promise<DeleteEntity<Order>> => {
+export const deleteOrder = ({ id }: { id: number }): Promise<DeleteEntity> => {
   const path = `${apiPaths.app.order}/${id}`;
   return api.delete(path);
 };
