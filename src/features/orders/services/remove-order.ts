@@ -7,7 +7,7 @@ import { Order } from "../schema";
 export const useRemoveOrder = ({ row }: { row: Row<Order> }) => {
   const { mutate: deleteOrder, isPending: isRemoving } = useDeleteOrder();
 
-  const onSuccessDelete = (data: DeleteEntity<Order>) => {
+  const onSuccessDelete = (data: DeleteEntity) => {
     toast.message(data.data.message);
     row.toggleExpanded();
   };

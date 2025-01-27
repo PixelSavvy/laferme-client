@@ -7,7 +7,7 @@ import { Customer } from "../schema";
 export const useRemoveCustomer = ({ row }: { row: Row<Customer> }) => {
   const { mutate: deleteCustomer, isPending: isRemoving } = useDeleteCustomer();
 
-  const onSuccessDelete = (data: DeleteEntity<Customer>) => {
+  const onSuccessDelete = (data: DeleteEntity) => {
     toast.message(data.data.message);
     row.toggleExpanded();
   };
