@@ -23,7 +23,7 @@ export const AuthLayout = ({ title, children }: AuthLayoutProps) => {
   // If the user is authenticated, redirect to the app root
   useEffect(() => {
     if (user?.data) {
-      navigate(redirectTo ? redirectTo : appPaths.app.root.getHref(), {
+      navigate(redirectTo ? redirectTo : appPaths.app.orders.getHref(), {
         replace: true,
       });
     }

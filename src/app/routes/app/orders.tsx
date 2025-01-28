@@ -35,9 +35,12 @@ const OrdersRoute = () => {
   const { data: orders } = useOrders();
   const columns = useOrdersColumns();
 
-  const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: orders,
-  });
+  const { filteredData, fallback, showAll, ...restCalendarProps } =
+    useCalendarFilter({
+      data: orders,
+    });
+
+  if (!orders?.data) return null;
 
   return (
     <ContentLayout title="მიმდინარე შეკვეთები">
@@ -67,7 +70,7 @@ const OrdersRoute = () => {
 
         {/* Filters */}
         <div className="flex justify-between col-span-full">
-          <CalendarFilter {...restCalendarProps} />
+          <CalendarFilter {...restCalendarProps} showAll={showAll} />
           <DebouncedInput
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
