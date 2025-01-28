@@ -16,11 +16,11 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
   const todayOrders = orders.filter((order) =>
     order.deliverDueAt
       ? isEqual(startOfDay(order.deliverDueAt), startOfDay(today))
-      : false,
+      : false
   );
 
   // State
-  const [filteredData, setFilteredData] = useState<Order[]>(todayOrders);
+  const [filteredData, setFilteredData] = useState<Order[]>(orders);
   const [fallback, setFallback] = useState<string>();
   const [date, setDate] = useState<DateRange | undefined>(undefined);
   const [prev, setPrev] = useState(today);
@@ -98,7 +98,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     const filtered = orders.filter((order) =>
       order.deliverDueAt
         ? isEqual(startOfDay(order.deliverDueAt), targetDay)
-        : false,
+        : false
     );
 
     setFilteredData(filtered);
