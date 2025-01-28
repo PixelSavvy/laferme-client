@@ -16,7 +16,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
   const todayOrders = orders.filter((order) =>
     order.deliverDueAt
       ? isEqual(startOfDay(order.deliverDueAt), startOfDay(today))
-      : false
+      : false,
   );
 
   // State
@@ -98,7 +98,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     const filtered = orders.filter((order) =>
       order.deliverDueAt
         ? isEqual(startOfDay(order.deliverDueAt), targetDay)
-        : false
+        : false,
     );
 
     setFilteredData(filtered);

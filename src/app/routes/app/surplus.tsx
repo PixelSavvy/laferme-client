@@ -88,7 +88,7 @@ const SurplusRoute = () => {
           <CollapsibleTrigger
             className={cn(
               "w-full p-4 text-left flex items-center gap-2 hover:bg-neutral-100 transition-all",
-              collapsedStates[key] ? "border-none" : "border-b"
+              collapsedStates[key] ? "border-none" : "border-b",
             )}
           >
             {/* Collapsible Item Label */}
@@ -107,7 +107,7 @@ const SurplusRoute = () => {
               size={20}
               className={cn(
                 collapsedStates[key] ? "-rotate-180" : "rotate-0",
-                "transition-transform"
+                "transition-transform",
               )}
             />
             <Badge

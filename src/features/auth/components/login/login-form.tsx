@@ -14,7 +14,7 @@ export const LoginForm = () => {
     onError: (error: unknown) => {
       const axiosError = error as AxiosError;
       return setErrMessage(
-        (axiosError?.response?.data as { message: string })?.message
+        (axiosError?.response?.data as { message: string })?.message,
       );
     },
   });
@@ -61,7 +61,7 @@ export const LoginForm = () => {
       <div
         className={cn(
           " w-full h-10 rounded-md mt-4 px-4 flex items-center",
-          errMessage ? "bg-red-100" : ""
+          errMessage ? "bg-red-100" : "",
         )}
       >
         <span className="text-red-700 text-sm">{errMessage}</span>
