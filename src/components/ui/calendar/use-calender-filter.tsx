@@ -39,7 +39,7 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     } else {
       setFallback(undefined);
     }
-  }, [filteredData, showAll]);
+  }, [filteredData, showAll, data]);
 
   // Reset filters and show all data
   const handleShowAll = () => {
