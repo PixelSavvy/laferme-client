@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppRoot, AppRootErrorBoundary } from "./routes/app/root";
 
 import { appPaths } from "@/config";
+import { ProtectedRoute } from "@/features/auth";
 
 const convert = (queryClient: QueryClient) => (m: any) => {
   const { clientLoader, clientAction, default: Component, ...rest } = m;
@@ -21,8 +22,18 @@ const createAppRouter = (queryClient: QueryClient) => {
   return createBrowserRouter(
     [
       {
+        path: appPaths.auth.login.path,
+        lazy: () => import("./routes/auth/login").then(convert(queryClient)),
+      },
+
+      // Protected Routes
+      {
         path: appPaths.app.root.path,
-        element: <AppRoot />,
+        element: (
+          <ProtectedRoute>
+            <AppRoot />
+          </ProtectedRoute>
+        ),
         ErrorBoundary: AppRootErrorBoundary,
         children: [
           // Products
@@ -81,7 +92,7 @@ const createAppRouter = (queryClient: QueryClient) => {
         v7_relativeSplatPath: true,
         v7_skipActionErrorRevalidation: true,
       },
-    },
+    }
   );
 };
 

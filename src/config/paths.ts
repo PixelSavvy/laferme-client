@@ -1,14 +1,9 @@
 export const appPaths = {
-  home: {
-    path: "/",
-    getHref: () => "/",
-  },
-
   auth: {
     login: {
-      path: "/auth/login",
+      path: "/",
       getHref: (redirectTo?: string | null) =>
-        `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
+        `/${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
     },
     logout: {
       path: "/auth/logout",
@@ -18,8 +13,8 @@ export const appPaths = {
   },
   app: {
     root: {
-      path: "/",
-      getHref: () => "/",
+      path: "/app",
+      getHref: () => "/app",
     },
     surplus: {
       path: "/app/surplus",
@@ -57,9 +52,11 @@ export const apiPaths = {
     surplus: "/surplus",
   },
   auth: {
-    signin: "/auth/signin",
-    signup: "/auth/signup",
+    login: "/auth/login",
+    register: "/auth/register",
+    logout: "/auth/logout",
     resetPassword: "/auth/reset-password",
+    me: "/auth/me",
   },
   excel: {
     order: "/excel/orders",
