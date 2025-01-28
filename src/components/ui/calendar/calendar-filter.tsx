@@ -1,4 +1,3 @@
-import { addDays, subDays } from "date-fns";
 import { ka } from "date-fns/locale";
 import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -18,10 +17,12 @@ type CalendarFilterProps = Omit<
   "fallback" | "filteredData"
 > & {
   className?: string;
+  onShowAll: (val: boolean) => void;
 };
 
 export const CalendarFilter = ({
   className,
+  onShowAll,
   ...props
 }: CalendarFilterProps) => {
   const formattedDateRange = props.date?.from ? (
@@ -38,35 +39,42 @@ export const CalendarFilter = ({
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
+      {/* Show All */}
       <div>
-        <Button
-          variant={"outline"}
-          onClick={() => props.handleShowAll()}
-          disabled={props.showAll || props.isDisabled}
-        >
+        <Button variant={"outline"} onClick={() => onShowAll(true)}>
           ყველა
         </Button>
       </div>
       {/* Day Navigation */}
+
       <div className="grid grid-cols-3 gap-2">
         <Button
           variant="outline"
-          onClick={() => props.handleDateByDays?.("prev")}
+          onClick={() => {
+            onShowAll(false);
+            props.handleDateByDays?.("prev");
+          }}
         >
           <ChevronLeft />
-          {formatDate(subDays(props.prev, 1))}
+          {formatDate(props.prev)}
         </Button>
         <Button
           variant="outline"
-          onClick={() => props.handleDateByDays?.("today")}
+          onClick={() => {
+            onShowAll(false);
+            props.handleDateByDays?.("today");
+          }}
         >
           დღეს
         </Button>
         <Button
           variant="outline"
-          onClick={() => props.handleDateByDays?.("next")}
+          onClick={() => {
+            onShowAll(false);
+            props.handleDateByDays?.("next");
+          }}
         >
-          {formatDate(addDays(props.next, 1))}
+          {formatDate(props.next)}
           <ChevronRight />
         </Button>
       </div>
@@ -86,7 +94,10 @@ export const CalendarFilter = ({
             mode="range"
             locale={ka}
             selected={props.date}
-            onSelect={(range) => range && props.handleDateByRange?.(range)}
+            onSelect={(range) => {
+              onShowAll(false);
+              props.handleDateByRange?.(range);
+            }}
             numberOfMonths={1}
           />
         </PopoverContent>
