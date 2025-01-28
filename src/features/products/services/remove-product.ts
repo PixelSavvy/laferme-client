@@ -6,7 +6,7 @@ export const useRemoveProduct = () => {
   const { mutate: deleteProduct, isPending: isRemoving } = useDeleteProduct();
 
   const onDeleteSuccess = async (data: DeleteEntity) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
   };
 
   const remove = (id: number) => {
