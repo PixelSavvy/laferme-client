@@ -33,6 +33,10 @@ export const CleanzoneItemRowExpanded = ({
     name: "products",
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    update(data);
+  });
+
   const isFormDisabled =
     cleanzoneItem.updateCount >= 2 ||
     isUpdating ||
@@ -42,7 +46,7 @@ export const CleanzoneItemRowExpanded = ({
     <Form {...form}>
       <form
         className="grid grid-cols-[max-content_1fr] gap-x-64"
-        onSubmit={(e) => void form.handleSubmit(update)(e)}
+        onSubmit={handleSubmit}
       >
         {/* Products */}
         <FormSection title="პროდუქტები">

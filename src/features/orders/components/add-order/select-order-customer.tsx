@@ -24,13 +24,13 @@ export const SelectOrderCustomer = ({
   append,
 }: SelectOrderCustomerProps) => {
   const { data: customerData, isPending, isSuccess } = useCustomers();
-  const customers = customerData?.data.data;
+  const customers = customerData?.data;
 
   const form = useFormContext();
 
   const handleSelect = (value: string) => {
     const selectedOrderCustomer = customers?.find(
-      (customer) => customer.id === Number(value),
+      (customer) => customer.id === Number(value)
     );
 
     if (!selectedOrderCustomer) return;
@@ -52,7 +52,7 @@ export const SelectOrderCustomer = ({
           weight: 0,
           preparedWeight: 0,
           distributedWeight: 0,
-        }) as OrderProduct,
+        }) as OrderProduct
     );
 
     append(orderProducts);

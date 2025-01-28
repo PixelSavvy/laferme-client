@@ -38,12 +38,20 @@ export const CalendarFilter = ({
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
+      <div>
+        <Button
+          variant={"outline"}
+          onClick={() => props.handleShowAll()}
+          disabled={props.showAll || props.isDisabled}
+        >
+          ყველა
+        </Button>
+      </div>
       {/* Day Navigation */}
       <div className="grid grid-cols-3 gap-2">
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("prev")}
-          disabled={!props.prev || props.isDisabled}
         >
           <ChevronLeft />
           {formatDate(subDays(props.prev, 1))}
@@ -51,14 +59,12 @@ export const CalendarFilter = ({
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("today")}
-          disabled={props.isDisabled}
         >
           დღეს
         </Button>
         <Button
           variant="outline"
           onClick={() => props.handleDateByDays?.("next")}
-          disabled={!props.next || props.isDisabled}
         >
           {formatDate(addDays(props.next, 1))}
           <ChevronRight />
@@ -71,7 +77,6 @@ export const CalendarFilter = ({
           <Button
             variant="outline"
             className={cn(!props.date && "text-neutral-800", "w-[17.375rem]")}
-            disabled={props.isDisabled}
           >
             {formattedDateRange}
           </Button>

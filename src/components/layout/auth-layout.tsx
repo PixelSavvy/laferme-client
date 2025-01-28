@@ -11,7 +11,6 @@ type AuthLayoutProps = {
 
 export const AuthLayout = ({ title, children }: AuthLayoutProps) => {
   // Get the authenticated user
-  // const user = useUser();
   const user = useUser();
 
   // Get the redirectTo query parameter

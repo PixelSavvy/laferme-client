@@ -42,7 +42,7 @@ export const useSurplusColumns = () => {
         },
       },
     ],
-    [],
+    []
   );
 
   return columns;

@@ -45,12 +45,6 @@ export const appPaths = {
 
 export const apiPaths = {
   root: "/api",
-  app: {
-    product: "/products",
-    customer: "/customers",
-    order: "/orders",
-    surplus: "/surplus",
-  },
   auth: {
     login: "/auth/login",
     register: "/auth/register",
@@ -58,12 +52,20 @@ export const apiPaths = {
     resetPassword: "/auth/reset-password",
     me: "/auth/me",
   },
+
+  app: {
+    product: "/protected/products",
+    customer: "/protected/customers",
+    order: "/protected/orders",
+    surplus: "/protected/surplus",
+    user: "/protected/user",
+  },
   excel: {
-    order: "/excel/orders",
-    product: "/excel/products",
-    distribution: "/excel/distribution",
-    cleanzone: "/excel/cleanzone",
-    customer: "/excel/customers",
-    surplus: "/excel/surplus",
+    order: "/protected/excel/orders",
+    product: "/protected/excel/products",
+    distribution: "/protected/excel/distribution",
+    cleanzone: "/protected/excel/cleanzone",
+    customer: "/protected/excel/customers",
+    surplus: "/protected/excel/surplus",
   },
 } as const;

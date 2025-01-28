@@ -23,11 +23,10 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const ProductsRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { data: productsData } = useProducts();
+  const { data: products } = useProducts();
 
-  if (!productsData?.data) return null;
+  if (!products) return null;
 
-  const products = productsData.data.data;
   const fallback = "პროდუქტები ვერ მოიძებნა";
 
   return (
@@ -69,7 +68,7 @@ const ProductsRoute = () => {
       </div>
       {/* Product table */}
       <ProductsTable
-        data={products}
+        data={products.data}
         fallback={fallback}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}

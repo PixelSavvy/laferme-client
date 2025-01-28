@@ -10,7 +10,7 @@ export const useCreateOrder = () => {
   const { toggleDrawer } = useDrawer();
 
   const onSuccessCreate = (data: AddEntity<NewOrder>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     toggleDrawer();
   };
 

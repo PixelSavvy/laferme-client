@@ -16,7 +16,7 @@ export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
   const { data: productsData, isPending } = useProducts();
   const { create, isSurplusAdding } = useCreateSurplus();
 
-  const products = productsData?.data.data;
+  const products = productsData?.data;
 
   const surplusDefaultValues: NewSurplus = useMemo(
     () => ({
@@ -28,12 +28,14 @@ export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
           quantity: 0,
           weight: 0,
           identificator:
-            formatDate(new Date(), "ymd") + "/" + product.productCode,
+            formatDate(new Date(), "P").split("/").join("") +
+            "/" +
+            product.productCode,
         })) || [],
       createdAt: null,
       expiresAt: null,
     }),
-    [orderId, products],
+    [orderId, products]
   );
 
   const form = useForm<NewSurplus>({

@@ -66,6 +66,8 @@ export const SurplusTable = ({
     enableMultiSort: false,
   });
 
+  console.log(data);
+
   return (
     <Table>
       {renderHeader && <SurplusDataTableHeader table={table} />}

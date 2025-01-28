@@ -1,4 +1,5 @@
 import { appPaths } from "@/config";
+import { useUser } from "@/features/auth";
 import {
   LogOut,
   RefrigeratorIcon,
@@ -72,6 +73,9 @@ const MENU_ITEMS = [
 
 /** Main Sidebar Component */
 export const AppSidebar: React.FC = () => {
+  const user = useUser();
+
+  if (!user.data) return null;
   return (
     <Sidebar collapsible="offcanvas">
       <SidebarContent className="gap-0 p-4">
@@ -128,8 +132,10 @@ export const AppSidebar: React.FC = () => {
                       <AvatarImage />
                     </Avatar>
                     <div className="text-xs flex flex-col items-start">
-                      <span>გიორგი მენაბდიშვილი</span>
-                      <span className="text-neutral-400">გაყიდები</span>
+                      <span>{user.data?.fullName}</span>
+                      <span className="text-neutral-400">
+                        id: {user.data?.id.slice(0, 12)}
+                      </span>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>

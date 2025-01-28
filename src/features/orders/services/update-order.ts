@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { Row } from "@tanstack/react-table";
 import { SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
 import { UpdateEntity } from "@/shared/types";
-import { Row } from "@tanstack/react-table";
 import {
   getOrdersQueryOptions,
   useUpdateOrder as useUpdateMutation,
@@ -16,7 +16,7 @@ export const useUpdateOrder = ({ row }: { row: Row<Order> }) => {
   const queryClient = useQueryClient();
 
   const onSuccessUpdate = (data: UpdateEntity<Order>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     row.toggleExpanded();
 
     queryClient.invalidateQueries({

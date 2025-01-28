@@ -25,20 +25,21 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const DistributionRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { data: distributionData } = useOrders();
+  const { data: orders } = useOrders();
 
   const columns = useDistributionColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: distributionData?.data,
+    data: orders,
   });
+  console.log(filteredData);
 
-  if (!distributionData?.data) return null;
+  if (!orders) return null;
 
   const distributionItems = filteredData.filter(
     (item) =>
       item.stage === stagesObj.DISTRIBUTION ||
-      item.stage === stagesObj.DELIVERED,
+      item.stage === stagesObj.DELIVERED
   );
 
   return (

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui";
 import { apiPaths } from "@/config";
 import { DownloadButton } from "@/features/excel";
-import { Surplus, SurplusTable, useSurplusColumns } from "@/features/surplus";
+import { SurplusTable, useSurplusColumns } from "@/features/surplus";
 import { getSurplusesQueryOptions, useSurpluses } from "@/features/surplus/api";
 import { cn } from "@/lib";
 import { ChevronDown } from "lucide-react";
@@ -45,14 +45,12 @@ const SurplusRoute = () => {
     }));
   };
 
-  const precomputedProducts = useMemo(() => {
-    return Object.entries(surplusData?.data?.data || {}).reduce(
-      (acc, [key, surplusArray]) => {
-        acc[key] = surplusArray.flatMap((surplus) => surplus.products || []);
-        return acc;
-      },
-      {} as Record<string, Surplus["products"]>,
-    );
+  const surplusList = useMemo(() => {
+    if (!surplusData?.data) {
+      return { fresh: [], medium: [], old: [], expired: [] };
+    }
+
+    return surplusData.data;
   }, [surplusData]);
 
   const fallback = "პროდუქტები ვერ მოიძებნა";
@@ -81,7 +79,7 @@ const SurplusRoute = () => {
       <SurplusTable columns={columns} data={[]} />
 
       {/* Collapsible Content */}
-      {Object.entries(precomputedProducts).map(([key, products]) => (
+      {Object.entries(surplusList).map(([key, surplusItems]) => (
         <Collapsible
           key={key}
           open={Boolean(collapsedStates[key])}
@@ -90,7 +88,7 @@ const SurplusRoute = () => {
           <CollapsibleTrigger
             className={cn(
               "w-full p-4 text-left flex items-center gap-2 hover:bg-neutral-100 transition-all",
-              collapsedStates[key] ? "border-none" : "border-b",
+              collapsedStates[key] ? "border-none" : "border-b"
             )}
           >
             {/* Collapsible Item Label */}
@@ -109,25 +107,26 @@ const SurplusRoute = () => {
               size={20}
               className={cn(
                 collapsedStates[key] ? "-rotate-180" : "rotate-0",
-                "transition-transform",
+                "transition-transform"
               )}
             />
             <Badge
               className="size-5 flex place-content-center ml-auto"
               variant={
-                !products.length
+                !surplusItems.length
                   ? "secondary"
                   : key === "expired"
                     ? "cancelled"
                     : "default"
               }
             >
-              <span>{products.length}</span>
+              <span>{surplusItems.length}</span>
             </Badge>
           </CollapsibleTrigger>
+
           <CollapsibleContent className="py-2">
             <SurplusTable
-              data={products}
+              data={surplusItems.flatMap((item) => item.products)} // Flatten products arrays for the table
               columns={columns}
               fallback={fallback}
               renderHeader={false}

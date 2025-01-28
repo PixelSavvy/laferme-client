@@ -32,20 +32,20 @@ export const SelectCustomerProductField = ({
 
   // Query products
   const { data: productsData, isPending, isSuccess } = useProducts();
-  const products = productsData?.data.data;
+  const products = productsData?.data;
 
   // Collect product codes that have already been appended
   const appendedProducts = fields?.map((field) => field.productCode);
 
   // Filter out already appended products
   const productsToAppend = products?.filter(
-    (product) => !appendedProducts?.includes(product.productCode),
+    (product) => !appendedProducts?.includes(product.productCode)
   );
 
   // Append product to the form
   const handleSelect = (value: string) => {
     const selectedProduct = products?.find(
-      (product) => product.id === Number(value),
+      (product) => product.id === Number(value)
     ) as Product;
 
     if (selectedProduct) {

@@ -32,11 +32,11 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 const OrdersRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: ordersData } = useOrders();
+  const { data: orders } = useOrders();
   const columns = useOrdersColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: ordersData?.data,
+    data: orders,
   });
 
   return (

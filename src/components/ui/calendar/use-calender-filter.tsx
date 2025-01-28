@@ -12,37 +12,48 @@ type UseCalendarFitlerProps = {
 export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
   const today = new Date();
 
-  const orders = data?.data as Order[];
-  const message = data?.message;
+  const orders = data?.data || [];
+  const todayOrders = orders.filter((order) =>
+    order.deliverDueAt
+      ? isEqual(startOfDay(order.deliverDueAt), startOfDay(today))
+      : false
+  );
 
-  const [filteredData, setFilteredData] = useState<Order[]>(orders);
+  // State
+  const [filteredData, setFilteredData] = useState<Order[]>(todayOrders);
   const [fallback, setFallback] = useState<string>();
-
   const [date, setDate] = useState<DateRange | undefined>(undefined);
   const [prev, setPrev] = useState(today);
   const [next, setNext] = useState(today);
   const [current, setCurrent] = useState(today);
+  const [showAll, setShowAll] = useState(false); // Add showAll state
 
-  const isDisabled = !orders?.length;
+  const isDisabled = !orders.length;
 
+  // Effect for handling fallback
   useEffect(() => {
-    setFilteredData(orders);
-  }, [orders]);
+    if (showAll) {
+      setFallback(undefined); // No fallback when showing all data
+    } else if (!filteredData.length) {
+      setFallback("მონაცემები არ მოიძებნა");
+    } else {
+      setFallback(undefined);
+    }
+  }, [filteredData, showAll]);
 
-  if (!data?.data.length) {
-    return {
-      filteredData: [],
-      fallback: message,
-      date: undefined,
-      prev: today,
-      next: today,
-      current: today,
-      isDisabled,
-    };
-  }
+  // Reset filters and show all data
+  const handleShowAll = () => {
+    setShowAll(true); // Activate "Show All"
+    setFilteredData(orders); // Reset filteredData to all orders
+    setDate(undefined);
+    setPrev(today);
+    setNext(today);
+    setCurrent(today);
+  };
 
   // Filter by date range
   const handleDateByRange = (range: DateRange | undefined) => {
+    setShowAll(false); // Deactivate "Show All" when applying filters
     setDate(range);
 
     if (!range || !range.from || !range.to) {
@@ -53,18 +64,11 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     const filtered = orders.filter((order) => {
       if (!order.deliverDueAt || !range || !range.from || !range.to) return;
 
-      // Filter by deliver date
-      const isDueAfterFrom = isBefore(
-        order.deliverDueAt,
-        startOfDay(range.from),
-      );
-      const isDueBeforeTo = isBefore(startOfDay(range.to), order.deliverDueAt);
+      const isWithinRange =
+        !isBefore(order.deliverDueAt, startOfDay(range.from)) &&
+        !isBefore(startOfDay(range.to), order.deliverDueAt);
 
-      const isDueBetweenRange = !isDueAfterFrom && !isDueBeforeTo;
-
-      if (!isDueBetweenRange) setFallback("შეკვეთები ვერ მოიძებნა");
-
-      return isDueBetweenRange;
+      return isWithinRange;
     });
 
     setFilteredData(filtered);
@@ -72,80 +76,32 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
 
   // Filter by days
   const handleDateByDays = (type: "prev" | "next" | "today") => {
-    let newPrevDay: Date;
-    let newNextDay: Date;
+    setShowAll(false); // Deactivate "Show All" when applying filters
+    let targetDay: Date;
 
     if (type === "today") {
-      newPrevDay = startOfDay(today);
-      newNextDay = startOfDay(today);
-
-      setPrev(newPrevDay);
-      setNext(newNextDay);
-      setCurrent(today);
-
-      const filtered = orders.filter((order) => {
-        if (!order.deliverDueAt) return;
-
-        const isDeliverDueToday = isEqual(
-          startOfDay(order.deliverDueAt),
-          startOfDay(today),
-        );
-
-        if (!isDeliverDueToday) setFallback("შეკვეთები ვერ მოიძებნა");
-
-        return isDeliverDueToday;
-      });
-
-      setDate({
-        from: today,
-        to: today,
-      });
-      setFilteredData(filtered);
+      targetDay = startOfDay(today);
+      setPrev(today);
+      setNext(today);
     } else if (type === "prev") {
-      newPrevDay = subDays(prev, 1);
-      newNextDay = subDays(next, 1);
-
-      setPrev(newPrevDay);
-      setNext(newNextDay);
-      setCurrent(newPrevDay);
-
-      const filtered = orders.filter((order) => {
-        if (!order.deliverDueAt) return;
-
-        const isDeliverDueBeforePrev = isEqual(
-          startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay),
-        );
-
-        if (!isDeliverDueBeforePrev) setFallback("შეკვეთები ვერ მოიძებნა");
-
-        return isDeliverDueBeforePrev;
-      });
-
-      setFilteredData(filtered);
+      targetDay = subDays(current, 1);
+      setPrev(subDays(prev, 1));
+      setNext(subDays(next, 1));
     } else {
-      newPrevDay = addDays(prev, 1);
-      newNextDay = addDays(next, 1);
-
-      setPrev(newPrevDay);
-      setNext(newNextDay);
-      setCurrent(newNextDay);
-
-      const filtered = orders.filter((order) => {
-        if (!order.deliverDueAt) return;
-
-        const isDeliverDueAfterNext = isEqual(
-          startOfDay(order.deliverDueAt),
-          startOfDay(newPrevDay),
-        );
-
-        if (!isDeliverDueAfterNext) setFallback("შეკვეთები ვერ მოიძებნა");
-
-        return isDeliverDueAfterNext;
-      });
-
-      setFilteredData(filtered);
+      targetDay = addDays(current, 1);
+      setPrev(addDays(prev, 1));
+      setNext(addDays(next, 1));
     }
+
+    setCurrent(targetDay);
+
+    const filtered = orders.filter((order) =>
+      order.deliverDueAt
+        ? isEqual(startOfDay(order.deliverDueAt), targetDay)
+        : false
+    );
+
+    setFilteredData(filtered);
   };
 
   const handleDateRangeRest = () => {
@@ -158,11 +114,13 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     handleDateByDays,
     handleDateByRange,
     handleDateRangeRest,
+    handleShowAll,
     date,
     prev,
     next,
     current,
     isDisabled,
+    showAll,
   };
 };
 
