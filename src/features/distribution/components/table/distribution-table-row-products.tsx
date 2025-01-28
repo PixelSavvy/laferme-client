@@ -19,14 +19,6 @@ export const DistributionTableRowProducts = ({
           <li key={index} className="flex gap-4">
             <InputField
               form={form}
-              name={`products.${index}.productCode`}
-              label="SKU"
-              type="text"
-              className="max-w-16"
-              disabled
-            />
-            <InputField
-              form={form}
               name={`products.${index}.title`}
               label="პროდუქტი"
               type="text"

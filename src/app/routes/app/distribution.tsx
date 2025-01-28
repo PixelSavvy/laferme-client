@@ -9,10 +9,7 @@ import {
   useCalendarFilter,
 } from "@/components/ui";
 import { apiPaths, stagesObj } from "@/config";
-import {
-  DistributionItemRowExpanded,
-  useDistributionColumns,
-} from "@/features/distribution";
+import { useDistributionColumns } from "@/features/distribution";
 import { DownloadButton } from "@/features/excel";
 import { getOrdersQueryOptions, useOrders } from "@/features/orders";
 import { useState } from "react";
@@ -41,7 +38,7 @@ const DistributionRoute = () => {
   const distributionItems = filteredData.filter(
     (item) =>
       item.stage === stagesObj.DISTRIBUTION ||
-      item.stage === stagesObj.DELIVERED,
+      item.stage === stagesObj.DELIVERED
   );
 
   return (
@@ -77,10 +74,6 @@ const DistributionRoute = () => {
         data={distributionItems}
         columns={columns}
         fallback={fallback}
-        renderSubComponent={({ row }) => (
-          <DistributionItemRowExpanded row={row} />
-        )}
-        getRowCanExpand={() => true}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
       />

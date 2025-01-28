@@ -125,7 +125,7 @@ export const AppSidebar: React.FC = () => {
                     className="flex justify-start items-center gap-3 w-full p-0"
                   >
                     <Avatar>
-                      <AvatarImage src="https://images.unsplash.com/photo-1640960543409-dbe56ccc30e2?q=80&w=2725&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                      <AvatarImage />
                     </Avatar>
                     <div className="text-xs flex flex-col items-start">
                       <span>გიორგი მენაბდიშვილი</span>

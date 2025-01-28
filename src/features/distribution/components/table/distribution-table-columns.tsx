@@ -6,6 +6,7 @@ import { Order } from "@/features/orders";
 import { formatDate } from "@/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Bookmark, Calendar, DollarSign, Landmark, User } from "lucide-react";
+import { DistributionTableDeliveredTrigger } from "./distribution-table-delivered-trigger";
 
 export const useDistributionColumns = () => {
   // const sortVATFn: SortingFn<Order> = (rowA, rowB) => {
@@ -89,8 +90,13 @@ export const useDistributionColumns = () => {
           />
         ),
       },
+      {
+        accessorKey: "action",
+        header: () => "",
+        cell: ({ row }) => <DistributionTableDeliveredTrigger row={row} />,
+      },
     ],
-    [],
+    []
   );
 
   return columns;
