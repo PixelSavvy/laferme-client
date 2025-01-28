@@ -13,7 +13,7 @@ export const useCreateProduct = () => {
   const { toggleDrawer } = useDrawer();
 
   const onSuccessCreate = async (data: AddEntity<NewProduct>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     toggleDrawer();
 
     return (

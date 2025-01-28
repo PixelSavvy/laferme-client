@@ -32,7 +32,7 @@ export const SelectCustomerProductField = ({
 
   // Query products
   const { data: productsData, isPending, isSuccess } = useProducts();
-  const products = productsData?.data.data;
+  const products = productsData?.data;
 
   // Collect product codes that have already been appended
   const appendedProducts = fields?.map((field) => field.productCode);

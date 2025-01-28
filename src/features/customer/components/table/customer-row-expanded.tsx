@@ -43,12 +43,13 @@ export const CustomerRowExpanded = ({ row }: CustomerRawExpandedProps) => {
     name: "products",
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    update(data);
+  });
+
   return (
     <Form {...form}>
-      <form
-        className="grid grid-cols-2 gap-x-24"
-        onSubmit={(e) => void form.handleSubmit(update)(e)}
-      >
+      <form className="grid grid-cols-2 gap-x-24" onSubmit={handleSubmit}>
         {/* Customer Details */}
 
         {/* General Details */}

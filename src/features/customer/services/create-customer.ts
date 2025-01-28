@@ -11,7 +11,7 @@ export const useCreateCustomer = () => {
   const { toggleDrawer } = useDrawer();
 
   const onSuccessCreate = (data: AddEntity<NewCustomer>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     toggleDrawer();
   };
 

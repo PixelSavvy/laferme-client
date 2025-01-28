@@ -53,12 +53,13 @@ export const OrderRowExpanded = ({ row }: OrderRowExpandedProps) => {
     name: "products",
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    update(data);
+  });
+
   return (
     <Form {...form}>
-      <form
-        className="grid grid-cols-2 gap-x-16"
-        onSubmit={(e) => void form.handleSubmit(update)(e)}
-      >
+      <form className="grid grid-cols-2 gap-x-16" onSubmit={handleSubmit}>
         <FormSection title="პროდუქტები" className="flex-col justify-start ">
           <SelectedOrderProducts
             fields={fields}

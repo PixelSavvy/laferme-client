@@ -24,7 +24,7 @@ export const SelectOrderCustomer = ({
   append,
 }: SelectOrderCustomerProps) => {
   const { data: customerData, isPending, isSuccess } = useCustomers();
-  const customers = customerData?.data.data;
+  const customers = customerData?.data;
 
   const form = useFormContext();
 

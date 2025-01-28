@@ -1,6 +1,7 @@
 import { Outlet, useRouteError } from "react-router-dom";
 
 import { AppLayout } from "@/components/layout";
+import { AxiosError } from "axios";
 
 export const AppRoot = () => {
   return (
@@ -11,8 +12,7 @@ export const AppRoot = () => {
 };
 
 export const AppRootErrorBoundary = () => {
-  const error = useRouteError();
+  const error = useRouteError() as AxiosError;
 
-  console.log(error);
-  return <div>Something went wrong!</div>;
+  return <div className="text-red-500">{error.message}</div>;
 };

@@ -32,7 +32,7 @@ export const SelectOrderProductField = ({
 
   // Query products
   const { data: productsData, isPending, isSuccess } = useProducts();
-  const products = productsData?.data.data;
+  const products = productsData?.data;
 
   // Get form context
   const form = useFormContext<NewOrder>();

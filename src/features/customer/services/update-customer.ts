@@ -16,7 +16,7 @@ export const useUpdateCustomer = ({ row }: { row: Row<Customer> }) => {
   const queryClient = useQueryClient();
 
   const onSuccessUpdate = (data: UpdateEntity<Customer>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     row.toggleExpanded();
 
     queryClient.invalidateQueries({

@@ -30,12 +30,13 @@ export const AddOrderForm = () => {
     name: "products",
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    create(data);
+  });
+
   return (
     <Form {...form}>
-      <form
-        className="flex flex-col gap-8"
-        onSubmit={(e) => form.handleSubmit(create)(e)}
-      >
+      <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <div className="col-span-full">
           <FormSection title="სარეალიზაციო პუნქტი">
             {!isCustomerSelected ? (

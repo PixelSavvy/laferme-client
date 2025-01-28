@@ -8,7 +8,7 @@ export const useRemoveOrder = ({ row }: { row: Row<Order> }) => {
   const { mutate: deleteOrder, isPending: isRemoving } = useDeleteOrder();
 
   const onSuccessDelete = (data: DeleteEntity) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     row.toggleExpanded();
   };
 

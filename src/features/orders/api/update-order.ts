@@ -32,7 +32,7 @@ export const useUpdateOrder = ({
   return useMutation({
     onSuccess: async (data, ...args) => {
       await queryClient.refetchQueries({
-        queryKey: getOrderQueryOptions(data.data.data.id).queryKey,
+        queryKey: getOrderQueryOptions(data.data.id).queryKey,
       });
       onSuccess?.(data, ...args);
     },

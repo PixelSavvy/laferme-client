@@ -28,14 +28,16 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const CleanzoneRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { data: cleanzoneData } = useOrders();
+  const { data: orders } = useOrders();
   const columns = useCleanzoneColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: cleanzoneData?.data,
+    data: orders,
   });
 
-  if (!cleanzoneData?.data) return null;
+  console.log(filteredData);
+
+  if (!orders) return null;
 
   return (
     <ContentLayout title="სუფთა ზონა">

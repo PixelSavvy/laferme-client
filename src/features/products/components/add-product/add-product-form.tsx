@@ -24,13 +24,13 @@ export const AddProductForm = () => {
     defaultValues: newProductDefaultValues,
   });
 
-  const submitHandler = form.handleSubmit((data) => {
+  const handleSubmit = form.handleSubmit((data) => {
     create(data);
   });
 
   return (
     <Form {...form}>
-      <form className="h-full flex flex-col gap-8 " onSubmit={submitHandler}>
+      <form className="h-full flex flex-col gap-8 " onSubmit={handleSubmit}>
         {/* Product info */}
         <FormSection title="პროდუქტის ინფორმაცია">
           <SelectField

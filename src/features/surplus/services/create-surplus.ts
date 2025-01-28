@@ -8,10 +8,11 @@ export const useCreateSurplus = () => {
   const { mutate: add, isPending: isSurplusAdding } = useAddSurplus();
 
   const onSuccessCreate = (data: AddEntity<NewSurplus>) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
   };
 
   const create: SubmitHandler<NewSurplus> = (payload) => {
+    console.log(payload);
     add(
       {
         data: payload,

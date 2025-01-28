@@ -32,7 +32,7 @@ export const useUpdateProduct = ({
   return useMutation({
     onSuccess: (data, ...args) => {
       queryClient.refetchQueries({
-        queryKey: getProductQueryOptions(data.data.data.id).queryKey,
+        queryKey: getProductQueryOptions(data.data.id).queryKey,
       });
       onSuccess?.(data, ...args);
     },

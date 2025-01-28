@@ -37,12 +37,13 @@ export const AddCustomerForm = () => {
     name: "products",
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    create(data);
+  });
+
   return (
     <Form {...form}>
-      <form
-        className="h-full flex flex-col gap-8"
-        onSubmit={(e) => form.handleSubmit(create)(e)}
-      >
+      <form className="h-full flex flex-col gap-8" onSubmit={handleSubmit}>
         {/* Company Details */}
         <FormSection title="კომპანიის ინფორმაცია" className="justify-between">
           <SelectField

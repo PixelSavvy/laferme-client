@@ -1,14 +1,9 @@
 export const appPaths = {
-  home: {
-    path: "/",
-    getHref: () => "/",
-  },
-
   auth: {
     login: {
-      path: "/auth/login",
+      path: "/",
       getHref: (redirectTo?: string | null) =>
-        `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
+        `/${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
     },
     logout: {
       path: "/auth/logout",
@@ -18,8 +13,8 @@ export const appPaths = {
   },
   app: {
     root: {
-      path: "/",
-      getHref: () => "/",
+      path: "/app",
+      getHref: () => "/app",
     },
     surplus: {
       path: "/app/surplus",
@@ -50,23 +45,27 @@ export const appPaths = {
 
 export const apiPaths = {
   root: "/api",
-  app: {
-    product: "/products",
-    customer: "/customers",
-    order: "/orders",
-    surplus: "/surplus",
-  },
   auth: {
-    signin: "/auth/signin",
-    signup: "/auth/signup",
+    login: "/auth/login",
+    register: "/auth/register",
+    logout: "/auth/logout",
     resetPassword: "/auth/reset-password",
+    me: "/auth/me",
+  },
+
+  app: {
+    product: "/protected/products",
+    customer: "/protected/customers",
+    order: "/protected/orders",
+    surplus: "/protected/surplus",
+    user: "/protected/user",
   },
   excel: {
-    order: "/excel/orders",
-    product: "/excel/products",
-    distribution: "/excel/distribution",
-    cleanzone: "/excel/cleanzone",
-    customer: "/excel/customers",
-    surplus: "/excel/surplus",
+    order: "/protected/excel/orders",
+    product: "/protected/excel/products",
+    distribution: "/protected/excel/distribution",
+    cleanzone: "/protected/excel/cleanzone",
+    customer: "/protected/excel/customers",
+    surplus: "/protected/excel/surplus",
   },
 } as const;

@@ -9,10 +9,7 @@ import {
   useCalendarFilter,
 } from "@/components/ui";
 import { apiPaths, stagesObj } from "@/config";
-import {
-  DistributionItemRowExpanded,
-  useDistributionColumns,
-} from "@/features/distribution";
+import { useDistributionColumns } from "@/features/distribution";
 import { DownloadButton } from "@/features/excel";
 import { getOrdersQueryOptions, useOrders } from "@/features/orders";
 import { useState } from "react";
@@ -28,15 +25,16 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const DistributionRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { data: distributionData } = useOrders();
+  const { data: orders } = useOrders();
 
   const columns = useDistributionColumns();
 
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
-    data: distributionData?.data,
+    data: orders,
   });
+  console.log(filteredData);
 
-  if (!distributionData?.data) return null;
+  if (!orders) return null;
 
   const distributionItems = filteredData.filter(
     (item) =>
@@ -77,10 +75,6 @@ const DistributionRoute = () => {
         data={distributionItems}
         columns={columns}
         fallback={fallback}
-        renderSubComponent={({ row }) => (
-          <DistributionItemRowExpanded row={row} />
-        )}
-        getRowCanExpand={() => true}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
       />

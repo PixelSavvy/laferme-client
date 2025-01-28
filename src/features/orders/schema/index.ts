@@ -1,7 +1,6 @@
 import { allStatuses, stages, stagesObj, statusesObj } from "@/config";
 import { customerSchema, newCustomerDefaultValues } from "@/features/customer";
 import { orderProductSchema } from "@/features/products";
-import { surplusSchema } from "@/features/surplus";
 import { addDays } from "date-fns";
 import { z } from "zod";
 
@@ -12,9 +11,6 @@ const orderSchema = z.object({
   customer: customerSchema,
   status: z.enum(allStatuses),
   stage: z.enum(stages),
-
-  // Surplus
-  surplus: surplusSchema.nullable(),
 
   // Notes
   note: z.string().nullable(),
@@ -72,8 +68,6 @@ const newOrderDefaultValues: NewOrder = {
   customerId: 0,
   status: statusesObj.all.ACCEPTED,
   stage: stagesObj.ORDER,
-
-  surplus: null,
 
   updateCount: 0,
   products: [],

@@ -8,7 +8,7 @@ export const useRemoveCustomer = ({ row }: { row: Row<Customer> }) => {
   const { mutate: deleteCustomer, isPending: isRemoving } = useDeleteCustomer();
 
   const onSuccessDelete = (data: DeleteEntity) => {
-    toast.message(data.data.message);
+    toast.message(data.message);
     row.toggleExpanded();
   };
 

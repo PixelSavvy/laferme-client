@@ -29,13 +29,12 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const CustomersRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { data: customersData } = useCustomers();
+  const { data: customers } = useCustomers();
   const columns = useCustomerColumns();
 
-  if (!customersData?.data) return null;
+  if (!customers) return null;
 
-  const customers = customersData.data.data.flat();
-  const fallback = customersData.data.message;
+  const fallback = customers.message;
 
   return (
     <ContentLayout title="სარეალიზაციო პუნქტები">
@@ -76,7 +75,7 @@ const CustomersRoute = () => {
       </div>
 
       <DataTable
-        data={customers}
+        data={customers.data}
         columns={columns}
         fallback={fallback}
         renderSubComponent={({ row }) => <CustomerRowExpanded row={row} />}

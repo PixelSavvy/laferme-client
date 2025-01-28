@@ -21,7 +21,7 @@ export const useUpdateProduct = ({
 
   const onUpdateSuccess = async (data: UpdateEntity<Product>) => {
     onRowSelect({});
-    toast.success(data.data.message);
+    toast.success(data.message);
 
     queryClient.invalidateQueries({
       queryKey: getProductsQueryOptions().queryKey,
