@@ -25,6 +25,7 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const DistributionRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
+  const [showAll, setSetshowAll] = useState(false);
   const { data: orders } = useOrders();
 
   const columns = useDistributionColumns();
@@ -32,14 +33,17 @@ const DistributionRoute = () => {
   const { filteredData, fallback, ...restCalendarProps } = useCalendarFilter({
     data: orders,
   });
-  console.log(filteredData);
+
+  const handleShowAll = (val: boolean) => {
+    setSetshowAll(val);
+  };
 
   if (!orders) return null;
 
   const distributionItems = filteredData.filter(
     (item) =>
       item.stage === stagesObj.DISTRIBUTION ||
-      item.stage === stagesObj.DELIVERED,
+      item.stage === stagesObj.DELIVERED
   );
 
   return (
@@ -62,7 +66,7 @@ const DistributionRoute = () => {
 
         {/* Filters */}
         <div className="flex justify-between col-span-full">
-          <CalendarFilter {...restCalendarProps} />
+          <CalendarFilter {...restCalendarProps} onShowAll={handleShowAll} />
           <DebouncedInput
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
@@ -72,7 +76,7 @@ const DistributionRoute = () => {
         </div>
       </div>
       <DataTable
-        data={distributionItems}
+        data={showAll ? distributionItems : filteredData}
         columns={columns}
         fallback={fallback}
         globalFilter={globalFilter}

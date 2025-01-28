@@ -28,6 +28,7 @@ export const clientLoader = (queryClient: QueryClient) => async () => {
 
 const CleanzoneRoute = () => {
   const [globalFilter, setGlobalFilter] = useState("");
+  const [showAll, setSetshowAll] = useState(false);
   const { data: orders } = useOrders();
   const columns = useCleanzoneColumns();
 
@@ -35,7 +36,9 @@ const CleanzoneRoute = () => {
     data: orders,
   });
 
-  console.log(filteredData);
+  const handleShowAll = (val: boolean) => {
+    setSetshowAll(val);
+  };
 
   if (!orders) return null;
 
@@ -59,7 +62,7 @@ const CleanzoneRoute = () => {
 
         {/* Filters */}
         <div className="flex justify-between col-span-full">
-          <CalendarFilter {...restCalendarProps} />
+          <CalendarFilter {...restCalendarProps} onShowAll={handleShowAll} />
           <DebouncedInput
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
@@ -69,7 +72,7 @@ const CleanzoneRoute = () => {
         </div>
       </div>
       <DataTable
-        data={filteredData}
+        data={showAll ? orders.data : filteredData}
         columns={columns}
         fallback={fallback}
         renderSubComponent={({ row }) => <CleanzoneItemRowExpanded row={row} />}
