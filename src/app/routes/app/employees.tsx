@@ -2,17 +2,18 @@ import { QueryClient } from "@tanstack/react-query";
 
 import { ContentLayout } from "@/components/layout";
 import { AppDrawer, DataTable, Separator } from "@/components/ui";
-import { useEmployees } from "@/features/employees/api/get-employees";
+import {
+  getEmployeesQueryOptions,
+  useEmployees,
+} from "@/features/employees/api/get-employees";
 import { useEmployeesColumns } from "@/features/employees/components";
 
 export const clientLoader = (queryClient: QueryClient) => async () => {
-  // const query = getCustomersQueryOptions();
-  // return (
-  //   queryClient.getQueryData(query.queryKey) ??
-  //   (await queryClient.fetchQuery(query))
-  // );
-
-  return queryClient;
+  const query = getEmployeesQueryOptions();
+  return (
+    queryClient.getQueryData(query.queryKey) ??
+    (await queryClient.fetchQuery(query))
+  );
 };
 
 const EmployeesRoute = () => {
