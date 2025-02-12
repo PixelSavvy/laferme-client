@@ -6,6 +6,7 @@ import {
   ShoppingBasket,
   ShoppingCart,
   Truck,
+  User,
   Users2,
   VenetianMask,
 } from "lucide-react";
@@ -102,7 +103,7 @@ export const AppSidebar: React.FC = () => {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className="h-12 pl-2 md:pl-3 lg:pl-4"
+                    className="h-10 pl-2 md:pl-3 lg:pl-4"
                   >
                     <Link to={item.url}>
                       <item.icon />
@@ -111,6 +112,25 @@ export const AppSidebar: React.FC = () => {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>ადმინი</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  className="h-10 pl-2 md:pl-3 lg:pl-4"
+                >
+                  <Link to={appPaths.app.employees.path}>
+                    <User />
+                    <span>თანამშრომლები</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -134,7 +154,7 @@ export const AppSidebar: React.FC = () => {
                     <div className="text-xs flex flex-col items-start">
                       <span>{user.data?.fullName}</span>
                       <span className="text-neutral-400">
-                        id: {user.data?.id.slice(0, 12)}
+                        id: {user.data?.id.split("-")[0]}
                       </span>
                     </div>
                   </Button>

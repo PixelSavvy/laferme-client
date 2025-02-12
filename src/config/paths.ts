@@ -40,6 +40,10 @@ export const appPaths = {
       path: "/app/products",
       getHref: () => "/app/products",
     },
+    employees: {
+      path: "/app/employees",
+      getHref: () => "/app/employees",
+    },
   },
 } as const;
 
@@ -58,7 +62,7 @@ export const apiPaths = {
     customer: "/protected/customers",
     order: "/protected/orders",
     surplus: "/protected/surplus",
-    user: "/protected/user",
+    employee: "/protected/employees",
   },
   excel: {
     order: "/protected/excel/orders",

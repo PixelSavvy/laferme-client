@@ -73,7 +73,12 @@ const createAppRouter = (queryClient: QueryClient) => {
             lazy: () =>
               import("./routes/app/surplus").then(convert(queryClient)),
           },
-
+          // Employees
+          {
+            path: appPaths.app.employees.path,
+            lazy: () =>
+              import("./routes/app/employees").then(convert(queryClient)),
+          },
           {
             path: "*",
             lazy: async () => {
@@ -92,7 +97,7 @@ const createAppRouter = (queryClient: QueryClient) => {
         v7_relativeSplatPath: true,
         v7_skipActionErrorRevalidation: true,
       },
-    },
+    }
   );
 };
 
