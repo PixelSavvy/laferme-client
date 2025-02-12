@@ -96,7 +96,7 @@ export const useDistributionColumns = () => {
         cell: ({ row }) => <DistributionTableDeliveredTrigger row={row} />,
       },
     ],
-    []
+    [],
   );
 
   return columns;

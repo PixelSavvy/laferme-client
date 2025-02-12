@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --cache --format  stylish --fix",
-    "format": "npx prettier . --write",
+    "lint": "eslint . --cache --cache-location .cache/.eslintcache --format  stylish --fix",
+    "format": "prettier --write  --cache --cache-location .cache/.prettiercache .",
     "preview": "vite preview",
     "prepare": "husky"
   },

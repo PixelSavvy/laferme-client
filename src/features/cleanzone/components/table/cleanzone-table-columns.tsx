@@ -82,7 +82,7 @@ export const useCleanzoneColumns = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return columns;

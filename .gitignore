@@ -1,25 +1,75 @@
+# Node modules
+node_modules/
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+jspm_packages/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+build/
+.tmp/
+.cache/
+
+# Optional npm cache directory
+.npm/
+
+# Optional REPL history
+.node_repl_history
+
+# TypeScript declaration files
+*.d.ts
+
+# dotenv environment files
+.env
+.env.development
+.env.production
+.env.local
+.env.*.local
+
+
+
+# Test coverage
+coverage/
+*.lcov
+
+# IDE or Editor specific files
+.vscode/
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# macOS specific files
+Thumbs.db
+.DS_Store
+
+# Windows specific files
+*.db
+
+# Optional ESLint cache
 .eslintcache
+
+# Optional Stylelint cache
+.stylelintcache
+
+# Optional Prettier cache
+.prettiercache
+
+# Parcel-bundler cache (optional)
+.cache/
+
+# Next.js build output
+.next/
+
+# Nuxt.js build output
+.nuxt/
+

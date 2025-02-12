@@ -18,8 +18,8 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
     orders.filter((order) =>
       order.deliverDueAt
         ? isEqual(startOfDay(new Date(order.deliverDueAt)), today)
-        : false
-    )
+        : false,
+    ),
   );
   const [fallback, setFallback] = useState<string>();
   const [date, setDate] = useState<DateRange | undefined>(undefined);
@@ -52,8 +52,8 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
         order.deliverDueAt
           ? !isBefore(order.deliverDueAt, startOfDay(range.from!)) &&
             !isBefore(startOfDay(range.to!), order.deliverDueAt)
-          : false
-      )
+          : false,
+      ),
     );
   };
 
@@ -81,8 +81,8 @@ export const useCalendarFilter = ({ data }: UseCalendarFitlerProps) => {
       orders.filter((order) =>
         order.deliverDueAt
           ? isEqual(startOfDay(order.deliverDueAt), targetDay)
-          : false
-      )
+          : false,
+      ),
     );
   };
 
