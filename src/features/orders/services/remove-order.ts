@@ -12,7 +12,7 @@ export const useRemoveOrder = ({ row }: { row: Row<Order> }) => {
     row.toggleExpanded();
   };
 
-  const remove = (id: number) => {
+  const remove = (id: string) => {
     deleteOrder(
       {
         id,

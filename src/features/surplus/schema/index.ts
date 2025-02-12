@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const newSurplusProductSchema = z.object({
-  id: z.coerce.number(),
+  id: z.string(),
   title: z.string(),
   quantity: z.coerce.number(),
   weight: z.coerce.number(),
@@ -9,7 +9,7 @@ const newSurplusProductSchema = z.object({
 });
 
 const surplusProductSchema = z.object({
-  id: z.coerce.number(),
+  id: z.string(),
   title: z.string(),
   details: z.object({
     quantity: z.coerce.number(),
@@ -19,8 +19,8 @@ const surplusProductSchema = z.object({
 });
 
 const surplusSchema = z.object({
-  id: z.coerce.number(),
-  orderId: z.coerce.number(),
+  id: z.string(),
+  orderId: z.string(),
   products: z.array(surplusProductSchema),
   createdAt: z.coerce.date().nullable(),
   expiresAt: z.coerce.date().nullable(),

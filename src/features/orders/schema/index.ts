@@ -6,8 +6,8 @@ import { z } from "zod";
 
 const orderSchema = z.object({
   // Order Info
-  id: z.coerce.number().nonnegative(),
-  customerId: z.number().nonnegative(),
+  id: z.string(),
+  customerId: z.string(),
   customer: customerSchema,
   status: z.enum(allStatuses),
   stage: z.enum(stages),
@@ -47,9 +47,9 @@ const newOrderSchema = orderSchema
     note: true,
   })
   .superRefine((data) => {
-    // If prepareDueAt is not provided, set it to the next day
+    // If prepareDueAt is not provided, set it to today
     if (!data.prepareDueAt) {
-      data.prepareDueAt = addDays(new Date(), 1);
+      data.prepareDueAt = new Date();
     }
     // Set deliverDueAt to the next day of prepareDueAt
     data.deliverDueAt = addDays(data.prepareDueAt, 1);
@@ -62,10 +62,10 @@ type NewOrder = z.infer<typeof newOrderSchema>;
 // New Order  default values for form
 const newOrderDefaultValues: NewOrder = {
   customer: {
-    id: 0,
+    id: "",
     ...newCustomerDefaultValues,
   },
-  customerId: 0,
+  customerId: "",
   status: statusesObj.all.ACCEPTED,
   stage: stagesObj.ORDER,
 

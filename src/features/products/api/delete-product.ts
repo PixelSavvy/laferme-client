@@ -9,7 +9,7 @@ import { getProductsQueryOptions } from "./get-products";
 export const deleteProduct = ({
   id,
 }: {
-  id: number;
+  id: string;
 }): Promise<DeleteEntity> => {
   const path = `${apiPaths.app.product}/${id}`;
   return api.delete(path);

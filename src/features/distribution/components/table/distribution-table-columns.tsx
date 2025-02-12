@@ -21,7 +21,7 @@ export const useDistributionColumns = () => {
       {
         accessorKey: "id",
         header: () => <span className="font-sans">ID</span>,
-        cell: (info) => info.getValue(),
+        cell: (info) => (info.getValue() as string).split("-")[0],
         sortDescFirst: true,
       },
       {
@@ -96,7 +96,7 @@ export const useDistributionColumns = () => {
         cell: ({ row }) => <DistributionTableDeliveredTrigger row={row} />,
       },
     ],
-    [],
+    []
   );
 
   return columns;

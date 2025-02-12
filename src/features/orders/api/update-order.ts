@@ -11,7 +11,7 @@ export const updateOrder = ({
   id,
   data,
 }: {
-  id: number;
+  id: string;
   data: Order;
 }): Promise<UpdateEntity<Order>> => {
   const path = `${apiPaths.app.order}/${id}`;

@@ -60,7 +60,7 @@ const prices = z.object(
 );
 
 const productSchema = z.object({
-  id: z.coerce.number().nonnegative(),
+  id: z.string(),
   title: z
     .string({
       required_error: REQUIRED_ERROR_MSG,
@@ -81,7 +81,7 @@ const newProductSchema = productSchema.omit({ id: true });
 
 const orderProductSchema = z
   .object({
-    id: z.coerce.number().nonnegative(),
+    id: z.string(),
     price: z.coerce.number().nonnegative(),
 
     quantity: z.coerce.number().nonnegative(),

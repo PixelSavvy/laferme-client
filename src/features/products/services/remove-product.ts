@@ -9,7 +9,7 @@ export const useRemoveProduct = () => {
     toast.message(data.message);
   };
 
-  const remove = (id: number) => {
+  const remove = (id: string) => {
     deleteProduct(
       {
         id,

@@ -18,7 +18,7 @@ const contactPerson = z.object({
 });
 
 const customerSchema = z.object({
-  id: z.coerce.number().int().nonnegative(),
+  id: z.string(),
 
   // Select Fields
   priceIndex: z.enum(priceIndexes),

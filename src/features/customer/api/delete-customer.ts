@@ -9,7 +9,7 @@ import { getCustomersQueryOptions } from "./get-customers";
 export const deleteCustomer = ({
   id,
 }: {
-  id: number;
+  id: string;
 }): Promise<DeleteEntity> => {
   const path = `${apiPaths.app.customer}/${id}`;
   return api.delete(path);

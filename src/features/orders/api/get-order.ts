@@ -5,12 +5,12 @@ import { api, QueryConfig } from "@/lib";
 import { GetEntity } from "@/shared/types";
 
 import { Order } from "../schema";
-export const getOrder = (id: number): Promise<GetEntity<Order>> => {
+export const getOrder = (id: string): Promise<GetEntity<Order>> => {
   const path = `${apiPaths.app.order}/${id}`;
   return api.get(path);
 };
 
-export const getOrderQueryOptions = (id: number) => {
+export const getOrderQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ["orders", id],
     queryFn: () => getOrder(id),
@@ -18,7 +18,7 @@ export const getOrderQueryOptions = (id: number) => {
 };
 
 type UseOrderOptions = {
-  id: number;
+  id: string;
   queryConfig?: QueryConfig<typeof getOrderQueryOptions>;
 };
 

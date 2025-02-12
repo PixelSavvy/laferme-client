@@ -94,7 +94,7 @@ export const AppSidebar: React.FC = () => {
         <SidebarSeparator className="mb-4" />
 
         {/* Sidebar Main Content */}
-        <SidebarGroup className="gap-4 p-0">
+        <SidebarGroup className="gap-1 p-0">
           <SidebarGroupLabel>მართვის პანელი</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

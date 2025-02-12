@@ -12,7 +12,7 @@ export const useRemoveCustomer = ({ row }: { row: Row<Customer> }) => {
     row.toggleExpanded();
   };
 
-  const remove = (id: number) => {
+  const remove = (id: string) => {
     deleteCustomer(
       {
         id,

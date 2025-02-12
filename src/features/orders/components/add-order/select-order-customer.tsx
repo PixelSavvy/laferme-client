@@ -30,7 +30,7 @@ export const SelectOrderCustomer = ({
 
   const handleSelect = (value: string) => {
     const selectedOrderCustomer = customers?.find(
-      (customer) => customer.id === Number(value),
+      (customer) => customer.id === value
     );
 
     if (!selectedOrderCustomer) return;
@@ -52,7 +52,7 @@ export const SelectOrderCustomer = ({
           weight: 0,
           preparedWeight: 0,
           distributedWeight: 0,
-        }) as OrderProduct,
+        }) as OrderProduct
     );
 
     append(orderProducts);

@@ -20,7 +20,9 @@ export const useCustomerColumns = () => {
         accessorKey: "id",
         header: () => <span className="font-sans">ID</span>,
         cell: (info) => (
-          <span className="text-primary/80">{info.getValue() as number}</span>
+          <span className="text-primary/80">
+            {(info.getValue() as string).split("-")[0]}
+          </span>
         ),
         sortDescFirst: true,
         filterFn: "fuzzy",
@@ -92,7 +94,7 @@ export const useCustomerColumns = () => {
         filterFn: "fuzzy",
       },
     ],
-    [],
+    []
   );
 
   return columns;

@@ -58,10 +58,10 @@ export const useProductColumns = ({
       },
       {
         accessorKey: "id",
-        header: () => <span className="font-sans">ID</span>,
+        header: () => <span className="font-sans text-sm">ID</span>,
         cell: (info) => (
           <span className="text-primary/80 ml-3">
-            {info.getValue() as number}
+            {(info.getValue() as string).split("-")[0]}
           </span>
         ),
       },

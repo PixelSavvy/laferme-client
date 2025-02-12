@@ -6,7 +6,7 @@ import { DeleteEntity } from "@/shared/types";
 
 import { getOrdersQueryOptions } from "./get-orders";
 
-export const deleteOrder = ({ id }: { id: number }): Promise<DeleteEntity> => {
+export const deleteOrder = ({ id }: { id: string }): Promise<DeleteEntity> => {
   const path = `${apiPaths.app.order}/${id}`;
   return api.delete(path);
 };

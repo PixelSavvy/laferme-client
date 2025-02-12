@@ -9,7 +9,7 @@ import { NewSurplus, newSurplusSchema } from "../../schema";
 import { useCreateSurplus } from "../../services";
 
 type AddSurplusFormProps = {
-  orderId: number;
+  orderId: string;
 };
 
 export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
@@ -35,7 +35,7 @@ export const AddSurplusForm = ({ orderId }: AddSurplusFormProps) => {
       createdAt: null,
       expiresAt: null,
     }),
-    [orderId, products],
+    [orderId, products]
   );
 
   const form = useForm<NewSurplus>({

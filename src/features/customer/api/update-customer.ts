@@ -11,7 +11,7 @@ export const updateCustomer = ({
   id,
   data,
 }: {
-  id: number;
+  id: string;
   data: Customer;
 }): Promise<UpdateEntity<Customer>> => {
   const path = `${apiPaths.app.customer}/${id}`;
